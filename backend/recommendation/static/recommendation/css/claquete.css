@@ -1,0 +1,121 @@
+.aboutBox {
+    margin-top: 15%;
+    padding: 5%;
+    background-color: rgba(0,0,0,0.75);
+}
+
+.siteDescription {
+    color: #fff7c9;
+    text-align: justify;
+}
+
+.siteTitle {
+    color: #c68006;
+    text-align: center;
+}
+
+.loginText {
+    color: #fff7c9;
+    text-align: center;
+}
+
+.facebookButton {
+    background-color: #3b5998 !important;
+    border-color: #3b5998 !important;
+}
+
+.loginButton {
+    background-color: #642e68 !important;
+    border-color: #642e68 !important;
+}
+
+.singupButton {
+    background-color: #c68006 !important;
+    border-color: #c68006 !important;
+}
+
+.loginFields {
+    background-color: rgba(0,0,0,0.69) !important;
+    color: #fff7c9 !important;
+    border-color: rgba(0,0,0,0.69) !important;
+}
+
+.singInBackground {
+    background: url(../img/singingrandhotel.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.logInBackground {
+    background: url(../img/grandhotel.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.searchBar {
+    float: right;
+    height: 30px !important;
+    margin:0%;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    width: 50%;
+}
+
+
+/* When the input field gets focus, change its width to 100% */
+.searchBar:focus {
+    width: 100%;
+    border-color: #c68006;
+}
+
+.headerMenu {
+    background-color: #642e68;
+    padding: 7px 3% 0px 3%
+}
+
+/* Remove margins and padding from the list, and add a black background color */
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Float the list items side by side */
+ul.topnav li {float: left;}
+
+/* Style the links inside the list items */
+ul.topnav li a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 0px 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 15px;
+    vertical-align: sub;
+}
+
+/* Change background color of links on hover */
+ul.topnav li a:hover {    
+    color: #c68006;
+    font-weight: bold;
+}
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.topnav li.icon {display: none;}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border-color: #c68006;
+}
+
+.filterTab {
+    background-color: #fff7c9 !important;
+    padding-top: 1%;
+}
