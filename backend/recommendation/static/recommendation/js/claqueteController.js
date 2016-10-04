@@ -4,9 +4,9 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
     });
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.players = 'teste';
 
-    
+	
+
     (function() {
 	window.tmdb = {
 		"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
@@ -50,12 +50,6 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 	}
 })()
 
-
-	$http.get('movies').success(function(data) {
-		$scope.reco = data;
-		console.log(data);
-	});
-
 $scope.searchMovie = function (query) {
     oParams = 
         {
@@ -72,5 +66,39 @@ $scope.searchMovie = function (query) {
             }   
         )
 }
+
+//$scope.init = function () {
+		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+
+		$scope.test = ['oi', 'bye'];
+
+		$scope.images = [
+			{
+				img: $scope.imagePath + '/14HTiOiLHYf3qYIuxO12FkbfWlA.jpg',
+				title: 'Os Oito Odiados'
+			},
+			{
+				img: $scope.imagePath + '/qrx3qxAV1BW3JWdsglLJvyYZS0m.jpg',
+				title: 'Os Infratores'
+			},
+			{
+				img: $scope.imagePath + '/14HTiOiLHYf3qYIuxO12FkbfWlA.jpg',
+				title: 'Os Oito Odiados'
+			},
+			{
+				img: $scope.imagePath + '/qrx3qxAV1BW3JWdsglLJvyYZS0m.jpg',
+				title: 'Os Infratores'
+			},
+			{
+				img: $scope.imagePath + '/14HTiOiLHYf3qYIuxO12FkbfWlA.jpg',
+				title: 'Os Oito Odiados'
+			},
+			{
+				img: $scope.imagePath + '/qrx3qxAV1BW3JWdsglLJvyYZS0m.jpg',
+				title: 'Os Infratores'
+			}
+		];
+
+	//};
 
 }]);

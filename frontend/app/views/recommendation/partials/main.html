@@ -59,8 +59,14 @@
     </div>
     
 </div>
-<div class="twelve columns">
-    <div class="three columns">
+<div class="twelve columns" >
+    <div class="two columns" ng-init="init()" ng-repeat="m in images">
+        <div>
+            <p>{$ m.title $}</p>
+            <img src="{$ m.img $}" width="50%" height="auto">
+            
+        </div>
+
         <div>
             <ul class="topnav" id="myTopnav">
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
