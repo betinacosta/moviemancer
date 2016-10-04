@@ -56,10 +56,10 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 		console.log(data);
 	});
 
-//$scope.searchMovie = function (query) {
+$scope.searchMovie = function (query) {
     oParams = 
         {
-            "query": 'Ela',
+            "query": query,
             "language": "pt-br"
         };
 
@@ -71,7 +71,6 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
                 console.log("Error: "+e)
             }   
         )
-
-//}
+}
 
 }]);
