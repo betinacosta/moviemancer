@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from recommendation.models import Movie
+from recommendation.models import Movie, Type, MovieList, List
  
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
