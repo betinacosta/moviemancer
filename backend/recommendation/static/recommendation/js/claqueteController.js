@@ -84,27 +84,55 @@ $scope.loadCommingSoon = function () {
         );
 }
 
-$http.get('reco').success(function(data) {
-		$scope.reco = data;
 
-		recoo = 
-        {
-            "language": "pt-br"
-        };
 
-        tmdb.call("/movie/" + data[0].tmdb_movie_id, recoo,
-            function(soon){
-                console.log(soon)
+	//tmdb.call("/movie/" + data[0].tmdb_movie_id, recoo,
+       //     function(soon){
+           //     console.log(soon)
+           // }, 
+           // function(e){
+           //     console.log("Error: "+e)
+          //  }   
+       // );
+
+$scope.loadRecommendation = function () {
+
+
+	$http.get('reco').success(function(data) {
+		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+		$scope.images = [];
+		oParams = {"language": "pt-br"};
+
+		for (i = 0; i < data.length; i++) {
+
+			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
+            function(movies){
+				
+                $scope.images.push ( {
+				img: $scope.imagePath + data
+			})
             }, 
             function(e){
                 console.log("Error: "+e)
             }   
         );
+
+
+
+			$scope.images.push ( {
+				img: $scope.imagePath + data
+			})
+
+			console.log(data[i].tmdb_movie_id);
+		}
 	});
+}
+
+$scope.loadRecommendation();
 
 
 
-//$scope.init = function () {
+//$scope.loadReco = function () {
 		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
 
 		$scope.test = ['oi', 'bye'];
@@ -135,7 +163,6 @@ $http.get('reco').success(function(data) {
 				title: 'Os Infratores'
 			}
 		];
-
-	//};
+//};
 
 }]);
