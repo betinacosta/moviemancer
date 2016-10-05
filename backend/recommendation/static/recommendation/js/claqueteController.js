@@ -82,10 +82,11 @@ $scope.loadCommingSoon = function () {
                 for (m in soon.results) {
 					$scope.commingSoon. push (
 						{
-							img:$scope.imagePath + m.poster_path
+							img:$scope.imagePath + soon.results[m].poster_path
 						}
 					)
 				}
+				console.log($scope.commingSoon);
             }, 
             function(e){
                 console.log("Error: "+e)
