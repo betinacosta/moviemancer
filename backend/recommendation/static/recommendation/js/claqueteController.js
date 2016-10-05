@@ -67,33 +67,32 @@ $scope.searchMovie = function (query) {
 }
 
 $scope.loadCommingSoon = function () {
-	commingsoon = 
+	oParams = 
         {
-            "primary_release_date.gte": '2014-09-15',
-			"primary_release_date.lte": '2014-10-22',
+            "primary_release_date.gte": '2016-10-05',
+			"primary_release_date.lte": '2016-10-19',
             "language": "pt-br"
         };
 
-        tmdb.call("/discover/movie", commingsoon,
-            function(soon){
-                console.log(soon)
+	$scope.commingSoon = [];
+	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+
+        tmdb.call("/discover/movie", oParams,
+            function(soon, commingSoon, imagePath){
+                for (m in soon.results) {
+					$scope.commingSoon. push (
+						{
+							img:$scope.imagePath + m.poster_path
+						}
+					)
+				}
             }, 
             function(e){
                 console.log("Error: "+e)
             }   
         );
 }
-
-
-
-	//tmdb.call("/movie/" + data[0].tmdb_movie_id, recoo,
-       //     function(soon){
-           //     console.log(soon)
-           // }, 
-           // function(e){
-           //     console.log("Error: "+e)
-          //  }   
-       // );
+$scope.loadCommingSoon();
 
 $scope.loadRecommendation = function () {
 
