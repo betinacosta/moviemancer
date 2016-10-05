@@ -1,5 +1,5 @@
 <div class="twelve columns filterTab" ng-controller="mainCtrl">
-    <h3 style="text-align: center">{$ players $}</h3>
+    <h4 style="text-align: center">Filtros <i class="fa fa-filter" aria-hidden="true"></i></h4>
     <div class="two columns">
         <input class="checkbox" type="checkbox">Drama
     </div>
@@ -59,22 +59,51 @@
     </div>
     
 </div>
-<div class="twelve columns" >
-    <div class="two columns" ng-init="init()" ng-repeat="m in images">
-        <div>
-            <p>{$ m.title $}</p>
-            <img src="{$ m.img $}" width="50%" height="auto">
-            
-        </div>
 
+<div>
+    <h4>Recomendados Pra Mim</h4>
+    <div class="twelve columns" style="margin:2px">
         <div>
-            <ul class="topnav" id="myTopnav">
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-            </ul>
+            <div class="two columns" ng-init="init()" ng-repeat="m in images">
+                <div>
+                    <img src="{$ m.img $}" width="125px" height="185px">
+                    
+                </div>
+
+                <div>
+                    <ul class="topnav" id="myTopnav">
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4>Lançamentos</h4>
+    <div class="twelve columns" style="margin:2px">
+        <div>
+            <div class="two columns" ng-init="init()" ng-repeat="m in images">
+                <div>
+                    <img src="{$ m.img $}" width="125px" height="185px">
+                    
+                </div>
+
+                <div>
+                    <ul class="topnav" id="myTopnav">
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -5,8 +5,6 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
-	
-
     (function() {
 	window.tmdb = {
 		"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
@@ -58,13 +56,32 @@ $scope.searchMovie = function (query) {
         };
 
         tmdb.call("/search/movie", oParams,
-            function(e){
-                console.log(e)
+            function(searchResult){
+                console.log(searchResult)
             }, 
             function(e){
                 console.log("Error: "+e)
             }   
-        )
+        );
+
+}
+
+$scope.loadCommingSoon = function () {
+	commingsoon = 
+        {
+            "primary_release_date.gte": '2014-09-15',
+			"primary_release_date.lte": '2014-10-22',
+            "language": "pt-br"
+        };
+
+        tmdb.call("/discover/movie", commingsoon,
+            function(soon){
+                console.log(soon)
+            }, 
+            function(e){
+                console.log("Error: "+e)
+            }   
+        );
 }
 
 //$scope.init = function () {
