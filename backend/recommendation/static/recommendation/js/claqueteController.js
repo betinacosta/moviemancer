@@ -103,10 +103,10 @@ $scope.loadCommingSoon = function () {
 
         tmdb.call("/discover/movie", oParams,
             function(soon, commingSoon, imagePath){
-                for (m in soon.results) {
+                for (i = 0; i < 4; i++)  {
 					$scope.commingSoon. push (
 						{
-							img:$scope.imagePath + soon.results[m].poster_path
+							img:$scope.imagePath + soon.results[i].poster_path
 						}
 					)
 				}
