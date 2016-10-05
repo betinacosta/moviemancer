@@ -66,11 +66,35 @@ $scope.searchMovie = function (query) {
 
 }
 
+$scope.formatDate = function (date) {
+	$scope.day = date.getDate()
+	$scope.month = date.getMonth()+1;
+	$scope.year = date.getFullYear();
+
+	if($scope.day<10){
+		$scope.day='0'+$scope.day
+	}
+	if($scope.month<10){
+		$scope.month='0'+$scope.month
+	} 
+
+	return $scope.year + '-' + $scope.month + '-' + $scope.day;
+}
+
+$scope.getEndDate = function (initialDate, days) {
+	
+    initialDate.setDate(initialDate.getDate() + days);
+    return initialDate;
+}
+
 $scope.loadCommingSoon = function () {
+	$scope.today = $scope.formatDate(new Date());
+	$scope.endDate = $scope.getEndDate(new Date(), 15);
+	$scope.endDate = $scope.formatDate($scope.endDate);
 	oParams = 
         {
-            "primary_release_date.gte": '2016-10-05',
-			"primary_release_date.lte": '2016-10-19',
+            "primary_release_date.gte": $scope.today,
+			"primary_release_date.lte": $scope.endDate,
             "language": "pt-br"
         };
 
@@ -94,6 +118,7 @@ $scope.loadCommingSoon = function () {
         );
 }
 $scope.loadCommingSoon();
+
 
 $scope.loadRecommendation = function () {
 
