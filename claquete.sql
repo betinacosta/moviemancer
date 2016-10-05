@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 04-Out-2016 às 10:37
+-- Data de Criação: 05-Out-2016 às 02:08
 -- Versão do servidor: 5.6.13
 -- versão do PHP: 5.4.17
 
@@ -281,7 +281,14 @@ CREATE TABLE IF NOT EXISTS `list` (
   PRIMARY KEY (`list_ID`),
   KEY `type_ID` (`type_ID`),
   KEY `user_ID` (`user_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `list`
+--
+
+INSERT INTO `list` (`list_ID`, `user_ID`, `type_ID`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -293,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `movie` (
   `movie_ID` int(11) NOT NULL AUTO_INCREMENT,
   `tmdb_movie_ID` int(11) NOT NULL,
   PRIMARY KEY (`movie_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Extraindo dados da tabela `movie`
@@ -301,7 +308,10 @@ CREATE TABLE IF NOT EXISTS `movie` (
 
 INSERT INTO `movie` (`movie_ID`, `tmdb_movie_ID`) VALUES
 (1, 27205),
-(2, 603);
+(2, 603),
+(3, 271110),
+(4, 101),
+(5, 155);
 
 -- --------------------------------------------------------
 
@@ -316,7 +326,17 @@ CREATE TABLE IF NOT EXISTS `movie_list` (
   PRIMARY KEY (`movie_list_ID`),
   KEY `movie_ID` (`movie_ID`,`list_ID`),
   KEY `list_ID` (`list_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `movie_list`
+--
+
+INSERT INTO `movie_list` (`movie_list_ID`, `movie_ID`, `list_ID`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -400,7 +420,16 @@ CREATE TABLE IF NOT EXISTS `type` (
   `type_ID` int(11) NOT NULL AUTO_INCREMENT,
   `type_name` varchar(100) NOT NULL,
   PRIMARY KEY (`type_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `type`
+--
+
+INSERT INTO `type` (`type_ID`, `type_name`) VALUES
+(1, 'recommendation'),
+(2, 'watchlist'),
+(3, 'watchedlist');
 
 -- --------------------------------------------------------
 
@@ -415,7 +444,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(50) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`user_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Extraindo dados da tabela `user`
+--
+
+INSERT INTO `user` (`user_ID`, `name`, `email`, `password`, `description`) VALUES
+(1, 'Betina Costa', 'bmcosta@gmail.com', '1234', 'Oi, eu sou o Goku'),
+(2, 'Thayse Klain', 'thayse@gmail.com', '1234', 'Chrommagia'),
+(3, 'Yuri Lima', 'yuri@gmail.com', '1234', 'bla bla bla'),
+(4, 'Fernanda Rodrigues', 'fernanda@gmail.com', '1234', 'blablabal'),
+(5, 'Alice Cárcamo', 'alice@gmail.com', '1234', 'lyschan');
 
 --
 -- Constraints for dumped tables
