@@ -84,6 +84,26 @@ $scope.loadCommingSoon = function () {
         );
 }
 
+$http.get('reco').success(function(data) {
+		$scope.reco = data;
+
+		recoo = 
+        {
+            "language": "pt-br"
+        };
+
+        tmdb.call("/movie/" + data[0].tmdb_movie_id, recoo,
+            function(soon){
+                console.log(soon)
+            }, 
+            function(e){
+                console.log("Error: "+e)
+            }   
+        );
+	});
+
+
+
 //$scope.init = function () {
 		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
 
