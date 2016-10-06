@@ -103,10 +103,11 @@ $scope.loadCommingSoon = function () {
 
         tmdb.call("/discover/movie", oParams,
             function(soon, commingSoon, imagePath){
-                for (i = 0; i < 4; i++)  {
+                for (i = 0; i < 6; i++)  {
 					$scope.commingSoon. push (
 						{
-							img:$scope.imagePath + soon.results[i].poster_path
+							img:$scope.imagePath + soon.results[i].poster_path,
+							title:soon.results[i].title
 						}
 					)
 				}
@@ -133,7 +134,11 @@ $scope.loadRecommendation = function () {
 			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
             function(movies){
 				
-                $scope.images.push ( {img: $scope.imagePath + movies.poster_path})
+                $scope.images.push ( 
+					{
+						img: $scope.imagePath + movies.poster_path,
+						title: movies.title
+					})
             }, 
             function(e){
                 console.log("Error: "+e)

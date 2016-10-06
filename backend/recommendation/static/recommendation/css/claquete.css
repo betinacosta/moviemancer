@@ -125,3 +125,11 @@ ul.topnav li.icon {display: none;}
     margin: 2%;
     color: #642e68;
 }
+
+.movieTitleMaster {
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
