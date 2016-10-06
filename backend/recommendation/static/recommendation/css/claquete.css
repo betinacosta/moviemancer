@@ -132,4 +132,6 @@ ul.topnav li.icon {display: none;}
     /* Required for text-overflow to do anything */
     white-space: nowrap;
     overflow: hidden;
+    margin-bottom: 0.5rem;
+    text-align: center;
 }
