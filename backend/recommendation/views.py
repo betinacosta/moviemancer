@@ -3,6 +3,7 @@ from django.shortcuts import render
 from recommendation.models import Movie
 from recommendation.serializers import MovieSerializer
 from rest_framework import generics
+from recommendation.reco import teste
  
 
 def index(request):
@@ -10,7 +11,8 @@ def index(request):
 
 class MovieView(generics.ListAPIView):
     model = Movie
-    queryset = Movie.objects.all()
+    #queryset = Movie.objects.all()
+    queryset = teste()
     serializer_class = MovieSerializer
 
 class RecoView (generics.ListAPIView):
