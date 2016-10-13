@@ -150,13 +150,23 @@ $scope.loadRecommendation = function () {
 
 $scope.loadRecommendation();
 
-$scope.showFilterBar = function(id) {
+$scope.showFilterBar = function() {
 
-	filterBar = document.getElementById(id);
-       if(filterBar.style.display == 'block')
+	filterBar = document.getElementById('filterBar');
+	toggleUp = document.getElementById('toggleUp');
+	toggleDown = document.getElementById('toggleDown');
+
+       if(filterBar.style.display == 'block') {
           filterBar.style.display = 'none';
-       else
-          filterBar.style.display = 'block';
+		  toggleUp.style.display = 'none';
+		  toggleDown.style.display = 'inline-block';
+	   }
+       else {
+		   filterBar.style.display = 'block';
+			toggleUp.style.display = 'inline-block';
+			toggleDown.style.display = 'none';
+	   }
+          
 }
 
 

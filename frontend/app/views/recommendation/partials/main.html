@@ -1,7 +1,11 @@
 <div class="twelve columns filterTab" ng-controller="mainCtrl">
     
-        <h4 style="text-align: center">Filtros <i class="fa fa-filter" aria-hidden="true"></i></h4>
-    <div class="twelve columns" style="display:none">
+        <h5 style="text-align: center">
+            <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-click="showFilterBar()"></i>
+            <i class="fa fa-caret-square-o-up" id="toggleUp" aria-hidden="true" style="display:none" ng-click="showFilterBar()"></i>
+            Filtros
+        </h5>
+    <div class="twelve columns" style="display:none" id="filterBar">
             <button>Drama</button>
             <button>Ação</button>
             <button>Suspense</button>
