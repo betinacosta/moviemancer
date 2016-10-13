@@ -150,5 +150,14 @@ $scope.loadRecommendation = function () {
 
 $scope.loadRecommendation();
 
+$scope.showFilterBar = function(id) {
+
+	filterBar = document.getElementById(id);
+       if(filterBar.style.display == 'block')
+          filterBar.style.display = 'none';
+       else
+          filterBar.style.display = 'block';
+}
+
 
 }]);
