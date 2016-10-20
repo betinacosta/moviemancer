@@ -1,4 +1,4 @@
-from recommendation.models import Movie, User
+from recommendation.models import Movie, User, List
 import collections
 
 
@@ -22,4 +22,15 @@ def getSimilarProfiles(user_id):
         if count > 1:
             similarUsers.append(item)
             
-    return oneGenreSimilarity
+    return similarUsers
+
+def getMovieByUser(user_id):
+    list_id = List.objects.raw("SELECT list_ID FROM list WHERE user_id = 7 AND type_id = 3")
+    movies_ids = Movie.objects.raw("SELECT movie_ID from movie_list where list_id = 20")
+    
+
+def generateDataset(user_id):
+    similarUsers = getSimilarProfiles(user_id)
+
+
+
