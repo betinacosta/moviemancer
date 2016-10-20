@@ -129,7 +129,7 @@ $scope.loadRecommendation = function () {
 	
 		oParams = {"language": "pt-br"};
 
-		for (i = 0; i < data.length; i++) {
+		for (i = 0; i < 6; i++) {
 
 			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
             function(movies){

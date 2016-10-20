@@ -21,7 +21,5 @@ def getSimilarProfiles(user_id):
     for item, count in collections.Counter(usersList).items():
         if count > 1:
             similarUsers.append(item)
-
-    
-  
+            
     return oneGenreSimilarity
