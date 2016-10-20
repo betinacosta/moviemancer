@@ -1,4 +1,4 @@
-from recommendation.models import Movie, User, List, Rating
+from recommendation.models import Movie, User, List, Rating, Rate
 import collections
 
 
@@ -26,36 +26,36 @@ def getSimilarProfiles(user_id):
 
 def getMovieByUser(user_id):
     movies =[]
+    dataset = []
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = 3", [user_id]):
         list_id = item.list_id
 
     for item in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id]):
         movies.append(item.movie_id)
 
-    return movies
+    for item in movies:
+        rate = getRatesByMovie(item, user_id)
+        rating = dict({item:rate})
+        dataset.append(rating)
+        
+    return dataset
 
 def getRatesByMovie(movie_id, user_id):
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
         rate_id = item.rate_id
 
-    for item in Rate.objects.raw("SELECT * FROM rate WHERE rate_id = %s", [rate_id])
+    for item in Rate.objects.raw("SELECT * FROM rate WHERE rate_id = %s", [rate_id]):
         movieRate = item.rate
 
     return movieRate
     
 
 def generateDataset(user_id):
-    dataset = {}
-    movies = {}
     similarUsers = getSimilarProfiles(user_id)
-    
+    dataset={}
 
-    for user in similarUsers:
-        movieByUser = getMovieByUser(user)
-        for movie in movieByUser:
-            movieRate = getRatesByMovie(user, movie)
-            movies[movie] = movieRate
-        dataset[user] = movies
+    for item in similarUsers:
+        dataset[item] = getMovieByUser(item)
 
     return dataset
 
