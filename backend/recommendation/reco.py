@@ -34,12 +34,7 @@ def getMovieByUser(user_id):
     for item in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id]):
         movies.append(item.movie_id)
 
-    for item in movies:
-        rate = getRatesByMovie(item, user_id)
-        rating = dict({item:rate})
-        dataset.append(rating)
-        
-    return dataset
+    return movies
 
 def getRatesByMovie(movie_id, user_id):
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
@@ -75,6 +70,7 @@ def pearson_correlation(person1,person2):
 		return 0
 
 	# Add up all the preferences of each user
+    # !!!ALERT!!! Cant do like this, because getRatesByMovie returns a list of dict!!!
 	person1_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
 	person2_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
 
