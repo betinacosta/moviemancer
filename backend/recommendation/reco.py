@@ -120,3 +120,6 @@ def user_reommendations(person):
 	recommendataions_list = [recommend_item for score,recommend_item in rankings]
 	return recommendataions_list
 
+def add_recommentation_to_database(user):
+	pass
+
