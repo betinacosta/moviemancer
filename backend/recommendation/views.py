@@ -3,7 +3,6 @@ from django.shortcuts import render
 from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
-from recommendation.reco import teste, getSimilarProfiles
  
 
 def index(request):
