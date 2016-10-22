@@ -15,6 +15,7 @@ class MovieView(generics.ListAPIView):
 
 class RecoView (generics.ListAPIView):
     model = Movie
+    # Fix queryset
     queryset = Movie.objects.raw("SELECT * FROM movie INNER JOIN movie_list ON movie.movie_id = movie_list.movie_id INNER JOIN list ON user_id = '1' AND type_id = '1'")
     serializer_class = MovieSerializer
 
