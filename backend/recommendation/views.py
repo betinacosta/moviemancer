@@ -18,12 +18,6 @@ class RecoView (generics.ListAPIView):
     queryset = Movie.objects.raw("SELECT * FROM movie INNER JOIN movie_list ON movie.movie_id = movie_list.movie_id INNER JOIN list ON user_id = '1' AND type_id = '1'")
     serializer_class = MovieSerializer
 
-class SimilarityView (generics.ListAPIView):
-    model = User
-    queryset = getSimilarProfiles('1')
-    serializer_class = UserSerializer
-    
-
 def main(request):
     return render(request,'recommendation/partials/main.html')
 
