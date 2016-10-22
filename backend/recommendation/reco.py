@@ -71,7 +71,7 @@ def pearson_correlation(person1,person2):
 
 	# Add up all the preferences of each user
 	person1_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
-	person2_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
+	person2_preferences_sum = sum([getRatesByMovie(item, person2) for item in both_rated])
 
 	# Sum up the squares of preferences of each user
 	person1_square_preferences_sum = sum([pow(getRatesByMovie(item, person1),2) for item in both_rated])
