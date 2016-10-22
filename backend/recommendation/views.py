@@ -10,7 +10,7 @@ def index(request):
 
 class MovieView(generics.ListAPIView):
     model = Movie
-    #queryset = Movie.objects.all()
+    queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
 class RecoView (generics.ListAPIView):
