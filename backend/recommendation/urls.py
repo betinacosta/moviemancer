@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^movies/$', views.MovieView.as_view(), name='movies'),
     url(r'^reco/$', views.RecoView.as_view(), name='recommendation'),
-    url(r'^similarity/$', views.SimilarityView.as_view(), name='similarity'),
     url(r'^main/$', views.main, name='main'),
 ]
 
