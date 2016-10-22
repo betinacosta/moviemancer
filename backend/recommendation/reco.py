@@ -2,11 +2,6 @@ from recommendation.models import Movie, User, List, Rating, Rate
 import collections
 from math import sqrt
 
-
-def teste():
-    query = Movie.objects.all()
-    return query
-
 def getFacebookFriends(user_id):
     pass
 
