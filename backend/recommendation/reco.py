@@ -70,7 +70,6 @@ def pearson_correlation(person1,person2):
 		return 0
 
 	# Add up all the preferences of each user
-    # !!!ALERT!!! Cant do like this, because getRatesByMovie returns a list of dict!!!
 	person1_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
 	person2_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
 
