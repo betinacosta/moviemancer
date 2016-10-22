@@ -20,13 +20,3 @@ class RecoView (generics.ListAPIView):
 
 def main(request):
     return render(request,'recommendation/partials/main.html')
-
- 
-
-'''def index(request):
-    movie_list = Movie.objects.all()
-    template = loader.get_template('recommendation/index.html')
-    context = {
-        'movie_list': movie_list,
-    }
-    return HttpResponse(template.render(context, request))'''
