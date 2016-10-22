@@ -91,6 +91,7 @@ def pearson_correlation(person1,person2):
 
 def most_similar_users(person,number_of_users):
 	# returns the number_of_users (similar persons) for a given specific person.
+	dataset = getSimilarProfiles(person)
 	scores = [(pearson_correlation(person,other_person),other_person) for other_person in dataset if  other_person != person ]
 	
 	# Sort the similar persons so that highest scores person will appear at the first
@@ -99,7 +100,7 @@ def most_similar_users(person,number_of_users):
 	return scores[0:number_of_users]
 
 def user_reommendations(person):
-
+	dataset = getSimilarProfiles(person)
 	# Gets recommendations for a person by using a weighted average of every other user's rankings
 	totals = {}
 	simSums = {}
@@ -109,19 +110,18 @@ def user_reommendations(person):
 		if other == person:
 			continue
 		sim = pearson_correlation(person,other)
-		#print ">>>>>>>",sim
 
 		# ignore scores of zero or lower
 		if sim <=0: 
 			continue
-		for item in dataset[other]:
+		for item in getMovieByUser(other):
 
 			# only score movies i haven't seen yet
-			if item not in dataset[person] or dataset[person][item] == 0:
+			if item not in getMovieByUser(person):
 
 			# Similrity * score
 				totals.setdefault(item,0)
-				totals[item] += dataset[other][item]* sim
+				totals[item] += getRatesByMovie(item, other)* sim
 				# sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
