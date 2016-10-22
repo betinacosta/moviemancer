@@ -11,7 +11,6 @@ def index(request):
 class MovieView(generics.ListAPIView):
     model = Movie
     #queryset = Movie.objects.all()
-    queryset = teste()
     serializer_class = MovieSerializer
 
 class RecoView (generics.ListAPIView):
