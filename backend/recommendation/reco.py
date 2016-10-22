@@ -39,16 +39,6 @@ def getRatesByMovie(movie_id, user_id):
         movieRate = item.rate
 
     return movieRate
-    
-
-def generateDataset(user_id):
-    similarUsers = getSimilarProfiles(user_id)
-    dataset={}
-
-    for item in similarUsers:
-        dataset[item] = getMovieByUser(item)
-
-    return dataset
 
 def pearson_correlation(person1,person2):
     
