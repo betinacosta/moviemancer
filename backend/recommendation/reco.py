@@ -1,5 +1,6 @@
 from recommendation.models import Movie, User, List, Rating, Rate, MovieList
 import collections
+from recommendation.queries import *
 from math import sqrt
 
 def getFacebookFriends(user_id):
