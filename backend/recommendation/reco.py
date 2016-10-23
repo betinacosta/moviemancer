@@ -127,7 +127,12 @@ def add_recommentation_to_database(user):
 	recommendation = user_reommendations(user)
 	list_id = get_list_by_user(user, 1)
 
-	for item in recommendation:
-		reco = MovieList(movie_id=item, list_id=list_id)
-		reco.save()
+	movies =[]
 
+	for item in movie_by_user_list(user,'recommendation'):
+		movies.append(item.movie_id)
+   
+	for item in recommendation:
+		if item not in movies:
+			reco = MovieList(movie_id=item, list_id=list_id)
+			reco.save()
