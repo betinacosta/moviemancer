@@ -23,11 +23,8 @@ def getSimilarProfiles(user_id):
 
 def getMovieByUser(user_id):
     movies =[]
-    dataset = []
-    for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = 3", [user_id]):
-        list_id = item.list_id
-
-    for item in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id]):
+   
+    for item in movie_by_user_list(user_id, 'watchedlist'):
         movies.append(item.movie_id)
 
     return movies
