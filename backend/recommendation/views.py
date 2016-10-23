@@ -3,6 +3,7 @@ from django.shortcuts import render
 from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
+from recommendation.queries import movie_by_user_list
  
 
 def index(request):
@@ -16,7 +17,7 @@ class MovieView(generics.ListAPIView):
 class RecoView (generics.ListAPIView):
     model = Movie
     # Fix queryset
-    queryset = Movie.objects.raw("SELECT * FROM movie INNER JOIN movie_list ON movie.movie_id = movie_list.movie_id INNER JOIN list ON user_id = '1' AND type_id = '1'")
+    queryset = 
     serializer_class = MovieSerializer
 
 def main(request):
