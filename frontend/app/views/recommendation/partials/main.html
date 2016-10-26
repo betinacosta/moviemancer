@@ -1,61 +1,74 @@
 <div class="twelve columns filterTab" ng-controller="mainCtrl">
-    <h3 style="text-align: center">iiii</h3>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Drama
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Ação
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Suspense
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Aventura
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Mistério
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Família
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Thriller
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">História
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Romance
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Documentário
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Comédia
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Musical
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Guerra
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Ficção Científica
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Fantasia
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Animação
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Crime
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">Faroeste
-    </div>
-    <div class="two columns">
-        <input class="checkbox" type="checkbox">bob
+    
+        <h5 style="text-align: center">
+            <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-click="showFilterBar()"></i>
+            <i class="fa fa-caret-square-o-up" id="toggleUp" aria-hidden="true" style="display:none" ng-click="showFilterBar()"></i>
+            Filtros
+        </h5>
+    <div class="twelve columns" style="display:none" id="filterBar">
+            <button>Drama</button>
+            <button>Ação</button>
+            <button>Suspense</button>
+            <button>Aventura</button>
+            <button>Mistério</button>
+            <button>Família</button>
+            <button>Thriller</button>
+            <button>História</button>
+            <button>Romance</button>
+            <button>Documentário</button>
+            <button>Comédia</button>
+            <button>Musical</button>
+            <button>Guerra</button>
+            <button>Ficção Científica</button>
+            <button>Fantasia</button>
+            <button>Animação</button>
+            <button>Crime</button>
+            <button>Faroeste</button>
+            <button>Terror</button>
     </div>
     
+</div>
+
+<div>
+    <h4>Recomendados Pra Mim</h4>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
+        <div>
+            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="m in images">
+                
+                
+                    <p class="movieTitleMaster">{$ m.title $}</p>
+                    <img src="{$ m.img $}" width="100%" height="100%">
+                
+                    <ul class="topnav" id="myTopnav">
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></li>
+                    </ul>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4>Lançamentos</h4>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
+        <div>
+            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="l in commingSoon">
+
+                    <p class="movieTitleMaster">{$ l.title $}</p>                    
+                    <img src="{$ l.img $}" width="100%" height="100%">
+
+                    <ul class="topnav" id="myTopnav">
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></li>
+                    </ul>
+            </div>
+        </div>
+    </div>
 </div>

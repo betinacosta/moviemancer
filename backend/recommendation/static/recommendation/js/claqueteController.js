@@ -4,9 +4,7 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
     });
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.players = 'teste';
 
-    
     (function() {
 	window.tmdb = {
 		"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
@@ -50,28 +48,126 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 	}
 })()
 
-
-	$http.get('movies').success(function(data) {
-		$scope.reco = data;
-		console.log(data);
-	});
-
-//$scope.searchMovie = function (query) {
+$scope.searchMovie = function (query) {
     oParams = 
         {
-            "query": 'Ela',
+            "query": query,
             "language": "pt-br"
         };
 
         tmdb.call("/search/movie", oParams,
-            function(e){
-                console.log(e)
+            function(searchResult){
+                console.log(searchResult)
             }, 
             function(e){
                 console.log("Error: "+e)
             }   
-        )
+        );
 
-//}
+}
+
+$scope.formatDate = function (date) {
+	$scope.day = date.getDate()
+	$scope.month = date.getMonth()+1;
+	$scope.year = date.getFullYear();
+
+	if($scope.day<10){
+		$scope.day='0'+$scope.day
+	}
+	if($scope.month<10){
+		$scope.month='0'+$scope.month
+	} 
+
+	return $scope.year + '-' + $scope.month + '-' + $scope.day;
+}
+
+$scope.getEndDate = function (initialDate, days) {
+	
+    initialDate.setDate(initialDate.getDate() + days);
+    return initialDate;
+}
+
+$scope.loadCommingSoon = function () {
+	$scope.today = $scope.formatDate(new Date());
+	$scope.endDate = $scope.getEndDate(new Date(), 15);
+	$scope.endDate = $scope.formatDate($scope.endDate);
+	oParams = 
+        {
+            "primary_release_date.gte": $scope.today,
+			"primary_release_date.lte": $scope.endDate,
+            "language": "pt-br"
+        };
+
+	$scope.commingSoon = [];
+	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+
+        tmdb.call("/discover/movie", oParams,
+            function(soon, commingSoon, imagePath){
+                for (i = 0; i < 6; i++)  {
+					$scope.commingSoon. push (
+						{
+							img:$scope.imagePath + soon.results[i].poster_path,
+							title:soon.results[i].title
+						}
+					)
+				}
+				console.log($scope.commingSoon);
+            }, 
+            function(e){
+                console.log("Error: "+e)
+            }   
+        );
+}
+$scope.loadCommingSoon();
+
+
+$scope.loadRecommendation = function () {
+
+	$scope.images = [];
+	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+	$http.get('reco').success(function(data, images, imagePath) {
+	
+		oParams = {"language": "pt-br"};
+
+		for (i = 0; i < 6; i++) {
+
+			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
+            function(movies){
+				
+                $scope.images.push ( 
+					{
+						img: $scope.imagePath + movies.poster_path,
+						title: movies.title
+					})
+            }, 
+            function(e){
+                console.log("Error: "+e)
+            }   
+        );
+		}
+	});
+}
+
+$scope.loadRecommendation();
+
+$scope.showFilterBar = function() {
+
+	filterBar = document.getElementById('filterBar');
+	toggleUp = document.getElementById('toggleUp');
+	toggleDown = document.getElementById('toggleDown');
+
+       if(filterBar.style.display == 'block') {
+          filterBar.style.display = 'none';
+		  toggleUp.style.display = 'none';
+		  toggleDown.style.display = 'inline-block';
+	   }
+       else {
+		   filterBar.style.display = 'block';
+			toggleUp.style.display = 'inline-block';
+			toggleDown.style.display = 'none';
+	   }
+          
+}
+
 
 }]);

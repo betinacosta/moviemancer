@@ -46,7 +46,7 @@
 <div class="twelve columns headerMenu" id="nav" style="background-color: #642e68" ng-controller="mainCtrl">
     <div class="seven columns">
         <ul class="topnav" id="myTopnav">
-            <li><a href="#home">{$ players $}</a></li>
+            <li><a href="#home">Claquete</a></li>
             <li><a href="#news">Perfil</a></li>
             <li><a href="#contact">Já Vi</a></li>
             <li><a href="#about">Quero Ver</a></li>
@@ -56,55 +56,15 @@
     </div>
 
     <div class="five columns">
-        <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="sSearch">
+        <form ng-submit="searchMovie(query)">
+            <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
+        </form>
     </div>
 </div>
 <!-- End Page (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-
 <div ng-view></div>
-
-
-
-<!--<div class="twelve columns">
-    <h3>Filtros</h3>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-    <div class="checkboxAlign">
-        <input type="checkbox">bob
-    </div>
-</div>
-
--->
-
-
-
-  <!-- End Page (Filtar Bar)
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
 
 </body>
 </html>

@@ -118,4 +118,20 @@ ul.topnav li.icon {display: none;}
 .filterTab {
     background-color: #fff7c9 !important;
     padding-top: 1%;
+    margin-bottom: 2%;
+}
+
+.mainListsTitle {
+    margin: 2%;
+    color: #642e68;
+}
+
+.movieTitleMaster {
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    text-align: center;
 }
