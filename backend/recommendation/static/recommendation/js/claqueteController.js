@@ -111,7 +111,6 @@ $scope.loadCommingSoon = function () {
 						}
 					)
 				}
-				console.log($scope.commingSoon);
             }, 
             function(e){
                 console.log("Error: "+e)
@@ -120,16 +119,13 @@ $scope.loadCommingSoon = function () {
 }
 $scope.loadCommingSoon();
 
-
-$scope.loadRecommendation = function () {
-
+$scope.getPosters = function (data) {
 	$scope.images = [];
 	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-	$http.get('reco').success(function(data, images, imagePath) {
-	
+
 		oParams = {"language": "pt-br"};
 
-		for (i = 0; i < 6; i++) {
+		for (i = 0; i < 3; i++) {
 
 			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
             function(movies){
@@ -143,10 +139,36 @@ $scope.loadRecommendation = function () {
             function(e){
                 console.log("Error: "+e)
             }   
-        );
-		}
-	});
+        )};
+},
+
+$scope.getSimilar = function (data) {
+	$scope.movies = data;
+
+	for (i = 0; i < data.length; i++) {
+
+		tmdb.call("/movie/" + data[i].tmdb_movie_id + "/similar", {},
+		function(similars){
+			for (i = 0; i < similars.results.length; i++) {
+				$scope.movies.push ( 
+				{
+					tmdb_movie_id: similars.results[i].id
+				})
+			}
+		}, 
+		function(e){
+			console.log("Error: "+e)
+		}   
+	)};
+	console.log($scope.movies)
 }
+
+$scope.loadRecommendation = function () {
+	$http.get('reco').success(function(data, images, imagePath) {
+		//$scope.getPosters(data);
+		$scope.getSimilar(data);
+	});
+},
 
 $scope.loadRecommendation();
 
