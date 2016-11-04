@@ -44,15 +44,15 @@ def pearson_correlation(person1,person2):
 		return 0
 
 	# Add up all the preferences of each user
-	person1_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
-	person2_preferences_sum = sum([getRatesByMovie(item, person2) for item in both_rated])
+	person1_preferences_sum = sum([get_rates_by_movie(item, person1) for item in both_rated])
+	person2_preferences_sum = sum([get_rates_by_movie(item, person2) for item in both_rated])
 
 	# Sum up the squares of preferences of each user
-	person1_square_preferences_sum = sum([pow(getRatesByMovie(item, person1),2) for item in both_rated])
-	person2_square_preferences_sum = sum([pow(getRatesByMovie(item, person2),2) for item in both_rated])
+	person1_square_preferences_sum = sum([pow(get_rates_by_movie(item, person1),2) for item in both_rated])
+	person2_square_preferences_sum = sum([pow(get_rates_by_movie(item, person2),2) for item in both_rated])
 
 	# Sum up the product value of both preferences for each item
-	product_sum_of_both_users = sum([getRatesByMovie(item, person1) * getRatesByMovie(item, person2) for item in both_rated])
+	product_sum_of_both_users = sum([get_rates_by_movie(item, person1) * get_rates_by_movie(item, person2) for item in both_rated])
 
 	# Calculate the pearson score
 	numerator_value = product_sum_of_both_users - (person1_preferences_sum*person2_preferences_sum/number_of_ratings)
@@ -95,7 +95,7 @@ def user_reommendations(person):
 
 			# Similrity * score
 				totals.setdefault(item,0)
-				totals[item] += getRatesByMovie(item, other)* sim
+				totals[item] += get_rates_by_movie(item, other)* sim
 				# sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
