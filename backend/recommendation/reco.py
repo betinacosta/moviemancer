@@ -101,6 +101,12 @@ def user_reommendations(person):
 	recommendataions_list = [recommend_item for score,recommend_item in rankings]
 	return recommendataions_list
 
+def get_similar_movies(tmdb_movie_id):
+    pass
+
+def add_similar_movies_to_recommendation (movies):
+    pass
+
 def add_recommentation_to_database(user):
 	recommendation = user_reommendations(user)
 	list_id = get_list_by_user(user, 1)
