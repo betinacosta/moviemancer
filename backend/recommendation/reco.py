@@ -109,12 +109,6 @@ def user_reommendations(person):
 	recommendataions_list = [recommend_item for score,recommend_item in rankings]
 	return recommendataions_list
 
-def get_list_by_user(user, list_type):
-	for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
-		list_id = item.list_id
-	return list_id
-  	
-
 def add_recommentation_to_database(user):
 	recommendation = user_reommendations(user)
 	list_id = get_list_by_user(user, 1)
