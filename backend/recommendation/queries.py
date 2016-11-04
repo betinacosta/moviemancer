@@ -9,7 +9,7 @@ def movie_by_user_list(user_id, list_name):
 
     return Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
 
-def getRatesByMovie(movie_id, user_id):
+def get_rates_by_movie(movie_id, user_id):
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
         rate_id = item.rate_id
 
