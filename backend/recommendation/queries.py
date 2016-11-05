@@ -14,3 +14,12 @@ def get_list_by_user(user, list_type):
     	for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
 		list_id = item.list_id
 	return list_id
+
+def get_rate_by_movie(movie_id, user_id):
+    for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
+        rate_id = item.rate_id
+
+    for item in Rate.objects.raw("SELECT * FROM rate WHERE rate_id = %s", [rate_id]):
+        movieRate = item.rate
+
+    return movieRate
