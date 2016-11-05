@@ -29,7 +29,7 @@ def getMovieByUser(user_id):
 
     return movies
 
-def getRatesByMovie(movie_id, user_id):
+def get_rate_by_movie(movie_id, user_id):
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
         rate_id = item.rate_id
 
@@ -53,15 +53,15 @@ def pearson_correlation(person1,person2):
 		return 0
 
 	# Add up all the preferences of each user
-	person1_preferences_sum = sum([getRatesByMovie(item, person1) for item in both_rated])
-	person2_preferences_sum = sum([getRatesByMovie(item, person2) for item in both_rated])
+	person1_preferences_sum = sum([get_rate_by_movie(item, person1) for item in both_rated])
+	person2_preferences_sum = sum([get_rate_by_movie(item, person2) for item in both_rated])
 
 	# Sum up the squares of preferences of each user
-	person1_square_preferences_sum = sum([pow(getRatesByMovie(item, person1),2) for item in both_rated])
-	person2_square_preferences_sum = sum([pow(getRatesByMovie(item, person2),2) for item in both_rated])
+	person1_square_preferences_sum = sum([pow(get_rate_by_movie(item, person1),2) for item in both_rated])
+	person2_square_preferences_sum = sum([pow(get_rate_by_movie(item, person2),2) for item in both_rated])
 
 	# Sum up the product value of both preferences for each item
-	product_sum_of_both_users = sum([getRatesByMovie(item, person1) * getRatesByMovie(item, person2) for item in both_rated])
+	product_sum_of_both_users = sum([get_rate_by_movie(item, person1) * get_rate_by_movie(item, person2) for item in both_rated])
 
 	# Calculate the pearson score
 	numerator_value = product_sum_of_both_users - (person1_preferences_sum*person2_preferences_sum/number_of_ratings)
@@ -104,7 +104,7 @@ def user_reommendations(person):
 
 			# Similrity * score
 				totals.setdefault(item,0)
-				totals[item] += getRatesByMovie(item, other)* sim
+				totals[item] += get_rate_by_movie(item, other)* sim
 				# sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
@@ -117,11 +117,6 @@ def user_reommendations(person):
 	# returns the recommended items
 	recommendataions_list = [recommend_item for score,recommend_item in rankings]
 	return recommendataions_list
-
-def get_list_by_user(user, list_type):
-	for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
-		list_id = item.list_id
-	return list_id
 
 def add_recommentation_to_database(user):
 	recommendation = user_reommendations(user)
