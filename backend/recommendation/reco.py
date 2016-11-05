@@ -4,6 +4,8 @@ from recommendation.queries import *
 from math import sqrt
 import tmdbsimple as tmdb
 
+tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
+
 def getFacebookFriends(user_id):
     pass
 
