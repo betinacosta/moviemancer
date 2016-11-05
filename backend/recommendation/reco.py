@@ -117,3 +117,13 @@ def add_recommentation_to_database(user):
 		if item not in movies:
 			reco = MovieList(movie_id=item, list_id=list_id)
 			reco.save()
+
+def get_similar_movies(tmdb_movie_id):
+	similar_movies = []
+	movie = tmdb.Movies(tmdb_movie_id)
+	response = movie.similar_movies(page=1, append_to_response='top_rated')
+
+	for item in response['results']:
+		similar_movies.append(item['id'])
+
+	return similar_movies
