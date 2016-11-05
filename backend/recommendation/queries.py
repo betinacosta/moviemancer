@@ -9,3 +9,8 @@ def movie_by_user_list(user_id, list_name):
         list_id = item.list_id
 
     return Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
+
+def get_list_by_user(user, list_type):
+    	for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
+		list_id = item.list_id
+	return list_id
