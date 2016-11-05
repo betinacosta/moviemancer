@@ -23,3 +23,11 @@ def get_rate_by_movie(movie_id, user_id):
         movieRate = item.rate
 
     return movieRate
+
+def get_movies_by_user(user_id):
+    movies =[]
+   
+    for item in movie_by_user_list(user_id, 'watchedlist'):
+        movies.append(item.movie_id)
+
+    return movies
