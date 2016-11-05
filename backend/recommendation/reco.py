@@ -21,14 +21,6 @@ def getSimilarProfiles(user_id):
             
     return similarUsers
 
-def get_movies_by_user(user_id):
-    movies =[]
-   
-    for item in movie_by_user_list(user_id, 'watchedlist'):
-        movies.append(item.movie_id)
-
-    return movies
-
 def pearson_correlation(person1,person2):
     
 	# To get both rated items
