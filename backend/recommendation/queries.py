@@ -45,4 +45,13 @@ def get_tmdb_movies_id():
 
     return movies
 
-def get_tmdb_movies_id_by_user():
+def get_tmdb_movies_id_by_user(user):
+    lists_id = get_list_id_by_user(user)
+    movies = []
+
+    for item in lists_id:
+        for movie in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [item]):
+            movies.append(movie.tmdb_movie_id)
+    
+    return movies
+
