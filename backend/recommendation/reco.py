@@ -29,15 +29,6 @@ def getMovieByUser(user_id):
 
     return movies
 
-def get_rate_by_movie(movie_id, user_id):
-    for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
-        rate_id = item.rate_id
-
-    for item in Rate.objects.raw("SELECT * FROM rate WHERE rate_id = %s", [rate_id]):
-        movieRate = item.rate
-
-    return movieRate
-
 def pearson_correlation(person1,person2):
     
 	# To get both rated items
