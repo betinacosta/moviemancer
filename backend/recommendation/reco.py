@@ -127,3 +127,6 @@ def get_similar_movies(tmdb_movie_id):
 		similar_movies.append(item['id'])
 
 	return similar_movies
+
+def check_if_movie_exists(tmdb_movie_id):
+	all_movies =  
