@@ -21,7 +21,7 @@ def getSimilarProfiles(user_id):
             
     return similarUsers
 
-def getMovieByUser(user_id):
+def get_movies_by_user(user_id):
     movies =[]
    
     for item in movie_by_user_list(user_id, 'watchedlist'):
@@ -33,8 +33,8 @@ def pearson_correlation(person1,person2):
     
 	# To get both rated items
 	both_rated = {}
-	for item in getMovieByUser(person1):
-		if item in getMovieByUser(person2):
+	for item in get_movies_by_user(person1):
+		if item in get_movies_by_user(person2):
 			both_rated[item] = 1
 
 	number_of_ratings = len(both_rated)		
@@ -88,10 +88,10 @@ def user_reommendations(person):
 		# ignore scores of zero or lower
 		if sim <=0: 
 			continue
-		for item in getMovieByUser(other):
+		for item in get_movies_by_user(other):
 
 			# only score movies i haven't seen yet
-			if item not in getMovieByUser(person):
+			if item not in get_movies_by_user(person):
 
 			# Similrity * score
 				totals.setdefault(item,0)
