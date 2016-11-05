@@ -25,9 +25,17 @@ def get_rate_by_movie(movie_id, user_id):
     return movieRate
 
 def get_movies_by_user(user_id):
-    movies =[]
+    movies = []
    
     for item in movie_by_user_list(user_id, 'watchedlist'):
         movies.append(item.movie_id)
+
+    return movies
+
+def get_tmdb_movies_id():
+    movies = []
+
+    for item in Movie.objects.all()
+        movies.append(item.tmdb_movie_id)
 
     return movies
