@@ -140,9 +140,6 @@ def add_movie_to_database(movie):
 		movie_db = Movie(tmdb_movie_id=movie)
 		movie_db.save()
 
-def check_if_movie_exists(tmdb_movie_id):
-	pass
-
 def build_recommendation_dataset(user):
 	recommendation = user_reommendations(user)
 
