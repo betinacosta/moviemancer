@@ -128,5 +128,17 @@ def get_similar_movies(tmdb_movie_id):
 
 	return similar_movies
 
+def filter_similar_movies(similar_movies):
+	user_movies = get_tmdb_movies_id_by_user(user)
+
+	for item in similar_movies:
+		if movie in user_movies:
+    		similar_movies.remove(movie)
+
 def check_if_movie_exists(tmdb_movie_id):
 	pass
+
+def build_recommendation_dataset(user):
+	recommendation = user_reommendations(user)
+
+	for item in recommendation
