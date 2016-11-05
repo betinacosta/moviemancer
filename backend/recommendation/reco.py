@@ -142,5 +142,10 @@ def add_movie_to_database(movie):
 
 def build_recommendation_dataset(user):
 	recommendation = user_reommendations(user)
+	similar_movies = []
 
-	for item in recommendation
+	for item in recommendation:
+		tmdb_movie_id = get_tmdb_movie_id_by_movie(item)
+		similar_movies + get_similar_movies(tmdb_movie_id)
+	
+		
