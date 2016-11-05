@@ -6,7 +6,6 @@ def get_list_id_by_user(user):
         lists.append(item.list_id)
 
 def movie_by_user_list(user_id, list_name):
-    
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
         type_id = item.type_id;
 
@@ -14,11 +13,6 @@ def movie_by_user_list(user_id, list_name):
         list_id = item.list_id
 
     return Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
-
-def get_list_by_user(user, list_type):
-    	for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
-		list_id = item.list_id
-	return list_id
 
 def get_rate_by_movie(movie_id, user_id):
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
@@ -29,12 +23,16 @@ def get_rate_by_movie(movie_id, user_id):
 
     return movieRate
 
-def get_movies_by_user(user_id):
-    movies = []
+def get_list_by_user(user, list_type):
+    for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
+		list_id = item.list_id
+	return list_id
+    
+def get_movie_by_user(user_id):
+    movies =[]
    
     for item in movie_by_user_list(user_id, 'watchedlist'):
         movies.append(item.movie_id)
-
     return movies
 
 def get_tmdb_movies_id():
@@ -58,4 +56,3 @@ def get_tmdb_movies_id_by_user(user):
             movies.append(movie.tmdb_movie_id)
     
     return movies
-
