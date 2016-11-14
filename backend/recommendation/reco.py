@@ -106,7 +106,7 @@ def user_recommendations(person):
 	return recommendataions_list
 
 def add_recommentation_to_database(user):
-	recommendation = user_recommendations(user)
+	recommendation = build_recommendation_dataset(user)
 	list_id = get_list_by_user(user, 1)
 
 	movies =[]
@@ -129,24 +129,35 @@ def get_similar_movies(tmdb_movie_id):
 
 	return similar_movies
 
-def filter_movies(movies):
+def filter_movies(movies, user):
 	user_movies = get_tmdb_movies_id_by_user(user)
 
 	for item in movies:
-		if movie in user_movies:
-			movies.remove(movie)
+		if item in user_movies:
+			movies.remove(item)
+	return movies
 
 def add_movie_to_database(movie):
 	if movie not in get_tmdb_movies_id():
 		movie_db = Movie(tmdb_movie_id=movie)
 		movie_db.save()
 
+def get_tmdb_movies(id_movie_list):
+	tmdb_movies = []
+	for item in id_movie_list:
+		tmdb_movies.append(get_tmdb_movie_id_by_movie(item))
+
+	return tmdb_movies
+
 def build_recommendation_dataset(user):
 	recommendation = user_recommendations(user)
+	reco = get_tmdb_movies(recommendation)
 	similar_movies = []
 
-	for item in recommendation:
-		tmdb_movie_id = get_tmdb_movie_id_by_movie(item)
-		similar_movies + get_similar_movies(tmdb_movie_id)
+	for movie in reco:
+		similar_movies =  similar_movies + get_similar_movies(movie)
 	
-		
+	similar_movies = similar_movies + reco
+	similar_movies = filter_movies(similar_movies, user)
+	
+	return list(set(similar_movies))
