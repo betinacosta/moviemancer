@@ -1,9 +1,10 @@
 from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type
 
-def get_list_id_by_user(user):
+def get_list_id_by_user(user_id):
     lists = []
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s", [user_id]):
         lists.append(item.list_id)
+    return lists
 
 def movie_by_user_list(user_id, list_name):
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
