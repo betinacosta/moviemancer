@@ -25,8 +25,8 @@ def get_rate_by_movie(movie_id, user_id):
 
 def get_list_by_user(user, list_type):
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
-		list_id = item.list_id
-	return list_id
+        list_id = item.list_id
+    return list_id
     
 def get_movie_by_user(user_id):
     movies =[]
@@ -38,7 +38,7 @@ def get_movie_by_user(user_id):
 def get_tmdb_movies_id():
     movies = []
 
-    for item in Movie.objects.all()
+    for item in Movie.objects.all():
         movies.append(item.tmdb_movie_id)
 
     return movies
