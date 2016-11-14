@@ -5,6 +5,8 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
+	$scope.database = [];
+
 	$scope.init = function() {
 		$scope.loadRecommendation();
 		$scope.loadCommingSoon();
@@ -131,7 +133,7 @@ $scope.getPosters = function (data) {
 
 		oParams = {"language": "pt-br"};
 
-		for (i = 0; i < 3; i++) {
+		for (i = 0; i < 6; i++) {
 
 			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
             function(movies){
@@ -141,6 +143,8 @@ $scope.getPosters = function (data) {
 						img: $scope.imagePath + movies.poster_path,
 						title: movies.title
 					})
+
+				console.log($scope.images);
             }, 
             function(e){
                 console.log("Error: "+e)
@@ -149,8 +153,8 @@ $scope.getPosters = function (data) {
 },
 
 $scope.loadRecommendation = function () {
-	$http.get('reco').success(function(data, images, imagePath) {
-		$scope.getPosters(data);
+	$http.get('reco').success(function(data) {
+		$scope.database.push(data);
 	});
 },
 
