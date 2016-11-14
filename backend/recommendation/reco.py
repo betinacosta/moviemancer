@@ -6,10 +6,10 @@ import tmdbsimple as tmdb
 
 tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
 
-def getFacebookFriends(user_id):
+def get_facebook_friends(user_id):
     pass
 
-def getSimilarProfiles(user_id):
+def get_similar_profiles(user_id):
     oneGenreSimilarity = User.objects.raw("SELECT user.user_ID FROM user INNER JOIN profile ON profile.user_id = user.user_id INNER JOIN profile_genre ON profile.profile_id = profile_genre.profile_id AND (profile_genre.genre_id = '1' OR profile_genre.genre_id = '5' OR profile_genre.genre_id = '13')")
 
     usersList = []
@@ -39,15 +39,15 @@ def pearson_correlation(person1,person2):
 		return 0
 
 	# Add up all the preferences of each user
-	person1_preferences_sum = sum([get_rates_by_movie(item, person1) for item in both_rated])
-	person2_preferences_sum = sum([get_rates_by_movie(item, person2) for item in both_rated])
+	person1_preferences_sum = sum([get_rate_by_movie(item, person1) for item in both_rated])
+	person2_preferences_sum = sum([get_rate_by_movie(item, person2) for item in both_rated])
 
 	# Sum up the squares of preferences of each user
-	person1_square_preferences_sum = sum([pow(get_rates_by_movie(item, person1),2) for item in both_rated])
-	person2_square_preferences_sum = sum([pow(get_rates_by_movie(item, person2),2) for item in both_rated])
+	person1_square_preferences_sum = sum([pow(get_rate_by_movie(item, person1),2) for item in both_rated])
+	person2_square_preferences_sum = sum([pow(get_rate_by_movie(item, person2),2) for item in both_rated])
 
 	# Sum up the product value of both preferences for each item
-	product_sum_of_both_users = sum([get_rates_by_movie(item, person1) * get_rates_by_movie(item, person2) for item in both_rated])
+	product_sum_of_both_users = sum([get_rate_by_movie(item, person1) * get_rate_by_movie(item, person2) for item in both_rated])
 
 
 	# Calculate the pearson score
@@ -61,7 +61,7 @@ def pearson_correlation(person1,person2):
 
 def most_similar_users(person,number_of_users):
 	# returns the number_of_users (similar persons) for a given specific person.
-	dataset = getSimilarProfiles(person)
+	dataset = get_similar_profiles(person)
 	scores = [(pearson_correlation(person,other_person),other_person) for other_person in dataset if  other_person != person ]
 	
 	# Sort the similar persons so that highest scores person will appear at the first
@@ -69,8 +69,8 @@ def most_similar_users(person,number_of_users):
 	scores.reverse()
 	return scores[0:number_of_users]
 
-def user_reommendations(person):
-	dataset = getSimilarProfiles(person)
+def user_recommendations(person):
+	dataset = get_similar_profiles(person)
 	# Gets recommendations for a person by using a weighted average of every other user's rankings
 	totals = {}
 	simSums = {}
@@ -91,7 +91,7 @@ def user_reommendations(person):
 
 			# Similrity * score
 				totals.setdefault(item,0)
-				totals[item] += get_rates_by_movie(item, other)* sim
+				totals[item] += get_rate_by_movie(item, other)* sim
 				# sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
@@ -106,7 +106,7 @@ def user_reommendations(person):
 	return recommendataions_list
 
 def add_recommentation_to_database(user):
-	recommendation = user_reommendations(user)
+	recommendation = user_recommendations(user)
 	list_id = get_list_by_user(user, 1)
 
 	movies =[]
@@ -134,7 +134,7 @@ def filter_movies(movies):
 
 	for item in movies:
 		if movie in user_movies:
-    		movies.remove(movie)
+			movies.remove(movie)
 
 def add_movie_to_database(movie):
 	if movie not in get_tmdb_movies_id():
@@ -142,7 +142,7 @@ def add_movie_to_database(movie):
 		movie_db.save()
 
 def build_recommendation_dataset(user):
-	recommendation = user_reommendations(user)
+	recommendation = user_recommendations(user)
 	similar_movies = []
 
 	for item in recommendation:
