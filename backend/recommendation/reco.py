@@ -161,3 +161,4 @@ def build_recommendation_dataset(user):
 	similar_movies = filter_movies(similar_movies, user)
 	
 	return list(set(similar_movies))
+	
