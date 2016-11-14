@@ -2,10 +2,10 @@
 -- version 4.0.4.2
 -- http://www.phpmyadmin.net
 --
--- Máquina: localhost
--- Data de Criação: 23-Out-2016 às 03:56
--- Versão do servidor: 5.6.13
--- versão do PHP: 5.4.17
+-- Host: localhost
+-- Generation Time: Nov 14, 2016 at 12:07 PM
+-- Server version: 5.6.13
+-- PHP Version: 5.4.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de Dados: `claquete`
+-- Database: `claquete`
 --
 CREATE DATABASE IF NOT EXISTS `claquete` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `claquete`;
@@ -25,7 +25,7 @@ USE `claquete`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_group`
+-- Table structure for table `auth_group`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_group` (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `auth_group` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_group_permissions`
+-- Table structure for table `auth_group_permissions`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_permission`
+-- Table structure for table `auth_permission`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_permission` (
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
--- Extraindo dados da tabela `auth_permission`
+-- Dumping data for table `auth_permission`
 --
 
 INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
@@ -98,7 +98,7 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_user`
+-- Table structure for table `auth_user`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_user` (
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_user_groups`
+-- Table structure for table `auth_user_groups`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_user_groups` (
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_groups` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auth_user_user_permissions`
+-- Table structure for table `auth_user_user_permissions`
 --
 
 CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cast`
+-- Table structure for table `cast`
 --
 
 CREATE TABLE IF NOT EXISTS `cast` (
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `cast` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `django_admin_log`
+-- Table structure for table `django_admin_log`
 --
 
 CREATE TABLE IF NOT EXISTS `django_admin_log` (
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `django_admin_log` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `django_content_type`
+-- Table structure for table `django_content_type`
 --
 
 CREATE TABLE IF NOT EXISTS `django_content_type` (
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `django_content_type` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- Extraindo dados da tabela `django_content_type`
+-- Dumping data for table `django_content_type`
 --
 
 INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
@@ -210,7 +210,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `django_migrations`
+-- Table structure for table `django_migrations`
 --
 
 CREATE TABLE IF NOT EXISTS `django_migrations` (
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
--- Extraindo dados da tabela `django_migrations`
+-- Dumping data for table `django_migrations`
 --
 
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
@@ -245,7 +245,7 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `django_session`
+-- Table structure for table `django_session`
 --
 
 CREATE TABLE IF NOT EXISTS `django_session` (
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `django_session` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `genre`
+-- Table structure for table `genre`
 --
 
 CREATE TABLE IF NOT EXISTS `genre` (
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `genre` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
--- Extraindo dados da tabela `genre`
+-- Dumping data for table `genre`
 --
 
 INSERT INTO `genre` (`genre_ID`, `tmdb_genre_ID`, `genre_name`) VALUES
@@ -297,7 +297,7 @@ INSERT INTO `genre` (`genre_ID`, `tmdb_genre_ID`, `genre_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `list`
+-- Table structure for table `list`
 --
 
 CREATE TABLE IF NOT EXISTS `list` (
@@ -310,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `list` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
 
 --
--- Extraindo dados da tabela `list`
+-- Dumping data for table `list`
 --
 
 INSERT INTO `list` (`list_ID`, `user_ID`, `type_ID`) VALUES
@@ -396,7 +396,7 @@ INSERT INTO `list` (`list_ID`, `user_ID`, `type_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `movie`
+-- Table structure for table `movie`
 --
 
 CREATE TABLE IF NOT EXISTS `movie` (
@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `movie` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
 --
--- Extraindo dados da tabela `movie`
+-- Dumping data for table `movie`
 --
 
 INSERT INTO `movie` (`movie_ID`, `tmdb_movie_ID`) VALUES
@@ -458,7 +458,7 @@ INSERT INTO `movie` (`movie_ID`, `tmdb_movie_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `movie_list`
+-- Table structure for table `movie_list`
 --
 
 CREATE TABLE IF NOT EXISTS `movie_list` (
@@ -471,7 +471,7 @@ CREATE TABLE IF NOT EXISTS `movie_list` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
 
 --
--- Extraindo dados da tabela `movie_list`
+-- Dumping data for table `movie_list`
 --
 
 INSERT INTO `movie_list` (`movie_list_ID`, `movie_ID`, `list_ID`) VALUES
@@ -535,7 +535,7 @@ INSERT INTO `movie_list` (`movie_list_ID`, `movie_ID`, `list_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `profile`
+-- Table structure for table `profile`
 --
 
 CREATE TABLE IF NOT EXISTS `profile` (
@@ -547,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
--- Extraindo dados da tabela `profile`
+-- Dumping data for table `profile`
 --
 
 INSERT INTO `profile` (`profile_ID`, `user_ID`) VALUES
@@ -581,7 +581,7 @@ INSERT INTO `profile` (`profile_ID`, `user_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `profile_cast`
+-- Table structure for table `profile_cast`
 --
 
 CREATE TABLE IF NOT EXISTS `profile_cast` (
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `profile_cast` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `profile_genre`
+-- Table structure for table `profile_genre`
 --
 
 CREATE TABLE IF NOT EXISTS `profile_genre` (
@@ -609,7 +609,7 @@ CREATE TABLE IF NOT EXISTS `profile_genre` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=81 ;
 
 --
--- Extraindo dados da tabela `profile_genre`
+-- Dumping data for table `profile_genre`
 --
 
 INSERT INTO `profile_genre` (`profile_genre_ID`, `profile_ID`, `genre_ID`) VALUES
@@ -695,7 +695,7 @@ INSERT INTO `profile_genre` (`profile_genre_ID`, `profile_ID`, `genre_ID`) VALUE
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `rate`
+-- Table structure for table `rate`
 --
 
 CREATE TABLE IF NOT EXISTS `rate` (
@@ -705,7 +705,7 @@ CREATE TABLE IF NOT EXISTS `rate` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- Extraindo dados da tabela `rate`
+-- Dumping data for table `rate`
 --
 
 INSERT INTO `rate` (`rate_ID`, `rate`) VALUES
@@ -718,7 +718,7 @@ INSERT INTO `rate` (`rate_ID`, `rate`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `rating`
+-- Table structure for table `rating`
 --
 
 CREATE TABLE IF NOT EXISTS `rating` (
@@ -733,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `rating` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
 
 --
--- Extraindo dados da tabela `rating`
+-- Dumping data for table `rating`
 --
 
 INSERT INTO `rating` (`rating_ID`, `user_ID`, `movie_ID`, `rate_ID`) VALUES
@@ -794,7 +794,7 @@ INSERT INTO `rating` (`rating_ID`, `user_ID`, `movie_ID`, `rate_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `type`
+-- Table structure for table `type`
 --
 
 CREATE TABLE IF NOT EXISTS `type` (
@@ -804,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `type` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Extraindo dados da tabela `type`
+-- Dumping data for table `type`
 --
 
 INSERT INTO `type` (`type_ID`, `type_name`) VALUES
@@ -815,7 +815,7 @@ INSERT INTO `type` (`type_ID`, `type_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -828,7 +828,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
--- Extraindo dados da tabela `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_ID`, `name`, `email`, `password`, `description`) VALUES
@@ -864,75 +864,75 @@ INSERT INTO `user` (`user_ID`, `name`, `email`, `password`, `description`) VALUE
 --
 
 --
--- Limitadores para a tabela `auth_group_permissions`
+-- Constraints for table `auth_group_permissions`
 --
 ALTER TABLE `auth_group_permissions`
   ADD CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   ADD CONSTRAINT `auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
 
 --
--- Limitadores para a tabela `auth_permission`
+-- Constraints for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
   ADD CONSTRAINT `auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 
 --
--- Limitadores para a tabela `auth_user_groups`
+-- Constraints for table `auth_user_groups`
 --
 ALTER TABLE `auth_user_groups`
   ADD CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   ADD CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 --
--- Limitadores para a tabela `auth_user_user_permissions`
+-- Constraints for table `auth_user_user_permissions`
 --
 ALTER TABLE `auth_user_user_permissions`
   ADD CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   ADD CONSTRAINT `auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
 
 --
--- Limitadores para a tabela `django_admin_log`
+-- Constraints for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
   ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   ADD CONSTRAINT `django_admin__content_type_id_c4bce8eb_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 
 --
--- Limitadores para a tabela `list`
+-- Constraints for table `list`
 --
 ALTER TABLE `list`
   ADD CONSTRAINT `list_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`),
   ADD CONSTRAINT `list_ibfk_2` FOREIGN KEY (`type_ID`) REFERENCES `type` (`type_ID`);
 
 --
--- Limitadores para a tabela `movie_list`
+-- Constraints for table `movie_list`
 --
 ALTER TABLE `movie_list`
   ADD CONSTRAINT `movie_list_ibfk_1` FOREIGN KEY (`movie_ID`) REFERENCES `movie` (`movie_ID`),
   ADD CONSTRAINT `movie_list_ibfk_2` FOREIGN KEY (`list_ID`) REFERENCES `list` (`list_ID`);
 
 --
--- Limitadores para a tabela `profile`
+-- Constraints for table `profile`
 --
 ALTER TABLE `profile`
   ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`);
 
 --
--- Limitadores para a tabela `profile_cast`
+-- Constraints for table `profile_cast`
 --
 ALTER TABLE `profile_cast`
   ADD CONSTRAINT `profile_cast_ibfk_1` FOREIGN KEY (`profile_ID`) REFERENCES `profile` (`profile_ID`),
   ADD CONSTRAINT `profile_cast_ibfk_2` FOREIGN KEY (`cast_ID`) REFERENCES `cast` (`cast_ID`);
 
 --
--- Limitadores para a tabela `profile_genre`
+-- Constraints for table `profile_genre`
 --
 ALTER TABLE `profile_genre`
   ADD CONSTRAINT `profile_genre_ibfk_1` FOREIGN KEY (`profile_ID`) REFERENCES `profile` (`profile_ID`),
   ADD CONSTRAINT `profile_genre_ibfk_2` FOREIGN KEY (`genre_ID`) REFERENCES `genre` (`genre_ID`);
 
 --
--- Limitadores para a tabela `rating`
+-- Constraints for table `rating`
 --
 ALTER TABLE `rating`
   ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`),
