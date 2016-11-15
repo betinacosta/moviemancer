@@ -149,6 +149,13 @@ def get_tmdb_movies(id_movie_list):
 
 	return tmdb_movies
 
+def get_movie_id(tmdb_movie_list):
+	id_movie_list = []
+	for item in tmdb_movie_list:
+		id_movie_list.append(get_movie_id_by_tmdb_id(item))
+	
+	return id_movie_list
+
 def build_recommendation_dataset(user):
 	recommendation = user_recommendations(user)
 	reco = get_tmdb_movies(recommendation)
@@ -157,8 +164,15 @@ def build_recommendation_dataset(user):
 	for movie in reco:
 		similar_movies =  similar_movies + get_similar_movies(movie)
 	
-	similar_movies = similar_movies + reco
-	similar_movies = filter_movies(similar_movies, user)
-	
-	return list(set(similar_movies))
+	full_recommendation = similar_movies + reco
+	full_recommendation = filter_movies(full_recommendation, user)
+	full_recommendation = list(set(full_recommendation))
+
+	for item in full_recommendation:
+		add_movie_to_database(item)
+
+	id_recommendation_list = get_movie_id(full_recommendation)
+
+
+	return id_recommendation_list
 	
