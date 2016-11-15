@@ -10,24 +10,6 @@ app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
 		$scope.getRecommendation();
 	},
 
-$scope.searchMovie = function (query) {
-    oParams = 
-        {
-            "query": query,
-            "language": "pt-br"
-        };
-
-        tmdb.call("/search/movie", oParams,
-            function(searchResult){
-                console.log(searchResult)
-            }, 
-            function(e){
-                console.log("Error: "+e)
-            }   
-        );
-
-},
-
 $scope.getRecommendation = function (movies) {
 	$scope.fullRecommendation = [];
 	
@@ -36,7 +18,50 @@ $scope.getRecommendation = function (movies) {
 		for (i = 0; i < data.length; i++) {
 			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
 		}
+
+        $scope.teste = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), true);
+
 	});
+},
+
+$scope.splitRecommendations = function (a, n, balanced) {
+    
+    if (n < 2)
+        return [a];
+
+    var len = a.length,
+            out = [],
+            i = 0,
+            size;
+
+    if (len % n === 0) {
+        size = Math.floor(len / n);
+        while (i < len) {
+            out.push(a.slice(i, i += size));
+        }
+    }
+
+    else if (balanced) {
+        while (i < len) {
+            size = Math.ceil((len - i) / n--);
+            out.push(a.slice(i, i += size));
+        }
+    }
+
+    else {
+
+        n--;
+        size = Math.floor(len / n);
+        if (len % size === 0)
+            size--;
+        while (i < size * n) {
+            out.push(a.slice(i, i += size));
+        }
+        out.push(a.slice(size * n));
+
+    }
+
+    return out;
 },
 
 $scope.showFilterBar = function() {
