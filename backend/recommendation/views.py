@@ -17,7 +17,7 @@ class MovieView(generics.ListAPIView):
 
 class RecoView (generics.ListAPIView):
     model = Movie
-    #add_recommentation_to_database(1)
+    add_recommentation_to_database(1)
     queryset = movie_by_user_list(1, 'recommendation')
     serializer_class = MovieSerializer
 
