@@ -5,7 +5,7 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
-	$scope.database = [];
+	$scope.images = [];
 
 	$scope.init = function() {
 		$scope.loadRecommendation();
@@ -104,7 +104,7 @@ $scope.loadCommingSoon = function () {
         {
             "primary_release_date.gte": $scope.today,
 			"primary_release_date.lte": $scope.endDate,
-            "language": "pt-br"
+            "language": "pt-BR"
         };
 
 	$scope.commingSoon = [];
@@ -127,35 +127,63 @@ $scope.loadCommingSoon = function () {
         );
 },
 
-$scope.getPosters = function (data) {
+/*$scope.getPosters = function () {
 	$scope.images = [];
 	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+	oParams = {"language": "pt-br"};
+	$scope.getRecommendation();
+	console.log($scope.database);
 
+	for (i = 0; i < 6; i++) {
+
+		tmdb.call("/movie/" + $scope.database[i], oParams,
+		function(movies){
+			
+			$scope.images.push ( 
+				{
+					img: $scope.imagePath + movies.poster_path,
+					title: movies.title
+				})
+
+			console.log($scope.images);
+		}, 
+		function(e){
+			console.log("Error: "+e)
+		}   
+	)};
+},*/
+
+$scope.getRecommendation = function () {
+	$http.get('reco').success(function(data) {
+		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
 		oParams = {"language": "pt-br"};
 
 		for (i = 0; i < 6; i++) {
 
 			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
-            function(movies){
+			function(movies){
 				
-                $scope.images.push ( 
+				$scope.images.push ( 
 					{
 						img: $scope.imagePath + movies.poster_path,
 						title: movies.title
 					})
-
-				console.log($scope.images);
-            }, 
-            function(e){
-                console.log("Error: "+e)
-            }   
-        )};
+			}, 
+			function(e){
+				console.log("Error: "+e)
+			}   
+		)}
+		if ($scope.images.length == 6) {
+			$scope.movies = $scope.images
+		}else {
+			$scope.getRecommendation();
+		}
+		
+	});
 },
 
 $scope.loadRecommendation = function () {
-	$http.get('reco').success(function(data) {
-		$scope.database.push(data);
-	});
+		$scope.getRecommendation();
 },
 
 $scope.showFilterBar = function() {
@@ -176,8 +204,7 @@ $scope.showFilterBar = function() {
 	   }
           
 },
-
 // Call init function
-$scope.init();
+	$scope.init();
 
 }]);
