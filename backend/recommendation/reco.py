@@ -139,7 +139,10 @@ def filter_movies(movies, user):
 
 def add_movie_to_database(movie):
 	if movie not in get_tmdb_movies_id():
-		movie_db = Movie(tmdb_movie_id=movie)
+		title = get_tmdb_title(movie)
+		poster = get_tmdb_poster(movie)
+    	
+		movie_db = Movie(tmdb_movie_id=movie, tmdb_poster=poster, tmdb_title=title)
 		movie_db.save()
 
 def get_tmdb_movies(id_movie_list):
@@ -173,15 +176,7 @@ def build_recommendation_dataset(user):
 
 	id_recommendation_list = get_movie_id(full_recommendation)
 
-
 	return id_recommendation_list
-
-def setMovieImages():
-	for item in Movie.objects.all():
-		obj = Movie.objects.get(pk=item.movie_id)
-		obj.tmdb_title = get_tmdb_title(item.tmdb_movie_id)
-		obj.tmdb_poster = get_tmdb_poster(item.tmdb_movie_id)
-		obj.save()
 
 def get_tmdb_poster(tmdb_movie_id):
 	movie = tmdb.Movies(tmdb_movie_id)
