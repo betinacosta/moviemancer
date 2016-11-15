@@ -137,10 +137,16 @@ $scope.loadCommingSoon = function () {
 
 $scope.getRecommendation = function (movies) {
 	$scope.recommendation = [];
+	$scope.fullRecommendation = [];
+	
 	$http.get('reco').success(function(data) {
 
 		for (i = 0; i < 6; i++) {
 			$scope.recommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
+		}
+
+		for (i = 0; i < data.length; i++) {
+			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
 		}
 	});
 },
