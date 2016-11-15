@@ -127,32 +127,6 @@ $scope.loadCommingSoon = function () {
         );
 },
 
-/*$scope.getPosters = function () {
-	$scope.images = [];
-	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-	oParams = {"language": "pt-br"};
-	$scope.getRecommendation();
-	console.log($scope.database);
-
-	for (i = 0; i < 6; i++) {
-
-		tmdb.call("/movie/" + $scope.database[i], oParams,
-		function(movies){
-			
-			$scope.images.push ( 
-				{
-					img: $scope.imagePath + movies.poster_path,
-					title: movies.title
-				})
-
-			console.log($scope.images);
-		}, 
-		function(e){
-			console.log("Error: "+e)
-		}   
-	)};
-},*/
-
 $scope.getRecommendation = function () {
 	$http.get('reco').success(function(data) {
 		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
@@ -183,7 +157,7 @@ $scope.getRecommendation = function () {
 },
 
 $scope.loadRecommendation = function () {
-		$scope.getRecommendation();
+	$scope.getRecommendation();
 },
 
 $scope.showFilterBar = function() {
