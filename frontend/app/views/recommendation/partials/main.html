@@ -33,11 +33,11 @@
     <h4>Recomendados Pra Mim</h4>
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
-            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="m in teste">
+            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="movie in recommendation">
                 
                 
-                    <p class="movieTitleMaster">{$m.tmdbID$}</p>
-                    <img src="{$m.img$}" width="100%" height="100%">
+                    <p class="movieTitleMaster">{$movie.title$}</p>
+                    <img src="{$movie.poster$}" width="100%" height="100%">
                 
                     <ul class="topnav" id="myTopnav">
                         <li><i class="fa fa-star fa-lg" aria-hidden="true"></i></li>
@@ -46,7 +46,7 @@
                         <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></li>
                         <li><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></li>
                     </ul>
-                
+        
             </div>
         </div>
     </div>
