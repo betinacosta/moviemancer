@@ -6,6 +6,10 @@ claqueteApp.config(['$routeProvider',
         when('/', {
             templateUrl: 'main',  
             controller: 'mainCtrl'
+        }).
+        when('/full-recommendation', {
+            templateUrl: 'full-recommendation',  
+            controller: 'mainCtrl'
         });
     }
 
