@@ -23,3 +23,6 @@ class RecoView (generics.ListAPIView):
 
 def main(request):
     return render(request,'recommendation/partials/main.html')
+
+def fullreco(request):
+    return render(request,'recommendation/partials/full-recommendation.html')
