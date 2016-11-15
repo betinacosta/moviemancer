@@ -8,7 +8,7 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 	$scope.images = [];
 
 	$scope.init = function() {
-		$scope.loadRecommendation();
+		$scope.getRecommendation();
 		$scope.loadCommingSoon();
 	},
 
@@ -154,10 +154,6 @@ $scope.getRecommendation = function () {
 		}
 		
 	});
-},
-
-$scope.loadRecommendation = function () {
-	$scope.getRecommendation();
 },
 
 $scope.showFilterBar = function() {
