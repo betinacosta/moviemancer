@@ -7,8 +7,7 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
 	$scope.init = function() {
 
-		$scope.loadRecommendation();
-		console.log($scope.movies);
+		$scope.getRecommendation();
 		$scope.loadCommingSoon();
 	},
 
@@ -137,46 +136,13 @@ $scope.loadCommingSoon = function () {
 },
 
 $scope.getRecommendation = function (movies) {
-	$scope.teste = [];
+	$scope.recommendation = [];
 	$http.get('reco').success(function(data) {
 
 		for (i = 0; i < 6; i++) {
-			$scope.teste.push ({movieID: data[i].movie_id, tmdbID: data[i].tmdb_movie_id});
+			$scope.recommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
 		}
 	});
-},
-
-$scope.addToMovieArray = function(info, movies) {
-	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-	oParams = {"language": "pt-br"};
-
-	movies.push ( 
-		{
-			img: $scope.imagePath + info.poster_path,
-			title: info.title
-		}
-	)
-
-	return
-
-},
-
-$scope.getTMDbMovies = function (tmdbID, movies) {
-	
-	tmdb.call("/movie/" + tmdbID, oParams,
-		function(item){
-			
-			$scope.addToMovieArray(item, movies);
-		}, 
-		function(e){
-			console.log("Error: "+e)
-		}   
-	)
-},
-
-$scope.loadRecommendation = function () {
-	$scope.movies = [];
-	$scope.getRecommendation($scope.movies);
 },
 
 $scope.showFilterBar = function() {
