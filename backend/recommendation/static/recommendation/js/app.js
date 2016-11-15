@@ -1,4 +1,4 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp']);
+var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
@@ -9,7 +9,7 @@ claqueteApp.config(['$routeProvider',
         }).
         when('/full-recommendation', {
             templateUrl: 'full-recommendation',  
-            controller: 'mainCtrl'
+            controller: 'recoCtrl'
         });
     }
 
