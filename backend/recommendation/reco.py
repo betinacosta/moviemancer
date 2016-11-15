@@ -175,4 +175,28 @@ def build_recommendation_dataset(user):
 
 
 	return id_recommendation_list
+
+def setMovieImages():
+	for item in Movie.objects.all():
+		obj = Movie.objects.get(pk=item.movie_id)
+		obj.tmdb_title = get_tmdb_title(item.tmdb_movie_id)
+		obj.tmdb_poster = get_tmdb_poster(item.tmdb_movie_id)
+		obj.save()
+
+def get_tmdb_poster(tmdb_movie_id):
+	movie = tmdb.Movies(tmdb_movie_id)
+	response = movie.info(language='pt-BR')
+	path = 'https://image.tmdb.org/t/p/original' + response["poster_path"]
+
+	return path
+
+def get_tmdb_title(tmdb_movie_id):
+	movie = tmdb.Movies(tmdb_movie_id)
+	response = movie.info(language='pt-BR')
+	title = response["title"]
+
+	return title
+
+
+
 	

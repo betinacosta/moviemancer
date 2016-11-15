@@ -1,4 +1,4 @@
-<div class="twelve columns filterTab" ng-controller="mainCtrl">
+<div class="twelve columns filterTab" ng-controller="mainCtrl" ng-show="validateModel()">
     
         <h5 style="text-align: center">
             <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-click="showFilterBar()"></i>
@@ -33,10 +33,10 @@
     <h4>Recomendados Pra Mim</h4>
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
-            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="m in movies">
+            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="m in teste">
                 
                 
-                    <p class="movieTitleMaster">{$m.title$}</p>
+                    <p class="movieTitleMaster">{$m.tmdbID$}</p>
                     <img src="{$m.img$}" width="100%" height="100%">
                 
                     <ul class="topnav" id="myTopnav">

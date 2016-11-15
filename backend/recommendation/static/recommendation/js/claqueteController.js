@@ -5,11 +5,20 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
-	$scope.images = [];
-
 	$scope.init = function() {
-		$scope.getRecommendation();
+
+		$scope.loadRecommendation();
+		console.log($scope.movies);
 		$scope.loadCommingSoon();
+	},
+
+	$scope.validateModel = function () {
+		console.log($scope.movies)
+		if ($scope.movies.length == 6) {
+			return true;
+		}else {
+			return false;
+		}
 	},
 
 	//tmdb wrapper
@@ -127,33 +136,47 @@ $scope.loadCommingSoon = function () {
         );
 },
 
-$scope.getRecommendation = function () {
+$scope.getRecommendation = function (movies) {
+	$scope.teste = [];
 	$http.get('reco').success(function(data) {
-		$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-		oParams = {"language": "pt-br"};
 
 		for (i = 0; i < 6; i++) {
-
-			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
-			function(movies){
-				
-				$scope.images.push ( 
-					{
-						img: $scope.imagePath + movies.poster_path,
-						title: movies.title
-					})
-			}, 
-			function(e){
-				console.log("Error: "+e)
-			}   
-		)}
-		if ($scope.images.length == 6) {
-			$scope.movies = $scope.images
-		}else {
-			$scope.getRecommendation();
+			$scope.teste.push ({movieID: data[i].movie_id, tmdbID: data[i].tmdb_movie_id});
 		}
-		
 	});
+},
+
+$scope.addToMovieArray = function(info, movies) {
+	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+	oParams = {"language": "pt-br"};
+
+	movies.push ( 
+		{
+			img: $scope.imagePath + info.poster_path,
+			title: info.title
+		}
+	)
+
+	return
+
+},
+
+$scope.getTMDbMovies = function (tmdbID, movies) {
+	
+	tmdb.call("/movie/" + tmdbID, oParams,
+		function(item){
+			
+			$scope.addToMovieArray(item, movies);
+		}, 
+		function(e){
+			console.log("Error: "+e)
+		}   
+	)
+},
+
+$scope.loadRecommendation = function () {
+	$scope.movies = [];
+	$scope.getRecommendation($scope.movies);
 },
 
 $scope.showFilterBar = function() {
