@@ -34,6 +34,8 @@ class List(models.Model):
 class Movie(models.Model):
     movie_id = models.AutoField(db_column='movie_ID', primary_key=True)  # Field name made lowercase.
     tmdb_movie_id = models.IntegerField(db_column='tmdb_movie_ID')  # Field name made lowercase.
+    tmdb_poster = models.CharField(max_length=255)
+    tmdb_title = models.CharField(max_length=255)
 
     class Meta:
         managed = True
