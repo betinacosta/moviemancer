@@ -48,6 +48,10 @@ def get_tmdb_movie_id_by_movie(movie_id):
     for item in Movie.objects.raw("SELECT * FROM movie WHERE movie_id = %s", [movie_id]):
         return item.tmdb_movie_id
 
+def get_movie_id_by_tmdb_id(tmdb_movie_id):
+    for item in Movie.objects.raw("SELECT * FROM movie WHERE tmdb_movie_id = %s", [tmdb_movie_id]):
+        return item.movie_id
+
 def get_tmdb_movies_id_by_user(user):
     lists_id = get_list_id_by_user(user)
     movies = []
