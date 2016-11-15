@@ -65,7 +65,6 @@
     width: 50%;
 }
 
-
 /* When the input field gets focus, change its width to 100% */
 .searchBar:focus {
     width: 100%;
@@ -134,4 +133,12 @@ ul.topnav li.icon {display: none;}
     overflow: hidden;
     margin-bottom: 0.5rem;
     text-align: center;
+}
+
+.seeAll {
+    margin-left: 1%;
+    padding: 0 7px;
+    font-size: 10px;
+    height: 32px;
+    line-height: 0px;
 }
