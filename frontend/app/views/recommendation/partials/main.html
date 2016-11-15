@@ -1,4 +1,4 @@
-<div class="twelve columns filterTab" ng-controller="mainCtrl" ng-show="validateModel()">
+<div class="twelve columns filterTab" ng-controller="mainCtrl">
     
         <h5 style="text-align: center">
             <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-click="showFilterBar()"></i>
@@ -30,7 +30,9 @@
 </div>
 
 <div>
-    <h4>Recomendados Pra Mim</h4>
+    <div class="twelve columns">
+        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4><a href="#/full-recommendation"><button class="seeAll u-pull-left">Ver Todos</button></a>
+    </div>
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
             <div class="two columns" style="background-color: #fff7c9;" ng-repeat="movie in recommendation">
@@ -53,7 +55,9 @@
 </div>
 
 <div>
-    <h4>Lançamentos</h4>
+    <div class="twelve columns">
+        <h4 class="u-pull-left" style="margin-left:1%">Lançamentos</h4><button class="u-pull-left seeAll">Ver Todos</button>
+    </div>
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
             <div class="two columns" style="background-color: #fff7c9;" ng-repeat="l in commingSoon">
