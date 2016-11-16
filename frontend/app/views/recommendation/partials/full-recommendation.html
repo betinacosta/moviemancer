@@ -31,11 +31,11 @@
 
 <div>
     <div class="twelve columns">
-        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4><button class="seeAll u-pull-left">Ver Todos</button>
+        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4>
     </div>
-    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-repeat="i in index">
         <div>
-            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="movie in fullRecommendation">
+            <div class="two columns" style="background-color: #fff7c9;" ng-repeat="movie in teste[i]">
                 
                     <p class="movieTitleMaster">{$movie.title$}</p>
                     <img src="{$movie.poster$}" width="100%" height="100%">

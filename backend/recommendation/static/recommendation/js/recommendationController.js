@@ -12,6 +12,7 @@ app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
 
 $scope.getRecommendation = function (movies) {
 	$scope.fullRecommendation = [];
+    $scope.index = [];
 	
 	$http.get('reco').success(function(data) {
 
@@ -19,7 +20,10 @@ $scope.getRecommendation = function (movies) {
 			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
 		}
 
-        $scope.teste = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), true);
+        $scope.teste = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), false);
+        for (i = 0; i < $scope.fullRecommendation.length/6; i++) {
+            $scope.index.push(i);
+        }
 
 	});
 },
