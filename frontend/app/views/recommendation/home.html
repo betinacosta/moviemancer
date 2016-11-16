@@ -21,7 +21,7 @@
 
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/normalize.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/normalize.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/skeleton.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/claquete.css' %}" />
 
@@ -36,21 +36,22 @@
   <script src="{% static 'recommendation/js/app.js' %}"></script>
   <script src="{% static 'recommendation/node_modules/angular-route/angular-route.js' %}"></script>
   <script src="{% static 'recommendation/js/claqueteController.js' %}"></script>
+  <script src="{% static 'recommendation/js/recommendationController.js' %}"></script>
 
 </head>
  
-<body>
+<body >
 
   <!-- Imutable Page Layout (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<div class="twelve columns headerMenu" id="nav" style="background-color: #642e68" ng-controller="mainCtrl">
+<div class="twelve columns headerMenu" id="nav" style="background-color: #642e68">
     <div class="seven columns">
         <ul class="topnav" id="myTopnav">
-            <li><a href="#home">Claquete</a></li>
-            <li><a href="#news">Perfil</a></li>
-            <li><a href="#contact">Já Vi</a></li>
-            <li><a href="#about">Quero Ver</a></li>
-            <li><a href="#sair"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+            <li><a href="#/">Claquete</a></li>
+            <li><a href="#profile">Perfil</a></li>
+            <li><a href="#watchedlist">Já Vi</a></li>
+            <li><a href="#watchlist">Quero Ver</a></li>
+            <li><a href="#logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
 
         </ul>
     </div>

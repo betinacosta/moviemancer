@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^movies/$', views.MovieView.as_view(), name='movies'),
     url(r'^reco/$', views.RecoView.as_view(), name='recommendation'),
     url(r'^main/$', views.main, name='main'),
+    url(r'^full-recommendation/$', views.fullreco, name='fullreco'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

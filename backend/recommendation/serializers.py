@@ -4,7 +4,7 @@ from recommendation.models import Movie, Type, MovieList, List, User
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('movie_id', 'tmdb_movie_id')
+        fields = ('movie_id', 'tmdb_movie_id', 'tmdb_poster', 'tmdb_title')
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

@@ -5,48 +5,65 @@ var app = angular.module('myApp', []).config(function($interpolateProvider) {
 
 app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
+	$scope.init = function() {
+
+		$scope.getRecommendation();
+		$scope.loadCommingSoon();
+	},
+
+	$scope.validateModel = function () {
+		console.log($scope.movies)
+		if ($scope.movies.length == 6) {
+			return true;
+		}else {
+			return false;
+		}
+	},
+
+	//tmdb wrapper
     (function() {
-	window.tmdb = {
-		"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
-		"base_uri": "http://api.themoviedb.org/3",
-		"images_uri": "http://image.tmdb.org/t/p",
-		"timeout": 5000,
-		call: function(url, params, success, error){
-			var params_str ="api_key="+tmdb.api_key;
-			for (var key in params) {
-				if (params.hasOwnProperty(key)) {
-					params_str+="&"+key+"="+encodeURIComponent(params[key]);
-				}
-			}
-			var xhr = new XMLHttpRequest();
-			xhr.timeout = tmdb.timeout;
-			xhr.ontimeout = function () {
-				throw("Request timed out: " + url +" "+ params_str);
-			};
-			xhr.open("GET", tmdb.base_uri + url + "?" + params_str, true);
-			xhr.setRequestHeader('Accept', 'application/json');
-			xhr.responseType = "text";
-			xhr.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					if (this.status === 200){
-						if (typeof success == "function") {
-							success(JSON.parse(this.response));	
-						}else{
-							throw('No success callback, but the request gave results')
-						}
-					}else{
-						if (typeof error == "function") {
-							error(JSON.parse(this.response));
-						}else{
-							throw('No error callback')
-						}
+		window.tmdb = {
+			"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
+			"base_uri": "http://api.themoviedb.org/3",
+			"images_uri": "http://image.tmdb.org/t/p",
+			"timeout": 5000,
+			call: function(url, params, success, error){
+				var params_str ="api_key="+tmdb.api_key;
+				for (var key in params) {
+					if (params.hasOwnProperty(key)) {
+						params_str+="&"+key+"="+encodeURIComponent(params[key]);
 					}
 				}
-			};
-			xhr.send();
+				var xhr = new XMLHttpRequest();
+				xhr.timeout = tmdb.timeout;
+				xhr.ontimeout = function () {
+					throw("Request timed out: " + url +" "+ params_str);
+				};
+				xhr.open("GET", tmdb.base_uri + url + "?" + params_str, true);
+				xhr.setRequestHeader('Accept', 'application/json');
+				xhr.responseType = "text";
+				xhr.onreadystatechange = function () {
+					if (this.readyState === 4) {
+						if (this.status === 200){
+							if (typeof success == "function") {
+								success(JSON.parse(this.response));	
+							}else{
+								throw('No success callback, but the request gave results')
+							}
+						}else{
+							if (typeof error == "function") {
+								error(JSON.parse(this.response));
+							}else{
+								throw('No error callback')
+							}
+						}
+					}
+				};
+				xhr.send();
+			}
 		}
-	}
-})()
+	})()
+//tmdb wrapper
 
 $scope.searchMovie = function (query) {
     oParams = 
@@ -64,7 +81,7 @@ $scope.searchMovie = function (query) {
             }   
         );
 
-}
+},
 
 $scope.formatDate = function (date) {
 	$scope.day = date.getDate()
@@ -79,13 +96,13 @@ $scope.formatDate = function (date) {
 	} 
 
 	return $scope.year + '-' + $scope.month + '-' + $scope.day;
-}
+},
 
 $scope.getEndDate = function (initialDate, days) {
 	
     initialDate.setDate(initialDate.getDate() + days);
     return initialDate;
-}
+},
 
 $scope.loadCommingSoon = function () {
 	$scope.today = $scope.formatDate(new Date());
@@ -95,7 +112,7 @@ $scope.loadCommingSoon = function () {
         {
             "primary_release_date.gte": $scope.today,
 			"primary_release_date.lte": $scope.endDate,
-            "language": "pt-br"
+            "language": "pt-BR"
         };
 
 	$scope.commingSoon = [];
@@ -111,44 +128,28 @@ $scope.loadCommingSoon = function () {
 						}
 					)
 				}
-				console.log($scope.commingSoon);
             }, 
             function(e){
                 console.log("Error: "+e)
             }   
         );
-}
-$scope.loadCommingSoon();
+},
 
-
-$scope.loadRecommendation = function () {
-
-	$scope.images = [];
-	$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-	$http.get('reco').success(function(data, images, imagePath) {
+$scope.getRecommendation = function (movies) {
+	$scope.recommendation = [];
+	$scope.fullRecommendation = [];
 	
-		oParams = {"language": "pt-br"};
+	$http.get('reco').success(function(data) {
 
 		for (i = 0; i < 6; i++) {
+			$scope.recommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
+		}
 
-			tmdb.call("/movie/" + data[i].tmdb_movie_id, oParams,
-            function(movies){
-				
-                $scope.images.push ( 
-					{
-						img: $scope.imagePath + movies.poster_path,
-						title: movies.title
-					})
-            }, 
-            function(e){
-                console.log("Error: "+e)
-            }   
-        );
+		for (i = 0; i < data.length; i++) {
+			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
 		}
 	});
-}
-
-$scope.loadRecommendation();
+},
 
 $scope.showFilterBar = function() {
 
@@ -167,7 +168,8 @@ $scope.showFilterBar = function() {
 			toggleDown.style.display = 'none';
 	   }
           
-}
-
+},
+// Call init function
+	$scope.init();
 
 }]);
