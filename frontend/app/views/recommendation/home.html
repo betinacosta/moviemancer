@@ -44,24 +44,25 @@
 
   <!-- Imutable Page Layout (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<div class="twelve columns headerMenu" id="nav" style="background-color: #642e68">
-    <div class="seven columns">
+<div class="twelve columns headerMenu" id="nav">
+    <div class="twelve columns">
         <ul class="topnav" id="myTopnav">
-            <li><a href="#/">Claquete</a></li>
-            <li><a href="#profile">Perfil</a></li>
-            <li><a href="#watchedlist">Já Vi</a></li>
-            <li><a href="#watchlist">Quero Ver</a></li>
-            <li><a href="#logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
-
+            <li class="menuListItems"><img style="height: 65px;" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png"></li>
+            <li class="menuListItems"><a href="#profile" class="menuItems">PERFIL</a></li>
+            <li class="menuListItems"><a href="#watchedlist" class="menuItems">JÁ VI</a></li>
+            <li class="menuListItems"><a href="#watchlist" class="menuItems">QUERO VER</a></li>
+            <li class="menuListItems"><a href="#watchlist" class="menuItems">SAIR</a></li>
         </ul>
     </div>
+    </div>
 
-    <div class="five columns">
+    <div class="twelve columns searchBarBackground">
         <form ng-submit="searchMovie(query)">
+            <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
             <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
         </form>
     </div>
-</div>
+
 <!-- End Page (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
