@@ -57,7 +57,7 @@
 }
 
 .searchBar {
-    height: 35px !important;
+    height: 45px !important;
     width: 50%;
     border: none !important;
     margin-left: 25%;
@@ -67,7 +67,7 @@
 }
 
 .searchBarBackground {
-    height: 35px !important;
+    height: 45px !important;
     background-color: #ffffff;
 }
 
@@ -126,9 +126,16 @@ ul.topnav li.icon {display: none;}
 }
 
 .filterTab {
-    background-color: #fff7c9 !important;
+    background-color: #eee !important;
     padding-top: 1%;
     margin-bottom: 2%;
+}
+
+.filterText {
+    margin-bottom: 1rem !important;
+    text-align: center;
+    font-size: 2rem !important;
+    font-weight: 100;
 }
 
 .mainListsTitle {
