@@ -170,3 +170,12 @@ ul.topnav li.icon {display: none;}
 .menuListItems {
     margin: 0% 1% 0% 1%;
 }
+
+.footerBar {
+    background-color: #2B2B2B;
+    padding: 3% 15% 3% 15%;
+}
+
+.footerImg {
+    height: 100px;
+}
