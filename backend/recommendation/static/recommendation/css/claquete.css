@@ -69,6 +69,7 @@
 .searchBarBackground {
     height: 45px !important;
     background-color: #ffffff;
+    border-bottom-color: #000000 !important;
 }
 
 .searchIcon {
