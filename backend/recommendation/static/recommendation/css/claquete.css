@@ -57,22 +57,34 @@
 }
 
 .searchBar {
-    float: right;
-    height: 30px !important;
-    margin:0%;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+    height: 45px !important;
     width: 50%;
+    border: none !important;
+    margin-left: 25%;
+    margin-right: 25%;
+    color: #acacac;
+    font-style: italic;
 }
 
-/* When the input field gets focus, change its width to 100% */
-.searchBar:focus {
-    width: 100%;
-    border-color: #c68006;
+.searchBarBackground {
+    height: 45px !important;
+    background-color: #ffffff;
+    border-bottom-color: #000000 !important;
+}
+
+.searchIcon {
+    position: absolute;
+    margin-left: 23%;
+    line-height: 35px;
+    color: #acacac;
+}
+
+#searchIcon:hover {
+    color: #081c24;
 }
 
 .headerMenu {
-    background-color: #642e68;
+    background-color: #2B2B2B;
     padding: 7px 3% 0px 3%
 }
 
@@ -101,7 +113,7 @@ ul.topnav li a {
 
 /* Change background color of links on hover */
 ul.topnav li a:hover {    
-    color: #c68006;
+    color: #DE1B1B;
     font-weight: bold;
 }
 
@@ -115,9 +127,16 @@ ul.topnav li.icon {display: none;}
 }
 
 .filterTab {
-    background-color: #fff7c9 !important;
+    background-color: #eee !important;
     padding-top: 1%;
     margin-bottom: 2%;
+}
+
+.filterText {
+    margin-bottom: 1rem !important;
+    text-align: center;
+    font-size: 2rem !important;
+    font-weight: 100;
 }
 
 .mainListsTitle {
@@ -141,4 +160,22 @@ ul.topnav li.icon {display: none;}
     font-size: 10px;
     height: 32px;
     line-height: 0px;
+}
+
+.menuItems {
+    margin-top: 23px;
+    width: 100%;
+}
+
+.menuListItems {
+    margin: 0% 1% 0% 1%;
+}
+
+.footerBar {
+    background-color: #2B2B2B;
+    padding: 3% 15% 3% 15%;
+}
+
+.footerImg {
+    height: 100px;
 }

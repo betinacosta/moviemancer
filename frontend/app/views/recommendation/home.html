@@ -44,28 +44,51 @@
 
   <!-- Imutable Page Layout (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<div class="twelve columns headerMenu" id="nav" style="background-color: #642e68">
-    <div class="seven columns">
+<div class="twelve columns headerMenu" id="nav">
+    <div class="twelve columns">
         <ul class="topnav" id="myTopnav">
-            <li><a href="#/">Claquete</a></li>
-            <li><a href="#profile">Perfil</a></li>
-            <li><a href="#watchedlist">Já Vi</a></li>
-            <li><a href="#watchlist">Quero Ver</a></li>
-            <li><a href="#logout"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
-
+            <li class="menuListItems"> <a href="#/"><img style="height: 65px;" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png"></a></li>
+            <li class="menuListItems"><a href="#profile" class="menuItems">PERFIL</a></li>
+            <li class="menuListItems"><a href="#watchedlist" class="menuItems">JÁ VI</a></li>
+            <li class="menuListItems"><a href="#watchlist" class="menuItems">QUERO VER</a></li>
+            <li class="menuListItems"><a href="#watchlist" class="menuItems">SAIR</a></li>
         </ul>
     </div>
+    </div>
 
-    <div class="five columns">
+    <div class="twelve columns searchBarBackground">
         <form ng-submit="searchMovie(query)">
+            <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
             <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
         </form>
     </div>
-</div>
+
 <!-- End Page (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <div ng-view></div>
+
+<!-- End Content (navigation)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <footer class="twelve columns footerBar">
+    <div class="three columns" style="color:#f2f2f2;">
+      <img class="footerImg" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png">
+    </div>
+    <div class="three columns" style="color:#f2f2f2;margin-top: 2%;">
+      <p style="margin-bottom: 0.5rem !important;">Versão 1.0</p>
+      <p style="margin-bottom: 0.5rem !important;">copyright ©2016</p>
+    </div>
+    <div class="three columns" style="color:#f2f2f2;margin-top: 2%;">
+      <p style="margin-bottom: 0.5rem !important;">O site de recomendação de filmes mais legal do Brasil</p>
+    </div>
+    <div class="three columns" style="margin-top: 2%;float:right;">
+      <img height="50px" style="float: right;" src="https://www.themoviedb.org/assets/9b3f9c24d9fd5f297ae433eb33d93514/images/v4/logos/408x161-powered-by-rectangle-green.png">
+    </div>
+  </footer>
+
+<!-- End Footer
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 </body>
 </html>
