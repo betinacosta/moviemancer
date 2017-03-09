@@ -169,6 +169,13 @@ $scope.showFilterBar = function() {
 	   }
           
 },
+
+$scope.showPopover = false;
+
+    $scope.popover = {
+        title: 'Title',
+        message: 'Message'
+    };
 // Call init function
 	$scope.init();
 
