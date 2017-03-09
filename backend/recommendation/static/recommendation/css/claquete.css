@@ -126,6 +126,13 @@ ul.topnav li.icon {display: none;}
     border-color: #c68006;
 }
 
+.main-add {
+    height: 30px;
+    line-height: 30px;
+    background-color: green;
+    color: white;
+}
+
 .filterTab {
     background-color: #eee !important;
     padding-top: 1%;
