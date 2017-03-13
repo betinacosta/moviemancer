@@ -1,4 +1,4 @@
-var app = angular.module('myApp', []).config(function($interpolateProvider) {
+var app = angular.module('myApp', ['ngRateIt']).config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('{$');
         $interpolateProvider.endSymbol('$}');
     });
