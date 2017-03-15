@@ -9,8 +9,6 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
 		$scope.getRecommendation();
 		$scope.loadCommingSoon();
-
-		$scope.showPopover = false;
 	},
 
 	$scope.validateModel = function () {

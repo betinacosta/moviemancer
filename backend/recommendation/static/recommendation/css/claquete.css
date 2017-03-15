@@ -168,6 +168,9 @@ ul.topnav li.icon {display: none;}
     overflow: hidden;
     margin-bottom: 0.5rem;
     text-align: center;
+
+    font-size: large;
+    margin: 2px 5px 2px 5px;
 }
 
 .see-all {
