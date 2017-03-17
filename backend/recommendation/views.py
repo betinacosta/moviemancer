@@ -4,7 +4,7 @@ from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from recommendation.queries import movie_by_user_list, rate_movie, remove_movie_from_list, add_to_watched_list
+from recommendation.queries import movie_by_user_list, add_rating_to_movie, remove_movie_from_list, add_to_watched_list
 from recommendation.reco import add_recommentation_to_database
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -30,7 +30,7 @@ def recoratemovie(request):
         request_rate_id = request_user_rating[u'rate_id']
 
         #Add user rate to movie
-        rate_movie(request_user_id, request_movie_id, request_rate_id)
+        add_rating_to_movie(request_user_id, request_movie_id, request_rate_id)
         #Removes movie from recommended list (id = 1)
         remove_movie_from_list(request_user_id, request_movie_id)
         #Add movie to user's watched list

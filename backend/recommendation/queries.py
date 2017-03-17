@@ -66,7 +66,7 @@ def get_tmdb_movies_id_by_user(user):
 
 #UPDATE, DELETE, INSERT
 
-def rate_movie(user_id, movie_id, local_rate_id):
+def add_rating_to_movie(user_id, movie_id, local_rate_id):
     rating_query = Rating.objects.filter(movie_id = movie_id, user_id= user_id)
 
     if not rating_query:
@@ -88,4 +88,12 @@ def add_to_watched_list (user_id, movie_id):
 
     movie_list_entry = MovieList(movie_id = movie_id, list_id = list_id)
     movie_list_entry.save()
+
+def rate_movie (user_id, movie_id, local_rate_id):
+    #dar a nota
+    
+    #Verificar se filme está na Reco list
+        #Se estiver, tirar e adicionar a wactched list
+    #Verificar se filme está na 'quero ver' list
+        #Se tiver, mover para 
 
