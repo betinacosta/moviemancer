@@ -8,7 +8,7 @@ def get_list_id_by_user(user_id):
 
 def movie_by_user_list(user_id, list_name):
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
-        type_id = item.type_id;
+        type_id = item.type_id
 
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user_id, type_id]):
         list_id = item.list_id
@@ -16,13 +16,15 @@ def movie_by_user_list(user_id, list_name):
     return Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
 
 def get_rate_by_movie(movie_id, user_id):
+    rate_id = 0
+    movie_rate = 0
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
         rate_id = item.rate_id
 
     for item in Rate.objects.raw("SELECT * FROM rate WHERE rate_id = %s", [rate_id]):
-        movieRate = item.rate
+        movie_rate = item.rate
 
-    return movieRate
+    return movie_rate
 
 def get_list_by_user(user, list_type):
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user, list_type]):
@@ -61,3 +63,29 @@ def get_tmdb_movies_id_by_user(user):
             movies.append(movie.tmdb_movie_id)
     
     return movies
+
+#UPDATE, DELETE, INSERT
+
+def rate_movie(user_id, movie_id, local_rate_id):
+    rating_query = Rating.objects.filter(movie_id = movie_id, user_id= user_id)
+
+    if not rating_query:
+        user_rating = Rating(user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
+        print (user_rating)
+        user_rating.save()
+    else:
+        for item in rating_query:
+            user_rating = Rating(rating_id = item.rating_id, user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
+            user_rating.save()
+
+def remove_movie_from_list(user_id, movie_id):
+    list_id = get_list_by_user(user_id, 1)
+
+    MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
+
+def add_to_watched_list (user_id, movie_id):
+    list_id = get_list_by_user(user_id, 3)
+
+    movie_list_entry = MovieList(movie_id = movie_id, list_id = list_id)
+    movie_list_entry.save()
+

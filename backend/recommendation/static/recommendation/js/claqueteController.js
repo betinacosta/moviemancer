@@ -184,14 +184,20 @@ $scope.showFilterBar = function() {
 },
 
 // Call init function
-	$scope.init();
+$scope.init();
 
 $scope.setUserRating = function (rating, movieID) {
 
-
-
-	console.log($scope.recommendation);
-	console.log(movieID);
+	$http.post("recoratemovie/",{"movie_id": movieID,"rate_id": rating,"user_id": 1}, {'Content-Type': 'application/json; charset=utf-8'})
+           .then(
+               function(response){
+					$scope.getRecommendation();
+					console.log('Success: ',response.data)
+               },
+               function(response){
+                 console.log('Error: ',response)
+               }
+            );	
 }
 
 }]);
