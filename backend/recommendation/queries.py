@@ -64,6 +64,16 @@ def get_tmdb_movies_id_by_user(user):
     
     return movies
 
+def is_movie_on_list (user_id, movie_id, list_type):
+    list_id = get_list_by_user(user_id, list_type)
+
+    movie_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
+
+    if not movie_list:
+        return False
+    else:
+        return True
+
 #UPDATE, DELETE, INSERT
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
@@ -78,8 +88,8 @@ def add_rating_to_movie(user_id, movie_id, local_rate_id):
             user_rating = Rating(rating_id = item.rating_id, user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
             user_rating.save()
 
-def remove_movie_from_list(user_id, movie_id):
-    list_id = get_list_by_user(user_id, 1)
+def remove_movie_from_list(user_id, movie_id, list_type):
+    list_id = get_list_by_user(user_id, list_type)
 
     MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
 
@@ -90,10 +100,15 @@ def add_to_watched_list (user_id, movie_id):
     movie_list_entry.save()
 
 def rate_movie (user_id, movie_id, local_rate_id):
-    #dar a nota
-    
-    #Verificar se filme está na Reco list
-        #Se estiver, tirar e adicionar a wactched list
-    #Verificar se filme está na 'quero ver' list
-        #Se tiver, mover para 
+    #add rating
+    add_rating_to_movie(user_id, movie_id, local_rate_id)
 
+    #check if it is on recommended list and remove it
+    if is_movie_on_list (user_id, movie_id, 1):
+        remove_movie_from_list(user_id, movie_id, 1)
+    #check if it is on watchlist and remove it
+    elif is_movie_on_list(user_id, movie_id, 2):
+        remove_movie_from_list(user_id, movie_id, 2)
+
+    #add to watched list
+    add_to_watched_list (user_id, movie_id)
