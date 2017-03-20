@@ -1,4 +1,4 @@
-var app = angular.module('myApp', []).config(function($interpolateProvider) {
+var app = angular.module('myApp', ['ngRateIt']).config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('{$');
         $interpolateProvider.endSymbol('$}');
     });
@@ -9,6 +9,18 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
 		$scope.getRecommendation();
 		$scope.loadCommingSoon();
+		$scope.model = {
+            basic: 0,
+            readonly: 2.5,
+            readonly_enables: true,
+            minMaxStep:6,
+            minMaxStep2:8.75,
+            pristine: 3,
+            resetable: 1,
+            heightWidth: 1.5,
+            callbacks: 5,
+            custom: 4,
+        };
 	},
 
 	$scope.validateModel = function () {
@@ -137,16 +149,17 @@ $scope.loadCommingSoon = function () {
 
 $scope.getRecommendation = function (movies) {
 	$scope.recommendation = [];
+	$scope.rating = [];
 	$scope.fullRecommendation = [];
 	
 	$http.get('reco').success(function(data) {
 
 		for (i = 0; i < 6; i++) {
-			$scope.recommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
+			$scope.recommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster, movie_id: data[i].movie_id, rating: 0});
 		}
 
 		for (i = 0; i < data.length; i++) {
-			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster});
+			$scope.fullRecommendation.push ({title: data[i].tmdb_title, poster: data[i].tmdb_poster, movie_id: data[i].movie_id, rating: 0});
 		}
 	});
 },
@@ -169,7 +182,22 @@ $scope.showFilterBar = function() {
 	   }
           
 },
+
 // Call init function
-	$scope.init();
+$scope.init();
+
+$scope.setUserRating = function (rating, movieID) {
+
+	$http.post("recoratemovie/",{"movie_id": movieID,"rate_id": rating,"user_id": 1}, {'Content-Type': 'application/json; charset=utf-8'})
+           .then(
+               function(response){
+					$scope.getRecommendation();
+					console.log('Success: ',response.data)
+               },
+               function(response){
+                 console.log('Error: ',response)
+               }
+            );	
+}
 
 }]);

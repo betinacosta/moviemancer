@@ -70,28 +70,25 @@ def most_similar_users(person,number_of_users):
 	return scores[0:number_of_users]
 
 def user_recommendations(person):
-	dataset = get_similar_profiles(person)
+	dataset = most_similar_users(person, 10)
 	# Gets recommendations for a person by using a weighted average of every other user's rankings
 	totals = {}
 	simSums = {}
 	rankings_list =[]
 	for other in dataset:
 		# don't compare me to myself
-		if other == person:
+		if other[1] == person:
 			continue
-		sim = pearson_correlation(person,other)
-
+		sim = pearson_correlation(person,other[1])
 		# ignore scores of zero or lower
 		if sim <=0: 
 			continue
-		for item in get_movie_by_user(other):
-
+		for item in get_movie_by_user(other[1]):
 			# only score movies i haven't seen yet
 			if item not in get_movie_by_user(person):
-
 			# Similrity * score
 				totals.setdefault(item,0)
-				totals[item] += get_rate_by_movie(item, other)* sim
+				totals[item] += get_rate_by_movie(item, other[1])* sim
 				# sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+= sim
@@ -119,6 +116,7 @@ def add_recommentation_to_database(user):
 			reco = MovieList(movie_id=item, list_id=list_id)
 			reco.save()
 
+#move this to javacript to take similar on demand
 def get_similar_movies(tmdb_movie_id):
 	similar_movies = []
 	movie = tmdb.Movies(tmdb_movie_id)
@@ -126,7 +124,7 @@ def get_similar_movies(tmdb_movie_id):
 
 	for item in response['results']:
 		similar_movies.append(item['id'])
-
+	
 	return similar_movies
 
 def filter_movies(movies, user):

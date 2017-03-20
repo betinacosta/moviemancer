@@ -3,12 +3,39 @@ from django.shortcuts import render
 from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
-from recommendation.queries import movie_by_user_list
+from rest_framework.decorators import api_view
+from recommendation.queries import movie_by_user_list, rate_movie
 from recommendation.reco import add_recommentation_to_database
- 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import json
 
+
+@api_view(['GET', 'POST', 'DELETE'])
 def index(request):
     return render(request,'recommendation/home.html')
+
+def main(request):
+    return render(request,'recommendation/partials/main.html')
+
+def fullreco(request):
+    return render(request,'recommendation/partials/full-recommendation.html')
+
+@csrf_exempt
+def recoratemovie(request):
+    if request.body:
+        request_user_rating = json.loads(request.body)
+        request_user_id = request_user_rating[u'user_id']
+        request_movie_id = request_user_rating[u'movie_id']
+        request_rate_id = request_user_rating[u'rate_id']
+
+        rate_movie (request_user_id, request_movie_id, request_rate_id)
+        return HttpResponse(request.body)
+    else:
+        return HttpResponse("You are on your own")
+    
+    #update recommendation
+    add_recommentation_to_database(1)
 
 class MovieView(generics.ListAPIView):
     model = Movie
@@ -21,8 +48,3 @@ class RecoView (generics.ListAPIView):
     queryset = movie_by_user_list(1, 'recommendation')
     serializer_class = MovieSerializer
 
-def main(request):
-    return render(request,'recommendation/partials/main.html')
-
-def fullreco(request):
-    return render(request,'recommendation/partials/full-recommendation.html')
