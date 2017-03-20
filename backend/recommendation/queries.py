@@ -7,13 +7,15 @@ def get_list_id_by_user(user_id):
     return lists
 
 def movie_by_user_list(user_id, list_name):
+    list_id = 0
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
         type_id = item.type_id
 
-    for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s AND type_id = %s", [user_id, type_id]):
+    for item in List.objects.filter(user_id = user_id, type_id = type_id):
         list_id = item.list_id
 
-    return Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
+    movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
+    return movie_list
 
 def get_rate_by_movie(movie_id, user_id):
     rate_id = 0
