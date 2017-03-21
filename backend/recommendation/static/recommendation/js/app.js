@@ -1,4 +1,4 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2']);
+var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
@@ -10,6 +10,10 @@ claqueteApp.config(['$routeProvider',
         when('/full-recommendation', {
             templateUrl: 'full-recommendation',  
             controller: 'recoCtrl'
+        }).
+        when('/moviedetails/:tmdbID/:userID', {
+            templateUrl: 'moviedetails',
+            controller: 'movieCtrl'
         });
     }
 
