@@ -219,3 +219,20 @@ a.movie-title-link:active  {
   text-decoration:  none;
   color: #2b2b2b;
   } 
+
+.detail-movie-poster {
+    margin: 10% 10% 0% 30%;
+    height: 68%;
+    width: 68%;
+}
+
+.movie-title-detail {
+    text-align: center;
+    font-weight: bold;
+}
+
+.movie-overview {
+    font-size: large;
+    text-align: justify;
+}
+      
