@@ -1,6 +1,33 @@
-<div class="twelve columns filterTab" ng-controller="movieCtrl">
-    <title>OOIIIIII</title>
-    <p>vamos dale</p>
-    <p>{$batata$}</p>
-</div>
+<div class="twelve columns" ng-controller="movieCtrl">
+   <div id="first-section" class="twelve columns first-section" style="background-color: #eee">
+       <div id="poster-rating" class="four columns">
+           <div>
+               <img src="{$ movieDetails.poster_path $}" class="detail-movie-poster">
+               <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star{
+                                background-size: 35px;
+                            }
+                        </style>
+                    <ng-rate-it style="margin-left: 30%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="35" star-height="35" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+            </div>
+           </div>
+       </div>
+
+       <div id=movie-info class="eight columns">
+           <div id="title-overview" style="margin: 5% 5% 0% 0%;">
+               <h3 class="movie-title-detail">{$ movieDetails.title $}</h3>
+               <p class="movie-overview">{$ movieDetails.overview $}</p>
+           </div>
+       </div>
+
+       <div id=movie-crew class="eight columns">
+           <div id="director" class="four columns">
+               <p><b>Diretor(a): </b>{$ movieCrew.director $}</p>
+           </div>
+           <div id="writer" class="four columns">
+               <p><b>Roteirista: </b>{$ movieCrew.writer $}</p>
+           </div>
+       </div>
+   </div>
 </div>
