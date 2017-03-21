@@ -199,4 +199,23 @@ ul.topnav li.icon {display: none;}
     height: 100px;
 }
 
-
+a.movie-title-link:link    {
+  /* Applies to unvisited links of class mainNav */
+  text-decoration:  none;
+  color: #2b2b2b;
+  } 
+a.movie-title-link:visited {
+  /* Applies to visited links of class mainNav */
+text-decoration:  none;
+  color: #2b2b2b;
+  } 
+a.movie-title-link:hover   {
+  /* Applies to links under the pointer of class mainNav */
+  text-decoration:  none;
+  color: #2b2b2b;
+  } 
+a.movie-title-link:active  {
+  /* Applies to activated links of class mainNav */
+  text-decoration:  none;
+  color: #2b2b2b;
+  } 
