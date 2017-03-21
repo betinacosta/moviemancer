@@ -129,23 +129,24 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 
 			tmdb.call("/movie/" + $routeParams.tmdbID + '/credits', oParams,
 				function (crew, movieCrew) {
-                    director = '';
-                    writer = '';
+                    $scope.director = '';
+                    $scope.writer = '';
 
                     for(i=0; i < crew.crew.length; i++) {
 
                         if (crew.crew[i].job == "Director") {
-                            director = director + ', ' + crew.crew[i].name
+                            $scope.director = $scope.director + ', ' + crew.crew[i].name
                         }
                         if (crew.crew[i].job == "Writer") {
-                            writer = writer + ', ' + crew.crew[i].name
+                            $scope.writer = $scope.writer + ', ' + crew.crew[i].name
                         }
                     }
 
-                    movieCrew = {
-                        director: director,
-                        writer: writer
+                    $scope.movieCrew = {
+                        director: $scope.director,
+                        writer: $scope.writer
                     }
+                    console.log($scope.movieCrew);
 				},
 				function (e) {
 					console.log("Error: " + e)
