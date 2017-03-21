@@ -40,9 +40,11 @@
             <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=true;">
                 
                 <div>
+                    <a ng-href="#/moviedetails/1/{$movie.tmdb_id$}">
                     <p class="movieTitleMaster">{$movie.title$}</p>
                     <div style="position: relative">
                     <img src="{$movie.poster$}" width="100%" height="100%" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=true;">
+                    </a>
                     </div>
                 </div>   
                 <div style="text-align: center;" >
