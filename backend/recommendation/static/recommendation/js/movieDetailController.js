@@ -62,24 +62,29 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 
 			tmdb.call("/movie/" + $routeParams.tmdbID, oParams,
 				function (details, movieDetails, imagePath, movieGenres) {
-					$scope.movieDetails = {
+					
+                    for (i = 0; i < details.genres.length; i++) {
+                        $scope.movieGenres.push(details.genres[i].name);
+                    }
+
+                    $scope.movieDetails = {
                             title: details.title,
                             poster_path: 'https://image.tmdb.org/t/p/original/' + details.poster_path,
                             original_title: details.original_title,
                             overview: details.overview,
                             year: details.release_date,
                             runtime: details.runtime,
-                            imdb_link: 'http://www.imdb.com/title/' + details.imdb_id
+                            genres: $scope.movieGenres.toString(),
+                            imdb_link: 'http://www.imdb.com/title/' + details.imdb_id,
+                            imdb_id: details.imdb_id
 						}
 
-                    for (i = 0; i < details.genres.length; i++) {
-                        $scope.movieGenres.push(details.genres[i].name);
-                    }
 				},
 				function (e) {
 					console.log("Error: " + e)
 				}
 			);
+            console.log($scope.movieDetails)
 		};
 
     $scope.loadMovieVideo = function () {
@@ -108,7 +113,7 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 			tmdb.call("/movie/" + $routeParams.tmdbID + '/credits', oParams,
 				function (casting, movieCast) {
 
-                    for(i=0; i < 8; i++) {
+                    for(i=0; i < 6; i++) {
                         $scope.movieCast.push({
                             character: casting.cast[i].character,
                             actor: casting.cast[i].name,

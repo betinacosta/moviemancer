@@ -6,16 +6,16 @@
                <div style="text-align: center;">
                         <style>
                             .ngrateit-star{
-                                background-size: 35px;
+                                background-size: 45px;
                             }
                         </style>
-                    <ng-rate-it style="margin-left: 30%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="35" star-height="35" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                    <ng-rate-it style="margin-left: 10%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
             </div>
            </div>
        </div>
 
        <div id=movie-info class="eight columns">
-           <div id="title-overview" style="margin: 5% 5% 0% 0%;">
+           <div id="title-overview" style="margin: 5% 10% 0% 0%;">
                <h3 class="movie-title-detail">{$ movieDetails.title $}</h3>
                <p class="movie-overview">{$ movieDetails.overview $}</p>
            </div>
@@ -28,6 +28,29 @@
            <div id="writer" class="four columns" style="float: right;">
                <p style="font-size: large;"><b>Roteirista: </b>{$ movieCrew.writer $}</p>
            </div>
+       </div>
+
+       <div id=movie-genre-rotten class="eight columns">
+           <div id="genre" class="four columns">
+               <p style="font-size: large;"><b>Gêneros: </b>{$ movieDetails.genres $}</p>
+           </div>
+           <div id="imdb" class="four columns" style="float: right;">
+                <span class="imdbRatingPlugin" data-user="ur27796125" data-title="{$ movieDetails.imdb_id $}" data-style="p4">
+                    <a ng-href='{$ movieDetails.imdb_link $}'><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_46x22.png" /></a>
+                8.7/10</span>             
+           </div>
+       </div>
+
+       <div id=casting class="eight columns" style="margin-top: 1%;">
+           <p style="font-size: large;"><b>Elenco Principal: </b>
+       </div>
+
+        <div id=casting class="eight columns"> 
+           <div class="two columns" ng-repeat="cast in movieCast">
+               <img src="{$ cast.profile_img $}" width='62px' height="93px">
+               <div>
+                   <p>{$ cast.actor $}<br><b>({$ cast.character $})</b></p>
+               </div>
        </div>
    </div>
 </div>
