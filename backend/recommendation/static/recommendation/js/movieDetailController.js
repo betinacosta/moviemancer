@@ -1,4 +1,4 @@
-var app = angular.module('myApp3', ['ngRateIt']).config(function($interpolateProvider) {
+var app = angular.module('myApp3', ['ngRateIt', 'youtube-embed']).config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('{$');
         $interpolateProvider.endSymbol('$}');
     });
@@ -96,7 +96,7 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 				function (video, movieVideo) {
 					$scope.movieVideo = {
                             video_title: video.results[0].name,
-                            youtube_link: 'https://www.youtube.com/watch?v=' + video.results[0].key,
+                            youtube_id: video.results[0].key,
                     }
 				},
 				function (e) {
@@ -215,4 +215,10 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 
     
 
+}]);
+
+app.filter('trusted', ['$sce', function ($sce) {
+    return function(url) {
+        return $sce.trustAsResourceUrl(url);
+    };
 }]);
