@@ -192,7 +192,7 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 			tmdb.call("/movie/" + $routeParams.tmdbID + '/similar', oParams,
 				function (similar, similarMovies) {
 
-                    for(i=0; i < 6; i++) {
+                    for(i=0; i < 5; i++) {
                         $scope.similarMovies.push({
                             title: similar.results[i].title,
                             poster_path: 'https://image.tmdb.org/t/p/original/' + similar.results[i].poster_path,

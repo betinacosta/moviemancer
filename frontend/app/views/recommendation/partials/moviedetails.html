@@ -1,83 +1,119 @@
 <div class="twelve columns" ng-controller="movieCtrl">
-   <div id="first-section" class="twelve columns first-section" style="background-color: #eee">
-       <div id="poster-rating" class="four columns">
-           <div>
-               <img src="{$ movieDetails.poster_path $}" class="detail-movie-poster">
-               <div style="text-align: center;">
-                        <style>
-                            .ngrateit-star{
-                                background-size: 45px;
-                            }
-                        </style>
-                    <ng-rate-it style="margin-left: 10%;margin-bottom: 3%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+    <div id="first-section" class="twelve columns first-section" style="background-color: #eee">
+        <div id="poster-rating" class="four columns">
+            <div>
+                <img src="{$ movieDetails.poster_path $}" class="detail-movie-poster">
+                <div style="text-align: center;">
+                    <style>
+                        .ngrateit-star {
+                            background-size: 45px;
+                        }
+                    </style>
+                    <ng-rate-it style="margin-left: 10%;margin-bottom: 3%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5"
+                        star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                </div>
             </div>
-           </div>
-       </div>
+        </div>
 
-       <div id=movie-info class="eight columns">
-           <div id="title-overview" style="margin: 5% 10% 0% 0%;">
-               <h3 class="movie-title-detail">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
-               <p class="movie-overview">{$ movieDetails.overview $}</p>
-           </div>
-       </div>
+        <div id=movie-info class="eight columns">
+            <div id="title-overview" style="margin: 5% 10% 0% 0%;">
+                <h3 class="movie-title-detail">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
+                <p class="movie-overview">{$ movieDetails.overview $}</p>
+            </div>
+        </div>
 
-       <div id=movie-crew class="eight columns">
-           <div id="director" class="four columns">
-               <p style="font-size: large;"><b>Diretor(a): </b>{$ movieCrew.director $}</p>
-           </div>
-           <div id="writer" class="four columns" style="float: right;">
-               <p style="font-size: large;"><b>Roteirista: </b>{$ movieCrew.writer $}</p>
-           </div>
-       </div>
+        <div id=movie-crew class="eight columns">
+            <div id="director" class="four columns">
+                <p style="font-size: large;"><b>Diretor(a): </b>{$ movieCrew.director $}</p>
+            </div>
+            <div id="writer" class="four columns" style="float: right;">
+                <p style="font-size: large;"><b>Roteirista: </b>{$ movieCrew.writer $}</p>
+            </div>
+        </div>
 
-       <div id=movie-genre-rotten class="eight columns">
-           <div id="genre" class="four columns">
-               <p style="font-size: large;"><b>Gêneros: </b>{$ movieDetails.genres $}</p>
-           </div>
-           <div id="imdb" class="four columns" style="float: right;">
+        <div id=movie-genre-rotten class="eight columns">
+            <div id="genre" class="four columns">
+                <p style="font-size: large;"><b>Gêneros: </b>{$ movieDetails.genres $}</p>
+            </div>
+            <div id="imdb" class="four columns" style="float: right;">
                 <span class="imdbRatingPlugin" data-user="ur27796125" data-title="{$ movieDetails.imdb_id $}" data-style="p4">
                     <a ng-href='{$ movieDetails.imdb_link $}'><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_46x22.png" /></a>
-                8.7/10</span>             
-           </div>
-       </div>
+                8.7/10</span>
+            </div>
+        </div>
 
-       <div id=casting class="eight columns" style="margin-top: 1%;">
-           <p style="font-size: large;"><b>Elenco Principal: </b>
-       </div>
+        <div id=casting class="eight columns" style="margin-top: 1%;">
+            <p style="font-size: large;"><b>Elenco Principal: </b>
+        </div>
 
-        <div id=casting class="eight columns"> 
-           <div class="two columns" ng-repeat="cast in movieCast">
-               <img src="{$ cast.profile_img $}" width='62px' height="93px">
-               <div>
-                   <p>{$ cast.actor $}<br><b>({$ cast.character $})</b></p>
-               </div>
-       </div>
-   </div>
-</div>
-
-<div id="second-section" class="twelve columns first-section">
-    <div id="video" class="four columns" style="margin: 1% 0% 1% 6%;">
-        <h3>Trailer</h3>
-        <div class="embed-responsive embed-responsive-16by9">
-            <youtube-video class="embed-responsive-item" video-id="movieVideo.youtube_id"></youtube-video>
+        <div id=casting class="eight columns">
+            <div class="two columns" ng-repeat="cast in movieCast">
+                <img src="{$ cast.profile_img $}" width='62px' height="93px">
+                <div>
+                    <p>{$ cast.actor $}<br><b>({$ cast.character $})</b></p>
+                </div>
+            </div>
         </div>
     </div>
 
-
-    <div id="more-details" class="six columns" style="width: 59%">
-        <div class="more_details" style="width: 50%; float: left;">
-            <p><b>Título Original:</b> {$ movieDetails.original_title $}</p>
-            <p><b>Duração:</b> {$ movieDetails.runtime $}</p>
-            <p><b>Links:</b> <a ng-href="{$ movieDetails.imdb_link $}"> IMDb</a> </p>
+    <div id="second-section" class="twelve columns first-section">
+        <div id="video" class="four columns" style="margin: 1% 0% 2% 6%;">
+            <h3>Trailer</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+                <youtube-video class="embed-responsive-item" video-id="movieVideo.youtube_id"></youtube-video>
+            </div>
         </div>
 
-     <div id="keywords" class="keywors">
-        <p style="font-size: large"><b>Palavras-Chave:</b></p>
-        <div ng-repeat="key in movieKeywords">
-            <button class="keywors-btn" >{$ key $}</button>
+
+        <div id="more-details" class="six columns" style="width: 59%">
+            <div class="more_details" style="width: 50%; float: left;">
+                <p><b>Título Original:</b> {$ movieDetails.original_title $}</p>
+                <p><b>Duração:</b> {$ movieDetails.runtime $}</p>
+                <p><b>Links:</b> <a ng-href="{$ movieDetails.imdb_link $}"> IMDb</a> </p>
+            </div>
+
+            <div id="keywords" class="keywors">
+                <p style="font-size: large"><b>Palavras-Chave:</b></p>
+                <div ng-repeat="key in movieKeywords">
+                    <button class="keywors-btn">{$ key $}</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
-</div>
-</div>
+    <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
+        <div id="reviews" style="margin: 1% 5% 2% 6%;">
+            <div>
+            <h3>Críticas <button class="see-all">Ver Todos</button></h3>
+            </div>
+            <h5 >Achei Bom</h5>
+            <p style="margin-top: -20px;">por Error404not</p>
+            <p style="font-size: large; text-align: justify">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam venenatis bibendum magna,
+                non varius libero aliquam quis. Maecenas non lorem a lacus malesuada blandit. Donec a erat orci. 
+                Nunc et vehicula turpis. In eget pretium ligula. Quisque eget metus mauris. Mauris blandit dui 
+                nulla, vel auctor nibh varius id. Donec hendrerit id diam vitae molestie. Suspendisse aliquam neque 
+                id felis interdum fringilla. Cras pellentesque urna mi, non feugiat ex blandit nec. nteger nec massa 
+                in lectus mollis bibendum vitae a metus. Mauris fringilla, arcu non tempor finibus, urna nisl lacinia 
+                neque, quis laoreet arcu massa at tortor. Nullam ultrices nec augue eu posuere. Aliquam suscipit, eros 
+                et ultricies cursus, mauris metus volutpat leo, congue vehicula lorem felis quis leo. Cras nec tortor 
+                quis est cursus fringilla. Ut mi felis, euismod in vehicula vitae, laoreet eu felis.
+            </p>
+        </div>
+    </div>
+
+    <div id="fourth-section" class="twelve columns first-section" style="margin-bottom: 2%;">
+        <div style="margin-top: 1%;">
+            <h3 style="margin-left: 6%;">Similares</h3>
+            <div class="two columns" style="background-color: #F6F6F6;margin-left: 6%;" ng-repeat="similar in similarMovies">
+                <div>
+                    <a ng-href="#/moviedetails/{$ similar.tmdb_id $}/1" class="movie-title-link">
+                    <p class="movieTitleMaster">{$ similar.title $}</p>
+                    <img src="{$ similar.poster_path $}" width="202px" height="287px">
+                    </a>
+                </div>
+        </div>   
+        </div>
+    </div>
 </div>
