@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="singInBackground">
+<html lang="en" ng-app="claqueteApp" class="singInBackground">
 
 <head>
 
@@ -16,13 +16,14 @@
 
     <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/font-awesome/css/font-awesome.min.css' %}" />
 
     <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="../../assets/css/normalize.css">
-    <link rel="stylesheet" href="../../assets/css/skeleton.css">
-    <link rel="stylesheet" href="../../assets/css/claquete.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/normalize.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/skeleton.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/claquete.css' %}" />
 
     <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -31,10 +32,11 @@
     <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="../controllers/login.js"></script>
+  <script src="{% static 'recommendation/node_modules/angular/angular.js' %}"></script>
+  <script src="{% static 'recommendation/js/app.js' %}"></script>
+  <script src="{% static 'recommendation/node_modules/angular-route/angular-route.js' %}"></script>
 
-
+  <!--<script src="{% static 'recommendation/js/loginController.js' %}"></script>-->
 </head>
 
 <body>

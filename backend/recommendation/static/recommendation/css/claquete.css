@@ -41,7 +41,7 @@
 }
 
 .singInBackground {
-    background: url(../img/singingrandhotel.jpg) no-repeat center center fixed; 
+    background: url(../img/shining_bike.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -49,7 +49,7 @@
 }
 
 .logInBackground {
-    background: url(../img/grandhotel.jpg) no-repeat center center fixed; 
+    background: url(../img/shining_bike.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
