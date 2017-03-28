@@ -67,13 +67,17 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
                         $scope.movieGenres.push(details.genres[i].name);
                     }
 
+					$scope.hours = Math.floor( details.runtime / 60);
+					$scope.minutes = details.runtime % 60;
+					$scope.runtime = $scope.hours.toString() + 'h' + $scope.minutes.toString() + 'min';
+
                     $scope.movieDetails = {
                             title: details.title,
                             poster_path: 'https://image.tmdb.org/t/p/original/' + details.poster_path,
                             original_title: details.original_title,
                             overview: details.overview,
-                            year: details.release_date,
-                            runtime: details.runtime,
+                            year: new Date(details.release_date).getFullYear(),
+                            runtime: $scope.runtime,
                             genres: $scope.movieGenres.toString(),
                             imdb_link: 'http://www.imdb.com/title/' + details.imdb_id,
                             imdb_id: details.imdb_id

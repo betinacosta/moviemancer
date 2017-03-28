@@ -258,3 +258,20 @@ a.movie-title-link:active  {
   border: 0;
 }
       
+.more_details {
+    margin-top: 10%;
+    font-size: larger;
+}
+
+.keywors {
+    margin-top: 10%;
+    width: 50%;
+    float: right;
+}
+
+.keywors-btn {
+    float: left; 
+    margin-right: 2%; 
+    background-color: #9a2726; 
+    color: #fff;
+}

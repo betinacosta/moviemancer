@@ -9,14 +9,14 @@
                                 background-size: 45px;
                             }
                         </style>
-                    <ng-rate-it style="margin-left: 10%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                    <ng-rate-it style="margin-left: 10%;margin-bottom: 3%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
             </div>
            </div>
        </div>
 
        <div id=movie-info class="eight columns">
            <div id="title-overview" style="margin: 5% 10% 0% 0%;">
-               <h3 class="movie-title-detail">{$ movieDetails.title $}</h3>
+               <h3 class="movie-title-detail">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
                <p class="movie-overview">{$ movieDetails.overview $}</p>
            </div>
        </div>
@@ -56,13 +56,28 @@
 </div>
 
 <div id="second-section" class="twelve columns first-section">
-    <div id="video" class="four columns" style="margin: 3% 0% 3% 6%;">
+    <div id="video" class="four columns" style="margin: 1% 0% 1% 6%;">
+        <h3>Trailer</h3>
         <div class="embed-responsive embed-responsive-16by9">
             <youtube-video class="embed-responsive-item" video-id="movieVideo.youtube_id"></youtube-video>
         </div>
     </div>
 
-    <div id="more-details" class="four columns">
+
+    <div id="more-details" class="six columns" style="width: 59%">
+        <div class="more_details" style="width: 50%; float: left;">
+            <p><b>Título Original:</b> {$ movieDetails.original_title $}</p>
+            <p><b>Duração:</b> {$ movieDetails.runtime $}</p>
+            <p><b>Links:</b> <a ng-href="{$ movieDetails.imdb_link $}"> IMDb</a> </p>
+        </div>
+
+     <div id="keywords" class="keywors">
+        <p style="font-size: large"><b>Palavras-Chave:</b></p>
+        <div ng-repeat="key in movieKeywords">
+            <button class="keywors-btn" >{$ key $}</button>
+        </div>
     </div>
+
+</div>
 </div>
 </div>
