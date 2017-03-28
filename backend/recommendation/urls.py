@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^main/$', views.main, name='main'),
     url(r'^full-recommendation/$', views.fullreco, name='fullreco'),
     url(r'^recoratemovie/$', views.recoratemovie, name='recoratemovie'),
+    url(r'^moviedetails/$', views.moviedetails, name='moviedetails'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
