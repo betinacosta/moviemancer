@@ -18,6 +18,9 @@ urlpatterns = [
     url(r'^getwatchedlist/$', views.get_watched_list, name='getwatchedlist'),
     url(r'^removefromwatchedlist/$', views.remove_from_watched_list, name='removefromwatchedlist'),
     url(r'^removefromwatchlist/$', views.remove_from_watchlist, name='removefromwatchlist'),
+    url(r'^watchlist/$', views.show_watchlist, name='watchlist'),
+    url(r'^getwatchlist/$', views.get_watch_list, name='getwatchlist'),
+
 
     
 

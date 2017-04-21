@@ -1,4 +1,4 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp']);
+var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
@@ -18,6 +18,10 @@ claqueteApp.config(['$routeProvider',
         when('/watchedlistview', {
             templateUrl: 'watchedlist',
             controller: 'watchedListCtrl'
+        }).
+        when('/watchlistview', {
+            templateUrl: 'watchlist',
+            controller: 'watchlistCtrl'
         });
     }
 

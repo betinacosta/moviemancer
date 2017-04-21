@@ -107,8 +107,21 @@ def get_watchedlist (user):
         })
 
     return json.dumps(watched_list)
-        
-    
+
+def get_watchlist(user):
+    watchlist = []
+    list_id = get_list_by_user(user, 2);
+    movies = MovieList.objects.filter(list_id = list_id)
+
+    for m in movies:
+        watchlist.append({
+            'movie_id': m.movie_id,
+            'tmdb_movie_id': get_movie_tmdb_id(m.movie_id),
+            'title': get_movie_title(m.movie_id),
+            'poster': get_movie_poster(m.movie_id),
+        })
+
+    return json.dumps(watchlist)
 
 #UPDATE, DELETE, INSERT
 

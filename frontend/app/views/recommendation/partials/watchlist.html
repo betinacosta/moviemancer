@@ -1,0 +1,62 @@
+<div class="twelve columns filterTab" ng-controller="watchlistCtrl">
+    <div>
+        <h6 class="filterText" style="text-align: center">
+            <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-click="showFilterBar()"></i>
+            <i class="fa fa-caret-square-o-up" id="toggleUp" aria-hidden="true" style="display:none" ng-click="showFilterBar()"></i>
+            Filtros
+        </h6>
+        </div>
+    <div class="twelve columns" style="display:none" id="filterBar">
+            <button>Drama</button>
+            <button>Ação</button>
+            <button>Suspense</button>
+            <button>Aventura</button>
+            <button>Mistério</button>
+            <button>Família</button>
+            <button>Thriller</button>
+            <button>História</button>
+            <button>Romance</button>
+            <button>Documentário</button>
+            <button>Comédia</button>
+            <button>Musical</button>
+            <button>Guerra</button>
+            <button>Ficção Científica</button>
+            <button>Fantasia</button>
+            <button>Animação</button>
+            <button>Crime</button>
+            <button>Faroeste</button>
+            <button>Terror</button>
+    </div>
+    
+</div>
+
+<div>
+    <div class="twelve columns">
+        <h4 class="u-pull-left" style="margin-left:1%">Quero Ver</h4>
+    </div>
+
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-repeat="i in index">
+        <div>
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in watchlist[i]">
+                
+                <div>
+                    <i class="fa fa-times watchlist_pin" style="color:#aa2323" ng-click="removeFromWatchlist(movie.movie_id)"></i>
+                    <a ng-href="#/moviedetails/{$movie.tmdb_id$}/1" class="movie-title-link">
+                    <p class="movieTitleMaster">{$movie.title$}</p>
+                    <div style="position: relative">
+                    <img src="{$movie.poster$}" style="width: 100%;min-height: 100%;">
+                    </a>
+                    </div>
+                </div>   
+                <div style="text-align: center;" >
+                    <style>
+                        .ngrateit-star{
+                            background-size: 28px;
+                        }
+                    </style>
+                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                </div>
+            </div>
+        </div>
+</div>
+<div id="snackbar">{$ toastMessage $}</div>
