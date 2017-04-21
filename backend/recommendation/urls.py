@@ -9,8 +9,11 @@ urlpatterns = [
     url(r'^reco/$', views.RecoView.as_view(), name='recommendation'),
     url(r'^main/$', views.main, name='main'),
     url(r'^full-recommendation/$', views.fullreco, name='fullreco'),
-    url(r'^recoratemovie/$', views.recoratemovie, name='recoratemovie'),
+    url(r'^ratemovie/$', views.ratemovie, name='ratemovie'),
     url(r'^moviedetails/$', views.moviedetails, name='moviedetails'),
+    url(r'^addwatchlist/$', views.add_watchlist, name='addwatchlist'),
+    url(r'^addwatchlistexternal/$', views.add_watchlist_external, name='addwatchlistexternal'),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

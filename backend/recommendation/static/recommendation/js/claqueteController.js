@@ -238,6 +238,29 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 			);
 	}
 
+	$scope.addWatchlistExternal = function (tmdb_id, poster, title) {
+
+		$http.post("addwatchlistexternal/", {
+				"tmdb_movie_id": tmdb_id,
+				"user_id": 1,
+				"movie_poster": poster,
+				"movie_title":title
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Quero Ver")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
+			);
+	}
+
+
+
 	$scope.toastMessege = function (msg) {
 		$scope.toastMessage = msg;
 		// Get the snackbar DIV

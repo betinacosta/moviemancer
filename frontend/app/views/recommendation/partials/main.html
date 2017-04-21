@@ -68,7 +68,7 @@
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
             <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="l in commingSoon">
-                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExterna(l.tmdb_id)"></i>
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExternal(l.tmdb_id, l.img, l.title)"></i>
                     <a ng-href="#/moviedetails/{$l.tmdb_id$}/1" class="movie-title-link">
                     <p class="movieTitleMaster">{$l.title$}</p>                    
                     <img src="{$l.img$}" width="100%" height="100%">
