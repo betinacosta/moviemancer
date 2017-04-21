@@ -23,52 +23,17 @@ $scope.getRecommendation = function (movies) {
                                                 tmdb_id: data[i].tmdb_movie_id});
 		}
 
-        $scope.fullList = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), true);
-        for (i = 0; i < $scope.fullRecommendation.length/6; i++) {
+		$scope.chunk_size = 6;
+		$scope.fullList = $scope.fullRecommendation.map( function(e,i){ 
+			return i%$scope.chunk_size===0 ? $scope.fullRecommendation.slice(i,i+$scope.chunk_size) : null; 
+		})
+		.filter(function(e){ return e; });
+
+        for (i = 0; i < $scope.fullList.length; i++) {
             $scope.index.push(i);
         }
 
 	});
-},
-
-$scope.splitRecommendations = function (a, n, balanced) {
-    
-    if (n < 2)
-        return [a];
-
-    var len = a.length,
-            out = [],
-            i = 0,
-            size;
-
-    if (len % n === 0) {
-        size = Math.floor(len / n);
-        while (i < len) {
-            out.push(a.slice(i, i += size));
-        }
-    }
-
-    else if (balanced) {
-        while (i < len) {
-            size = Math.ceil((len - i) / n--);
-            out.push(a.slice(i, i += size));
-        }
-    }
-
-    else {
-
-        n--;
-        size = Math.floor(len / n);
-        if (len % size === 0)
-            size--;
-        while (i < size * n) {
-            out.push(a.slice(i, i += size));
-        }
-        out.push(a.slice(size * n));
-
-    }
-
-    return out;
 },
 
 $scope.showFilterBar = function() {

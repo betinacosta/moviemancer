@@ -25,9 +25,15 @@ app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
                                                 rating: response.data[i].rating});
                         }
                     //console.log($scope.fullList);
+
+                    $scope.chunk_size = 6;
+                        $scope.watchedList = $scope.fullList.map( function(e,i){ 
+                            return i%$scope.chunk_size===0 ? $scope.fullList.slice(i,i+$scope.chunk_size) : null; 
+                        })
+                        .filter(function(e){ return e; });
     
-                    $scope.watchedList = $scope.splitRecommendations($scope.fullList, Math.ceil($scope.fullList.length/6), true);
-                    for (i = 0; i < $scope.fullList.length/6; i++) {
+                    //$scope.watchedList = $scope.splitRecommendations($scope.fullList, Math.ceil($scope.fullList.length/6), true);
+                    for (i = 0; i < $scope.watchedList.length; i++) {
                         $scope.index.push(i);
                     }
                     //console.log($scope.index);
