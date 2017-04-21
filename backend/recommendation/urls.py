@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^moviedetails/$', views.moviedetails, name='moviedetails'),
     url(r'^addwatchlist/$', views.add_watchlist, name='addwatchlist'),
     url(r'^addwatchlistexternal/$', views.add_watchlist_external, name='addwatchlistexternal'),
+    url(r'^rateexternalmovie/$', views.rate_external, name='rateexternalmovie'),
 
 ]
 

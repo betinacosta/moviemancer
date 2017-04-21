@@ -110,9 +110,6 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
         else:
             print('Errro while adding new movie to list')
 
-        
-        
-
 def add_to_list (user_id, movie_id, list_type):
     list_id = get_list_by_user(user_id, list_type)
     is_on_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
@@ -126,6 +123,7 @@ def add_to_list (user_id, movie_id, list_type):
         movie_list_entry.save()
 
 def rate_movie (user_id, movie_id, local_rate_id):
+
     #add rating
     add_rating_to_movie(user_id, movie_id, local_rate_id)
 
@@ -135,3 +133,19 @@ def rate_movie (user_id, movie_id, local_rate_id):
 
     #add to watched list
     add_to_list (user_id, movie_id, 3)
+
+def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_title):
+    movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
+
+    if movie:
+        movie_id = movie[0].movie_id
+        rate_movie (user_id, movie_id, user_rating)
+    else:
+        new_movie = Movie(tmdb_movie_id = tmdb_movie_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title)
+        new_movie.save()
+        movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
+        if movie:
+            movie_id = movie[0].movie_id
+            rate_movie (user_id, movie_id, user_rating)
+        else:
+            print('Errro while adding new movie to list')

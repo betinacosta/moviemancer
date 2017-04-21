@@ -338,3 +338,27 @@ However, delay the fade out process for 2.5 seconds */
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+.pin {
+    position: relative;
+    /* width: 42%; */
+    /* margin-left: 29%; */
+    /* margin-right: 29%; */
+    text-align: center;
+}
+
+.pin:after {
+    content: '\f08d';
+    font-family: fontAwesome;
+    /* position: absolute; */
+    margin-left: 0.7em;
+    top: 0.1em;
+    /* float: left; */
+    /* right: 1.5em; */
+    cursor: pointer;
+    cursor: hand;
+}
+
+.pin:hover:after {
+    color: #006400;
+}

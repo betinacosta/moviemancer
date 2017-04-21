@@ -5,6 +5,8 @@ var app = angular.module('myApp3', ['ngRateIt', 'youtube-embed']).config(functio
 
 app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
 
+	
+
      
     		//tmdb wrapper
 		(function () {
@@ -208,21 +210,71 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 
     $scope.init = function () {
         $scope.loadMovieDetails();
-        $scope.loadMovieVideo();
+		$scope.loadMovieVideo();
         $scope.loadCast();
-        $scope.loadCrew();
+		$scope.loadCrew();
         $scope.loadKeywords();
-        $scope.loadSimilarMovies();
+		$scope.loadSimilarMovies();
     }
 
     $scope.init();
 
+	$scope.setUserRatingExternal = function (rating, poster, title) {
+
+		$http.post("rateexternalmovie/", {
+				"tmdb_movie_id": $routeParams.tmdbID,
+				"rate_id": rating,
+				"user_id": $routeParams.userID,
+				"movie_poster": poster,
+				"movie_title": title
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
+			);
+	}
+
+	$scope.addWatchlistExternal = function (poster, title) {
+
+		$http.post("addwatchlistexternal/", {
+				"tmdb_movie_id": $routeParams.tmdbID,
+				"user_id": $routeParams.userID,
+				"movie_poster": poster,
+				"movie_title":title
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Quero Ver")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
+			);
+	}
+
+
+
+	$scope.toastMessege = function (msg) {
+		$scope.toastMessage = msg;
+		// Get the snackbar DIV
+		var x = document.getElementById("snackbar")
+
+		// Add the "show" class to DIV
+		x.className = "show";
+
+		// After 3 seconds, remove the show class from DIV
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
     
 
-}]);
-
-app.filter('trusted', ['$sce', function ($sce) {
-    return function(url) {
-        return $sce.trustAsResourceUrl(url);
-    };
 }]);

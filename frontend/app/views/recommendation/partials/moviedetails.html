@@ -10,14 +10,14 @@
                         }
                     </style>
                     <ng-rate-it style="margin-left: 10%;margin-bottom: 3%;" ng-model="movie.rating" step="1" resetable="false" min="0" max="5"
-                        star-width="45" star-height="45" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                        star-width="45" star-height="45" ng-click="setUserRatingExternal(movie.rating, movieDetails.poster_path, movieDetails.title)"></ng-rate-it>
                 </div>
             </div>
         </div>
 
         <div id=movie-info class="eight columns">
             <div id="title-overview" style="margin: 5% 10% 0% 0%;">
-                <h3 class="movie-title-detail">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
+                <h3 class="movie-title-detail pin" ng-click="addWatchlistExternal(movieDetails.poster_path, movieDetails.title)">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
                 <p class="movie-overview">{$ movieDetails.overview $}</p>
             </div>
         </div>
@@ -116,4 +116,5 @@
         </div>   
         </div>
     </div>
+    <div id="snackbar">{$ toastMessage $}</div>
 </div>
