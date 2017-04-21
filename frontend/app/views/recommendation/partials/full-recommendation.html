@@ -34,15 +34,29 @@
     <div class="twelve columns">
         <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4>
     </div>
+
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-repeat="i in index">
         <div>
-            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in teste[i]">
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in fullList[i]">
                 
+                <div>
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
+                    <a ng-href="#/moviedetails/{$movie.tmdb_id$}/1" class="movie-title-link">
                     <p class="movieTitleMaster">{$movie.title$}</p>
-                    <img src="{$movie.poster$}" width="100%" height="100%">
-                
-                    <button class="main-add-wl-btn u-full-width">Quero Ver</button>
+                    <div style="position: relative">
+                    <img src="{$movie.poster$}" style="width: 100%;min-height: 100%;">
+                    </a>
+                    </div>
+                </div>   
+                <div style="text-align: center;" >
+                    <style>
+                        .ngrateit-star{
+                            background-size: 28px;
+                        }
+                    </style>
+                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                </div>
             </div>
         </div>
-    </div>
 </div>
+<div id="snackbar">{$ toastMessage $}</div>
