@@ -275,3 +275,17 @@ a.movie-title-link:active  {
     background-color: #9a2726; 
     color: #fff;
 }
+
+.watchlist_pin {
+    line-height: 1.5em;
+    float: right;
+    color: #636361;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.watchlist_pin:hover {
+    color: #006400;
+}
