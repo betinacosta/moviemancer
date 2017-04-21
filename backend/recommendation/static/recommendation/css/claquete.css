@@ -357,6 +357,7 @@ However, delay the fade out process for 2.5 seconds */
     /* right: 1.5em; */
     cursor: pointer;
     cursor: hand;
+    font: normal normal normal 29px/1 FontAwesome;
 }
 
 .pin:hover:after {
