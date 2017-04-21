@@ -37,14 +37,14 @@
     </div>
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
-            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=true;">
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation">
                 
                 <div>
                     <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
                     <a ng-href="#/moviedetails/{$movie.tmdb_id$}/1" class="movie-title-link">
                     <p class="movieTitleMaster">{$movie.title$}</p>
                     <div style="position: relative">
-                    <img src="{$movie.poster$}" width="100%" height="100%">
+                    <img src="{$movie.poster$}" style="width: 100%;min-height: 100%;">
                     </a>
                     </div>
                 </div>   
@@ -68,10 +68,11 @@
     <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
             <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="l in commingSoon">
-
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExterna(l.tmdb_id)"></i>
+                    <a ng-href="#/moviedetails/{$l.tmdb_id$}/1" class="movie-title-link">
                     <p class="movieTitleMaster">{$l.title$}</p>                    
                     <img src="{$l.img$}" width="100%" height="100%">
-
+                    </a>
                     <h6 style="text-align:center">Sem Classificação</h6>
             </div>
         </div>

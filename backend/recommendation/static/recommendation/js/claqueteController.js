@@ -133,9 +133,11 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 					for (i = 0; i < 6; i++) {
 						$scope.commingSoon.push({
 							img: $scope.imagePath + soon.results[i].poster_path,
-							title: soon.results[i].title
+							title: soon.results[i].title,
+							tmdb_id: soon.results[i].id
 						})
 					}
+					console.log($scope.commingSoon)
 				},
 				function (e) {
 					console.log("Error: " + e)
@@ -195,7 +197,7 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 
 	$scope.setUserRating = function (rating, movieID) {
 
-		$http.post("recoratemovie/", {
+		$http.post("ratemovie/", {
 				"movie_id": movieID,
 				"rate_id": rating,
 				"user_id": 1
@@ -214,6 +216,26 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 			);
 
 			
+	}
+
+	$scope.addWatchlist = function (movieID) {
+
+		$http.post("addwatchlist/", {
+				"movie_id": movieID,
+				"user_id": 1
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.getRecommendation();
+					$scope.toastMessege("Filme Adicionado a Quero Ver")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
+			);
 	}
 
 	$scope.toastMessege = function (msg) {
