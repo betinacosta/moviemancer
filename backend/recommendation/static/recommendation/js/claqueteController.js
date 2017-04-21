@@ -137,7 +137,6 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 							tmdb_id: soon.results[i].id
 						})
 					}
-					console.log($scope.commingSoon)
 				},
 				function (e) {
 					console.log("Error: " + e)
