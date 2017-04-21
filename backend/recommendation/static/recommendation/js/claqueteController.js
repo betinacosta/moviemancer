@@ -206,11 +206,26 @@ app.controller('mainCtrl', ['$scope', '$http', function ($scope, $http) {
 				function (response) {
 					$scope.getRecommendation();
 					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Lista de Vistos")
 				},
 				function (response) {
 					console.log('Error: ', response)
 				}
 			);
+
+			
 	}
+
+	$scope.toastMessege = function (msg) {
+		$scope.toastMessage = msg;
+		// Get the snackbar DIV
+		var x = document.getElementById("snackbar")
+
+		// Add the "show" class to DIV
+		x.className = "show";
+
+		// After 3 seconds, remove the show class from DIV
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
 }]);
