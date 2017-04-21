@@ -23,7 +23,7 @@ $scope.getRecommendation = function (movies) {
                                                 tmdb_id: data[i].tmdb_movie_id});
 		}
 
-        $scope.fullList = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), false);
+        $scope.fullList = $scope.splitRecommendations($scope.fullRecommendation, Math.ceil($scope.fullRecommendation.length/6), true);
         for (i = 0; i < $scope.fullRecommendation.length/6; i++) {
             $scope.index.push(i);
         }

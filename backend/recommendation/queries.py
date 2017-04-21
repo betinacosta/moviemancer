@@ -1,4 +1,5 @@
 from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type
+import json
 
 def get_list_id_by_user(user_id):
     lists = []
@@ -76,6 +77,39 @@ def is_movie_on_list (user_id, movie_id, list_type):
     else:
         return True
 
+def get_movie_title(movie_id):
+    movie = Movie.objects.filter(movie_id = movie_id)
+
+    return movie[0].tmdb_title
+
+def get_movie_poster(movie_id):
+    movie = Movie.objects.filter(movie_id = movie_id)
+
+    return movie[0].tmdb_poster
+
+def get_movie_tmdb_id(movie_id):
+    movie = Movie.objects.filter(movie_id = movie_id)
+
+    return movie[0].tmdb_movie_id
+
+def get_watchedlist (user):
+    watched_list = []
+    list_id = get_list_by_user(user, 3);
+    movies = MovieList.objects.filter(list_id = list_id)
+
+    for m in movies:
+        watched_list.append({
+            'movie_id': m.movie_id,
+            'tmdb_movie_id': get_movie_tmdb_id(m.movie_id),
+            'title': get_movie_title(m.movie_id),
+            'poster': get_movie_poster(m.movie_id),
+            'rating': get_rate_by_movie(m.movie_id, user)
+        })
+
+    return json.dumps(watched_list)
+        
+    
+
 #UPDATE, DELETE, INSERT
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
@@ -94,6 +128,14 @@ def remove_movie_from_list(user_id, movie_id, list_type):
     list_id = get_list_by_user(user_id, list_type)
 
     MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
+
+def remove_rating(user_id, movie_id):
+    Rating.objects.filter(movie_id = movie_id, user_id = user_id).delete()
+
+def remove_watched(user_id, movie_id, list_type):
+    remove_movie_from_list(user_id, movie_id, list_type)
+
+    remove_rating(user_id, movie_id)
 
 def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_type):
     movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)

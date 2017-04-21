@@ -4,7 +4,7 @@ from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from recommendation.queries import movie_by_user_list, rate_movie
+from recommendation.queries import movie_by_user_list, rate_movie, get_watchedlist, remove_watched
 from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external, rate_external_movie
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -23,6 +23,9 @@ def fullreco(request):
 
 def moviedetails(request):
     return render(request,'recommendation/partials/moviedetails.html')
+
+def show_watched_list(request):
+    return render(request,'recommendation/partials/watchedlist.html')
 
 @csrf_exempt
 def ratemovie(request):
@@ -83,6 +86,43 @@ def add_watchlist_external(request):
         request_movie_title = request_data[u'movie_title']
 
         add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
+        return HttpResponse(request.body)
+    else:
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def get_watched_list(request):
+    if request.body:
+        request_user_rating = json.loads(request.body)
+        request_user_id = request_user_rating[u'user_id']
+        
+        user_watchedlist = get_watchedlist(request_user_id)
+        return HttpResponse(user_watchedlist)
+    else:
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def remove_from_watched_list(request):
+    if request.body:
+        request_data = json.loads(request.body)
+        request_user_id = request_data[u'user_id']
+        request_movie_id = request_data[u'movie_id']
+
+        remove_watched(request_user_id, request_movie_id, 3)
+        return HttpResponse(request.body)
+    else:
+        return HttpResponse("You are on your own")
+    #update recommendation
+    add_recommentation_to_database(1)
+
+@csrf_exempt
+def remove_from_watchlist(request):
+    if request.body:
+        request_data = json.loads(request.body)
+        request_user_id = request_data[u'user_id']
+        request_movie_id = request_data[u'movie_id']
+
+        remove_movie_from_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")

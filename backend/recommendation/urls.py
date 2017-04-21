@@ -14,6 +14,12 @@ urlpatterns = [
     url(r'^addwatchlist/$', views.add_watchlist, name='addwatchlist'),
     url(r'^addwatchlistexternal/$', views.add_watchlist_external, name='addwatchlistexternal'),
     url(r'^rateexternalmovie/$', views.rate_external, name='rateexternalmovie'),
+    url(r'^watchedlist/$', views.show_watched_list, name='watchedlist'),
+    url(r'^getwatchedlist/$', views.get_watched_list, name='getwatchedlist'),
+    url(r'^removefromwatchedlist/$', views.remove_from_watched_list, name='removefromwatchedlist'),
+    url(r'^removefromwatchlist/$', views.remove_from_watchlist, name='removefromwatchlist'),
+
+    
 
 ]
 
