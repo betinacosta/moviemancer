@@ -40,8 +40,8 @@
             <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=true;">
                 
                 <div>
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
                     <a ng-href="#/moviedetails/{$movie.tmdb_id$}/1" class="movie-title-link">
-                    <i class="fa fa-thumb-tack watchlist_pin"></i>
                     <p class="movieTitleMaster">{$movie.title$}</p>
                     <div style="position: relative">
                     <img src="{$movie.poster$}" width="100%" height="100%">

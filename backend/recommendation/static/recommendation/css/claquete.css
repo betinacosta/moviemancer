@@ -284,6 +284,8 @@ a.movie-title-link:active  {
     font-size: 1.2em;
     margin-left: 0.5em;
     margin-right: 0.5em;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .watchlist_pin:hover {
