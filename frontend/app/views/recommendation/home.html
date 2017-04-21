@@ -40,9 +40,11 @@
   
   <script src="{% static 'recommendation/js/app.js' %}"></script>
   <script src="{% static 'recommendation/node_modules/angular-route/angular-route.js' %}"></script>
-   <script src="{% static 'recommendation/js/movieDetailController.js' %}"></script>
+  <script src="{% static 'recommendation/js/movieDetailController.js' %}"></script>
   <script src="{% static 'recommendation/js/claqueteController.js' %}"></script>
   <script src="{% static 'recommendation/js/recommendationController.js' %}"></script>
+  <script src="{% static 'recommendation/js/watchedlist.controller.js' %}"></script>
+  <script src="{% static 'recommendation/js/watchlist.controller.js' %}"></script>
 
   <script>
         (function(d,s,id){
@@ -56,7 +58,6 @@
             stags.parentNode.insertBefore(js,stags);
         })
         (document,'script','imdb-rating-api');
-        console.log('batata');
 </script>
  
 
@@ -74,8 +75,8 @@
         <ul class="topnav" id="myTopnav">
             <li class="menuListItems"> <a href="#/"><img style="height: 65px;" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png"></a></li>
             <li class="menuListItems"><a href="#profile" class="menuItems">PERFIL</a></li>
-            <li class="menuListItems"><a href="#watchedlist" class="menuItems">JÁ VI</a></li>
-            <li class="menuListItems"><a href="#watchlist" class="menuItems">QUERO VER</a></li>
+            <li class="menuListItems"><a href="#/watchedlistview" class="menuItems">JÁ VI</a></li>
+            <li class="menuListItems"><a href="#/watchlistview" class="menuItems">QUERO VER</a></li>
             <li class="menuListItems"><a href="#watchlist" class="menuItems">SAIR</a></li>
         </ul>
     </div>
