@@ -363,3 +363,112 @@ However, delay the fade out process for 2.5 seconds */
 .pin:hover:after {
     color: #006400;
 }
+
+.genre-filter-list {
+    list-style-type:none
+}
+
+.genre-btn {
+    width: 100%;
+    padding: 0 0.5em;
+    font-size: 0.7em;
+    line-height: 3em;
+    height: 3em;
+    background-color: #7d7b7b;
+    color: #fff;
+    border:none;
+}
+
+.genre-btn:hover {
+    background-color: #9a2726;
+    color: #fff;
+    border: none;
+}
+
+.genre-filter-label {
+    text-align: center;
+    margin-bottom: 1em;
+    margin-top: -0.5em;
+    font-weight: bold;
+    font-size: medium;
+    color: #2b2b2b;
+    letter-spacing: .1rem;
+
+}
+
+.custom-slider.rzslider .rz-bar {
+  background: #ffe4d1;
+  height: 2px;
+}
+.custom-slider.rzslider .rz-selection {
+  background: orange;
+}
+
+.custom-slider.rzslider .rz-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+  display: none;
+}
+
+.custom-slider.rzslider .rz-bubble {
+  bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+  font-weight: bold;
+  color: orange;
+}
+
+.custom-slider.rzslider .rz-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #ffe4d1;
+  top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+  background: orange;
+}
+
+.slider-filter-label {
+    text-align: center;
+    margin-bottom: 0.5em;
+    margin-top: -0.5em;
+    font-weight: bold;
+    font-size: medium;
+    color: #2b2b2b;
+    letter-spacing: .1rem;
+    margin-left: 1.5em;
+
+}
+
+.filtrar-btn {
+    margin-top: 0em;
+    margin-bottom: 2em;
+    background-color: #006400;
+    font-size: small;
+    color: #fff;
+    border:none;
+}
+
+.filtrar-btn:hover {
+    background-color: #7cae7c;
+    color: #fff;
+}
+
+.tileMe li {
+    display: inline;
+    float: left;
+}
+
+

@@ -1,4 +1,4 @@
-<div class="twelve columns filterTab" ng-controller="mainCtrl">
+<div class="twelve columns filterTab" ng-controller="filtersCtrl">
     
     <div>
         <h6 class="filterText" style="text-align: center">
@@ -103,11 +103,21 @@
 
 <div>
     <div class="twelve columns">
-        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4><a href="#/full-recommendation"><button class="see-all u-pull-left">Ver Todos</button></a>
-    </div>
-    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
         <div>
-            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation">
+            <h4 class="u-pull-left" style="margin-left:1%">Resultados</h4>
+        </div>
+        <div>
+            <ul class="tileMe" style="margin-right:0.5em">
+                <li style="margin-right:2em"><b>Gêneros:</b> {$ currentGenres $}<li>
+                <li style="margin-right:2em"><b>Idioma Falado:</b>  {$ currentLanguage $}<li>
+                <li style="margin-right:2em"><b>Lançado entre:</b>  {$ currentMinYear $} e {$ currentMaxYear $}<li>
+                <li style="margin-right:2em"><b>Duração de:</b>  {$ currentMinRuntime $} a {$ currentMaxRuntime $}<li>
+            </ul>
+        </div>
+    </div>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-repeat="i in index">
+        <div>
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in filteredList[i]">
                 
                 <div>
                     <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
@@ -130,22 +140,3 @@
         </div>
     </div>
 </div>
-
-<div>
-    <div class="twelve columns">
-        <h4 class="u-pull-left" style="margin-left:1%">Principais Lançamentos</h4>
-    </div>
-    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
-        <div>
-            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="l in commingSoon">
-                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExternal(l.tmdb_id, l.img, l.title)"></i>
-                    <a ng-href="#/moviedetails/{$l.tmdb_id$}/1" class="movie-title-link">
-                    <p class="movieTitleMaster">{$l.title$}</p>                    
-                    <img src="{$l.img$}" width="100%" height="100%">
-                    </a>
-                    <h6 style="text-align:center">Sem Classificação</h6>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="snackbar">{$ toastMessage $}</div>
