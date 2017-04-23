@@ -1,268 +1,185 @@
-var app = angular.module('myApp3', ['ngRateIt', 'youtube-embed']).config(function($interpolateProvider) {
-        $interpolateProvider.startSymbol('{$');
-        $interpolateProvider.endSymbol('$}');
-    });
+var app = angular.module('myApp3', ['ngRateIt', 'youtube-embed']).config(function ($interpolateProvider) {
+	$interpolateProvider.startSymbol('{$');
+	$interpolateProvider.endSymbol('$}');
+});
 
 app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
 
-	
+	//--------------------------------------------Get Movie Information--------------------------------------------
 
-     
-    		//tmdb wrapper
-		(function () {
-			window.tmdb = {
-				"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
-				"base_uri": "http://api.themoviedb.org/3",
-				"images_uri": "http://image.tmdb.org/t/p",
-				"timeout": 5000,
-				call: function (url, params, success, error) {
-					var params_str = "api_key=" + tmdb.api_key;
-					for (var key in params) {
-						if (params.hasOwnProperty(key)) {
-							params_str += "&" + key + "=" + encodeURIComponent(params[key]);
-						}
+	$scope.loadMovieDetails = function () {
+
+		$scope.detailsUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '?api_key=5880f597a9fab4f284178ffe0e1f0dba&language=pt-BR';
+
+		$scope.requestDetails = $http.get($scope.detailsUrl);
+
+		$scope.requestDetails.then(
+			function (payload) {
+				$scope.movieDetails = {};
+				$scope.movieGenres = [];
+				$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+
+				for (i = 0; i < payload.data.genres.length; i++) {
+					$scope.movieGenres.push(payload.data.genres[i].name);
+				}
+
+				$scope.movieDetails = {
+					title: payload.data.title,
+					poster_path: 'https://image.tmdb.org/t/p/original/' + payload.data.poster_path,
+					original_title: payload.data.original_title,
+					overview: payload.data.overview,
+					year: new Date(payload.data.release_date).getFullYear(),
+					runtime: payload.data.runtime + 'min',
+					genres: $scope.movieGenres.toString(),
+					imdb_link: 'http://www.imdb.com/title/' + payload.data.imdb_id,
+					imdb_id: payload.data.imdb_id
+				}
+			});
+	};
+
+	$scope.loadMovieVideo = function () {
+
+		$scope.videoUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '/videos?api_key=5880f597a9fab4f284178ffe0e1f0dba';
+		$scope.requestVideo = $http.get($scope.videoUrl);
+
+		$scope.requestVideo.then(
+			function (payload) {
+				$scope.movieVideo = {
+					video_title: payload.data.results[0].name,
+					youtube_id: payload.data.results[0].key,
+				}
+			});
+	};
+
+	$scope.loadCast = function () {
+
+		$scope.castUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '/credits?api_key=5880f597a9fab4f284178ffe0e1f0dba';
+		$scope.requestCast = $http.get($scope.castUrl);
+
+		$scope.requestCast.then(
+			function (payload) {
+				$scope.movieCast = [];
+
+				for (i = 0; i < 6; i++) {
+					$scope.movieCast.push({
+						character: payload.data.cast[i].character,
+						actor: payload.data.cast[i].name,
+						profile_img: 'https://image.tmdb.org/t/p/original/' + payload.data.cast[i].profile_path
+					});
+				}
+			});
+	};
+
+	$scope.loadCrew = function () {
+
+		$scope.crewUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '/credits?api_key=5880f597a9fab4f284178ffe0e1f0dba';
+		$scope.requestCrew = $http.get($scope.crewUrl);
+
+		$scope.requestCrew.then(
+			function (payload) {
+				$scope.director = [];
+				$scope.writer = [];
+
+				for (i = 0; i < payload.data.crew.length; i++) {
+
+					if (payload.data.crew[i].job == "Director") {
+						$scope.director.push(payload.data.crew[i].name);
 					}
-					var xhr = new XMLHttpRequest();
-					xhr.timeout = tmdb.timeout;
-					xhr.ontimeout = function () {
-						throw ("Request timed out: " + url + " " + params_str);
-					};
-					xhr.open("GET", tmdb.base_uri + url + "?" + params_str, true);
-					xhr.setRequestHeader('Accept', 'application/json');
-					xhr.responseType = "text";
-					xhr.onreadystatechange = function () {
-						if (this.readyState === 4) {
-							if (this.status === 200) {
-								if (typeof success == "function") {
-									success(JSON.parse(this.response));
-								} else {
-									throw ('No success callback, but the request gave results')
-								}
-							} else {
-								if (typeof error == "function") {
-									error(JSON.parse(this.response));
-								} else {
-									throw ('No error callback')
-								}
-							}
-						}
-					};
-					xhr.send();
+					if (payload.data.crew[i].job == "Writer" || payload.data.crew[i].job == "Screenplay") {
+						$scope.writer.push(payload.data.crew[i].name);
+					}
 				}
-			}
-		})()
-	//tmdb wrapper
 
-    $scope.loadMovieDetails = function () {
-			oParams = {
-				"language": "pt-BR"
-			};
-
-			$scope.movieDetails = {};
-            $scope.movieGenres = [];
-			$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-
-			tmdb.call("/movie/" + $routeParams.tmdbID, oParams,
-				function (details, movieDetails, imagePath, movieGenres) {
-					
-                    for (i = 0; i < details.genres.length; i++) {
-                        $scope.movieGenres.push(details.genres[i].name);
-                    }
-
-					$scope.hours = Math.floor( details.runtime / 60);
-					$scope.minutes = details.runtime % 60;
-					$scope.runtime = $scope.hours.toString() + 'h' + $scope.minutes.toString() + 'min';
-
-                    $scope.movieDetails = {
-                            title: details.title,
-                            poster_path: 'https://image.tmdb.org/t/p/original/' + details.poster_path,
-                            original_title: details.original_title,
-                            overview: details.overview,
-                            year: new Date(details.release_date).getFullYear(),
-                            runtime: $scope.runtime,
-                            genres: $scope.movieGenres.toString(),
-                            imdb_link: 'http://www.imdb.com/title/' + details.imdb_id,
-                            imdb_id: details.imdb_id
-						}
-
-				},
-				function (e) {
-					console.log("Error: " + e)
+				$scope.movieCrew = {
+					director: $scope.director.toString(),
+					writer: $scope.writer.toString()
 				}
-			);
-            console.log($scope.movieDetails)
-		};
 
-    $scope.loadMovieVideo = function () {
-			
-			$scope.movieVideo = {};
-            oParams = {};
+			});
+	};
 
-			tmdb.call("/movie/" + $routeParams.tmdbID + '/videos', oParams,
-				function (video, movieVideo) {
-					$scope.movieVideo = {
-                            video_title: video.results[0].name,
-                            youtube_id: video.results[0].key,
-                    }
-				},
-				function (e) {
-					console.log("Error: " + e)
+	$scope.loadKeywords = function () {
+
+		$scope.keywordsUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '/keywords?api_key=5880f597a9fab4f284178ffe0e1f0dba';
+		$scope.requestKeywords = $http.get($scope.keywordsUrl);
+
+		$scope.requestKeywords.then(
+			function (payload) {
+				$scope.movieKeywords = [];
+
+				for (i = 0; i < 5; i++) {
+					$scope.movieKeywords.push(payload.data.keywords[i].name);
 				}
-			);
-		};
+			});
+	};
 
-    $scope.loadCast = function () {
-			
-			$scope.movieCast = [];
-            oParams = {};
+	$scope.loadSimilarMovies = function () {
 
-			tmdb.call("/movie/" + $routeParams.tmdbID + '/credits', oParams,
-				function (casting, movieCast) {
+		$scope.similarUrl = 'http://api.themoviedb.org/3/movie/' + $routeParams.tmdbID + '/similar?api_key=5880f597a9fab4f284178ffe0e1f0dba&language=pt-BR';
+		$scope.requestSimilar = $http.get($scope.similarUrl);
 
-                    for(i=0; i < 6; i++) {
-                        $scope.movieCast.push({
-                            character: casting.cast[i].character,
-                            actor: casting.cast[i].name,
-                            profile_img: 'https://image.tmdb.org/t/p/original/' + casting.cast[i].profile_path
-                        });
-                    }
-				},
-				function (e) {
-					console.log("Error: " + e)
+		$scope.requestSimilar.then(
+			function (payload) {
+				$scope.similarMovies = [];
+
+				for (i = 0; i < 5; i++) {
+					$scope.similarMovies.push({
+						title: payload.data.results[i].title,
+						poster_path: 'https://image.tmdb.org/t/p/original/' + payload.data.results[i].poster_path,
+						tmdb_id: payload.data.results[i].id
+					});
 				}
-			);
-		};
+			});
+	};
 
-    $scope.loadCrew = function () {
-			
-			$scope.movieCrew = {};
-            oParams = {};
-            $scope.director = [];
-            $scope.writer = [];
-
-			tmdb.call("/movie/" + $routeParams.tmdbID + '/credits', oParams,
-				function (crew, movieCrew, director, writer) {
-                    
-
-                    for(i=0; i < crew.crew.length; i++) {
-
-                        if (crew.crew[i].job == "Director") {
-                            $scope.director.push(crew.crew[i].name);
-                        }
-                        if (crew.crew[i].job == "Writer" || crew.crew[i].job == "Screenplay") {
-                            $scope.writer.push(crew.crew[i].name);
-                        }
-                    }
-
-                    $scope.movieCrew = {
-                        director: $scope.director.toString(),
-                        writer: $scope.writer.toString()
-                    }
-                    console.log($scope.movieCrew);
-				},
-				function (e) {
-					console.log("Error: " + e)
-				}
-			);
-		};
-
-    $scope.loadKeywords = function () {
-			
-			$scope.movieKeywords = [];
-            oParams = {};
-
-			tmdb.call("/movie/" + $routeParams.tmdbID + '/keywords', oParams,
-				function (keywords, movieKeywords) {
-
-                    for(i=0; i < 5; i++) {
-                        $scope.movieKeywords.push(keywords.keywords[i].name);
-                    }
-				},
-				function (e) {
-					console.log("Error: " + e)
-				}
-			);
-		};
-
-     $scope.loadSimilarMovies = function () {
-			
-			$scope.similarMovies = [];
-            oParams = {
-				"language": "pt-BR"
-			};
-
-			tmdb.call("/movie/" + $routeParams.tmdbID + '/similar', oParams,
-				function (similar, similarMovies) {
-
-                    for(i=0; i < 5; i++) {
-                        $scope.similarMovies.push({
-                            title: similar.results[i].title,
-                            poster_path: 'https://image.tmdb.org/t/p/original/' + similar.results[i].poster_path,
-                            tmdb_id: similar.results[i].id
-                        });
-                    }
-				},
-				function (e) {
-					console.log("Error: " + e)
-				}
-			);
-		};
-
-    $scope.init = function () {
-        $scope.loadMovieDetails();
-		$scope.loadMovieVideo();
-        $scope.loadCast();
-		$scope.loadCrew();
-        $scope.loadKeywords();
-		$scope.loadSimilarMovies();
-    }
-
-    $scope.init();
+	//--------------------------------------------Rating Handler--------------------------------------------
 
 	$scope.setUserRatingExternal = function (rating, poster, title) {
 
 		$http.post("rateexternalmovie/", {
-				"tmdb_movie_id": $routeParams.tmdbID,
-				"rate_id": rating,
-				"user_id": $routeParams.userID,
-				"movie_poster": poster,
-				"movie_title": title
-			}, {
+			"tmdb_movie_id": $routeParams.tmdbID,
+			"rate_id": rating,
+			"user_id": $routeParams.userID,
+			"movie_poster": poster,
+			"movie_title": title
+		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-				function (response) {
-					console.log('Success: ', response.data)
-					$scope.toastMessege("Filme Adicionado a Lista de Vistos")
-				},
-				function (response) {
-					console.log('Error: ', response)
-				}
+			function (response) {
+				console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+			},
+			function (response) {
+				console.log('Error: ', response)
+			}
 			);
 	}
+
+	//--------------------------------------------Add to watchlist Handler--------------------------------------------
 
 	$scope.addWatchlistExternal = function (poster, title) {
 
 		$http.post("addwatchlistexternal/", {
-				"tmdb_movie_id": $routeParams.tmdbID,
-				"user_id": $routeParams.userID,
-				"movie_poster": poster,
-				"movie_title":title
-			}, {
+			"tmdb_movie_id": $routeParams.tmdbID,
+			"user_id": $routeParams.userID,
+			"movie_poster": poster,
+			"movie_title": title
+		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-				function (response) {
-					console.log('Success: ', response.data)
-					$scope.toastMessege("Filme Adicionado a Quero Ver")
-				},
-				function (response) {
-					console.log('Error: ', response)
-				}
+			function (response) {
+				console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Quero Ver")
+			},
+			function (response) {
+				console.log('Error: ', response)
+			}
 			);
 	}
 
-
+	//--------------------------------------------Toast Message Handler--------------------------------------------
 
 	$scope.toastMessege = function (msg) {
 		$scope.toastMessage = msg;
@@ -273,8 +190,18 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', function ($scope
 		x.className = "show";
 
 		// After 3 seconds, remove the show class from DIV
-		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-    
+		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+	}
 
+	//--------------------------------------------Init--------------------------------------------
+	$scope.init = function () {
+		$scope.loadMovieDetails();
+		$scope.loadMovieVideo();
+		$scope.loadCast();
+		$scope.loadCrew();
+		$scope.loadKeywords();
+		$scope.loadSimilarMovies();
+	}
+
+	$scope.init();
 }]);

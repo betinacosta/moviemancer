@@ -25,6 +25,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/skeleton.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/claquete.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'recommendation/angular-rateit-master/dist/ng-rateit.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/angularjs-slider-master/dist/rzslider.css' %}" />
 
     <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -35,8 +36,11 @@
 
   <script src="{% static 'recommendation/node_modules/angular/angular.js' %}"></script>
   <script src="{% static 'recommendation/angular-rateit-master/dist/ng-rateit.js' %}"></script>
+  <script src="{% static 'recommendation/angularjs-slider-master/dist/rzslider.js' %}"></script>
   <script src="{% static 'recommendation/angular-youtube-embed-master/dist/angular-youtube-embed.min.js' %}"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
+
+  
   
   <script src="{% static 'recommendation/js/app.js' %}"></script>
   <script src="{% static 'recommendation/node_modules/angular-route/angular-route.js' %}"></script>
@@ -45,6 +49,8 @@
   <script src="{% static 'recommendation/js/recommendationController.js' %}"></script>
   <script src="{% static 'recommendation/js/watchedlist.controller.js' %}"></script>
   <script src="{% static 'recommendation/js/watchlist.controller.js' %}"></script>
+  <script src="{% static 'recommendation/js/filters.controller.js' %}"></script>
+  <script src="{% static 'recommendation/js/home.controller.js' %}"></script>
 
   <script>
         (function(d,s,id){
@@ -70,24 +76,32 @@
 
   <!-- Imutable Page Layout (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div ng-controller="homeCtrl">
+
 <div class="twelve columns headerMenu" id="nav">
     <div class="twelve columns">
-        <ul class="topnav" id="myTopnav">
-            <li class="menuListItems"> <a href="#/"><img style="height: 65px;" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png"></a></li>
-            <li class="menuListItems"><a href="#profile" class="menuItems">PERFIL</a></li>
-            <li class="menuListItems"><a href="#/watchedlistview" class="menuItems">JÁ VI</a></li>
-            <li class="menuListItems"><a href="#/watchlistview" class="menuItems">QUERO VER</a></li>
-            <li class="menuListItems"><a href="#watchlist" class="menuItems">SAIR</a></li>
-        </ul>
-    </div>
-    </div>
 
-    <div class="twelve columns searchBarBackground">
-        <form ng-submit="searchMovie(query)">
-            <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
-            <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
-        </form>
+        <ul class="topnav" id="myTopnav">
+            <li class="menuListItems"> <a href="#/"><img style="width: 10em;margin-top: 0.2em;" src="https://uploaddeimagens.com.br/images/000/898/377/original/moviemancer-hori.png?1492949519"></a></li>
+        </ul>
+
+        <div class="sandubaMenu" ng-click="showMenu()">
+          <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        </div>
+        
+</div>
     </div>
+    <div class="dropdownDiv" ng-show="menu">
+          <ul style="list-style-type: none;">
+            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">BETINA COSTA</li>
+            <li class="dropdownItens"><i class="fa fa-film menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">ASSISTIDOS</a></li>
+            <li class="dropdownItens"><i class="fa fa-list menuIcon" aria-hidden="true"></i><a href="#/watchlistview" class="menuItems ">QUERO VER</a></li>
+            <li class="dropdownItens" style="margin-bottom: -12%;"><i class="fa fa-sign-out menuIcon" aria-hidden="true"></i><a href="#sair" class="menuItems">SAIR</a></li>
+          </ul>
+        </div>
+</div>
+
+    
 
 <!-- End Page (Menu Bar)
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -99,7 +113,7 @@
 
   <footer class="twelve columns footerBar">
     <div class="three columns" style="color:#f2f2f2;">
-      <img class="footerImg" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png">
+      <img class="footerImg" src="https://uploaddeimagens.com.br/images/000/898/377/original/moviemancer-hori.png?1492949519">
     </div>
     <div class="three columns" style="color:#f2f2f2;margin-top: 2%;">
       <p style="margin-bottom: 0.5rem !important;">Versão 1.0</p>

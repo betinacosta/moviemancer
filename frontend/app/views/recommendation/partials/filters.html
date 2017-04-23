@@ -5,7 +5,7 @@
     </form>
 </div>
 
-<div class="twelve columns filterTab" ng-controller="mainCtrl">
+<div class="twelve columns filterTab" ng-controller="filtersCtrl">
 
     <div>
         <h6 class="filterText" style="text-align: center">
@@ -121,15 +121,36 @@
 
 <div>
     <div class="twelve columns">
-        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4>
+        <div style="margin-bottom:4em">
+            <h4 class="u-pull-left" style="margin-left:1%">Resultados {$movieContent$}</h4>
+        </div>
+        <div style="margin-left:1%;color:#c68006;margin-bottom: 7em;">
+            <ul class="tileMe" style="margin-right:0.5em">
+                <li style="margin-right:1.5em;color:#2b2b2b"><i class="fa fa-filter" aria-hidden="true"></i></li>
+                <li style="margin-right:1.5em">
+                    <font color="#666">Gêneros:</font> {$ currentGenres $}
+                    <li>
+                        <li style="margin-right:1.5em">
+                            <font color="#666">Idioma Falado:</font> {$ currentLanguage $}
+                            <li>
+                                <li style="margin-right:1.5em">
+                                    <font color="#666">Lançado entre:</font> {$ currentMinYear $} e {$ currentMaxYear $}
+                                    <li>
+                                        <li>
+                                            <font color="#666">Duração de:</font> {$ currentMinRuntime $} a {$ currentMaxRuntime $}
+                                            <li>
+            </ul>
+        </div>
     </div>
-
-    <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-repeat="i in index">
+    <div ng-if="!control">
+        <h1 class="filterNotFoundLabel">Nenhum Resultado Encontrado</h1>
+    </div>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;" ng-if="control" ng-repeat="i in index" id="teeest">
         <div>
-            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in fullList[i]">
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in filteredList[i]">
 
                 <div>
-                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExternal(movie.tmdb_id, movie.poster, movie.title)"></i>
                     <a ng-href="#/moviedetails/{$movie.tmdb_id$}/1" class="movie-title-link">
                         <p class="movieTitleMaster">{$movie.title$}</p>
                         <div style="position: relative">
@@ -143,9 +164,9 @@
                             background-size: 28px;
                         }
                     </style>
-                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRatingExternal(movie.rating, movie.poster, movie.title, movie.tmdb_id)"></ng-rate-it>
                 </div>
             </div>
         </div>
     </div>
-    <div id="snackbar">{$ toastMessage $}</div>
+</div>
