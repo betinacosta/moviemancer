@@ -8,10 +8,10 @@
         </h6>
         </div>
     <div ng-show='filterVisible' id="filterBar">
-        <div>
+        <div style='padding-left:1.5em;'>
         <div class="six columns" >
             <p class="genre-filter-label">GÊNEROS</p>
-            <div style="margin-left:1.5em;margin-right:2em;float:left;">
+            <div style="margin-right:2em;float:left;">
                 <ul class="genre-filter-list">
                     <li><button class="genre-btn" ng-model="genresSelector[0].selected" ng-click="selectGenre('acao', 0)" id="acao">{$genresSelector[0].name$}</button></li>
                     <li><button class="genre-btn" ng-model="genresSelector[1].selected" ng-click="selectGenre('aventura', 1)" id="aventura">{$genresSelector[1].name$}</button></li>
@@ -84,7 +84,7 @@
                 </ul>
             </div>
 
-            <div style="margin-right:2em;float:left;">
+            <div style="float: right;margin-right: 3em;">
                 <ul class="genre-filter-list">
                     <li><button class="genre-btn" ng-model="languages[3].selected" ng-click="selectIT()" id="it">{$languages[3].name$}</button></li>
                     <li><button class="genre-btn" ng-model="languages[4].selected" ng-click="selectJA()" id="ja">{$languages[4].name$}</button></li>
