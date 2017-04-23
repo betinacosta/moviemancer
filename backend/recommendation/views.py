@@ -33,6 +33,12 @@ def show_watchlist(request):
 def show_filters(request):
     return render(request,'recommendation/partials/filters.html')
 
+def show_login(request):
+    return render(request,'recommendation/login.html')
+
+def show_singup(request):
+    return render(request,'recommendation/singup.html')
+
 @csrf_exempt
 def ratemovie(request):
     if request.body:

@@ -1,11 +1,17 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp','filtersApp','homeApp']);
+var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp','filtersApp','homeApp','loginApp', 'singupApp']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         when('/', {
+            templateUrl: 'login',  
+            controller: 'loginCtrl'
+        }).when('/moviemancer', {
             templateUrl: 'main',  
             controller: 'mainCtrl'
+        }).when('/singup', {
+            templateUrl: 'singup',  
+            controller: 'singupCtrl'
         }).
         when('/full-recommendation', {
             templateUrl: 'full-recommendation',  
