@@ -196,7 +196,9 @@ ul.topnav li.icon {display: none;}
 }
 
 .footerImg {
-    height: 100px;
+    width: 15em;
+    margin-left: -5em;
+    margin-top: 1.4em;
 }
 
 a.movie-title-link:link    {
