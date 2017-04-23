@@ -5,12 +5,76 @@ var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($in
 
 app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
 
-	$scope.init = function () {
+	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
-		$scope.getRecommendation();
-		$scope.loadCommingSoon();
-	},
+	$scope.getRecommendation = function () {
+			$scope.recommendationRequest = $http.get('reco');
 
+			$scope.recommendationRequest.then(
+            function (payload) {
+                $scope.recommendation = [];
+				$scope.rating = [];
+				$scope.fullRecommendation = [];
+
+				for (i = 0; i < 6; i++) {
+					$scope.recommendation.push({
+						title: payload.data[i].tmdb_title,
+						poster: payload.data[i].tmdb_poster,
+						movie_id: payload.data[i].movie_id,
+						tmdb_id: payload.data[i].tmdb_movie_id,
+						rating: 0
+					});
+				}
+			});
+		}
+
+	//--------------------------------------------Get Comming Soon Handler--------------------------------------------
+	$scope.formatDate = function (date) {
+			$scope.day = date.getDate()
+			$scope.month = date.getMonth() + 1;
+			$scope.year = date.getFullYear();
+
+			if ($scope.day < 10) {
+				$scope.day = '0' + $scope.day
+			}
+			if ($scope.month < 10) {
+				$scope.month = '0' + $scope.month
+			}
+
+			return $scope.year + '-' + $scope.month + '-' + $scope.day;
+		},
+
+		$scope.getEndDate = function (initialDate, days) {
+
+			initialDate.setDate(initialDate.getDate() + days);
+			return initialDate;
+		},
+
+		$scope.loadCommingSoon = function () {
+			$scope.today = $scope.formatDate(new Date());
+			$scope.endDate = $scope.getEndDate(new Date(), 15);
+			$scope.endDate = $scope.formatDate($scope.endDate);
+			
+			$scope.baseUrl = 'http://api.themoviedb.org/3/discover/movie?api_key=5880f597a9fab4f284178ffe0e1f0dba&primary_release_date.gte=' +
+							$scope.today + '&primary_release_date.lte=' + $scope.endDate + '&language=pt-BR';
+
+			$scope.commingSoon = [];
+			$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+
+			$scope.commingSoonRequets = $http.get($scope.baseUrl);
+
+			$scope.commingSoonRequets.then(
+            function (payload) {
+                for (i = 0; i < 6; i++) {
+						$scope.commingSoon.push({
+							img: $scope.imagePath + payload.data.results[i].poster_path,
+							title: payload.data.results[i].title,
+							tmdb_id: payload.data.results[i].id
+						})
+					}
+			});
+		},
+	//--------------------------------------------Filter Box Handlers--------------------------------------------
 	$scope.filterVisible = false;
 	$scope.toggle = true;
 
@@ -32,7 +96,8 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 		}
 	};
 
-	$scope.genresSelector = [
+	$scope.getGenres = function() {
+		return([
 		{
 			id: 28,
 			name: "Ação",
@@ -123,9 +188,11 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 			name: "Família",
 			selected: false
 		},
-	];
+	])
+	}
 
-	$scope.languages = [
+	$scope.getLanguages = function() {
+		return([
 		{
 			code: 'pt',
 			name: 'Português',
@@ -156,7 +223,11 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 			name: 'Francês',
 			selected: false
 		}
-	]
+	])
+	}
+
+	$scope.genresSelector = $scope.getGenres();
+	$scope.languages = $scope.getLanguages();
 
 	$scope.uncheckLanguage = function (index, id) {
 		$scope.languages[index].selected = false;
@@ -255,31 +326,6 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 
 	}
 
-	$scope.handleFilters = function (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages) {
-		$scope.selectedGenres = [];
-		$scope.selectedLanguage = '';
-		$scope.aux = 0;
-
-		for (i = 0; i < genres.length; i++) {
-			if (genres[i].selected) {
-				$scope.selectedGenres.push(genres[i].id);
-			}
-		}
-
-		$scope.selectedGenres = $scope.selectedGenres.join(",");
-
-		for (i = 0; i < languages.length; i++) {
-			if (languages[i].selected) {
-				$scope.selectedLanguage = languages[i].code;
-			}
-		}
-
-		$scope.selectedMinYear = yearMin + '-' + '01' + '-' + '01';
-		$scope.selectedMaxYear = yearMax + '-' + '12' + '-' + '31'
-
-		$window.location.href = '#/filtersview/' + $scope.selectedGenres + '/' + $scope.selectedLanguage + '/' + $scope.selectedMinYear + '/' + $scope.selectedMaxYear + '/' + runtimeMin + '/' + runtimeMax;
-	}
-
 	$scope.refreshSlider = function () {
 		$timeout(function () {
 			$scope.$broadcast('rzSliderForceRender');
@@ -294,150 +340,38 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 			$scope.refreshSlider();
 
 	},
+	//--------------------------------------------Filter Request Handlers--------------------------------------------
 
-		//tmdb wrapper
-		(function () {
-			window.tmdb = {
-				"api_key": "5880f597a9fab4f284178ffe0e1f0dba",
-				"base_uri": "http://api.themoviedb.org/3",
-				"images_uri": "http://image.tmdb.org/t/p",
-				"timeout": 5000,
-				call: function (url, params, success, error) {
-					var params_str = "api_key=" + tmdb.api_key;
-					for (var key in params) {
-						if (params.hasOwnProperty(key)) {
-							params_str += "&" + key + "=" + encodeURIComponent(params[key]);
-						}
-					}
-					var xhr = new XMLHttpRequest();
-					xhr.timeout = tmdb.timeout;
-					xhr.ontimeout = function () {
-						throw ("Request timed out: " + url + " " + params_str);
-					};
-					xhr.open("GET", tmdb.base_uri + url + "?" + params_str, true);
-					xhr.setRequestHeader('Accept', 'application/json');
-					xhr.responseType = "text";
-					xhr.onreadystatechange = function () {
-						if (this.readyState === 4) {
-							if (this.status === 200) {
-								if (typeof success == "function") {
-									success(JSON.parse(this.response));
-								} else {
-									throw ('No success callback, but the request gave results')
-								}
-							} else {
-								if (typeof error == "function") {
-									error(JSON.parse(this.response));
-								} else {
-									throw ('No error callback')
-								}
-							}
-						}
-					};
-					xhr.send();
-				}
+	$scope.handleFilters = function (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages) {
+		$scope.selectedGenres = [];
+		$scope.selectedLanguage = 'null';
+		$scope.aux = 0;
+
+		for (i = 0; i < genres.length; i++) {
+			if (genres[i].selected) {
+				$scope.selectedGenres.push(genres[i].id);
 			}
-		})()
-	//tmdb wrapper
+		}
 
-	$scope.searchMovie = function (query) {
-		oParams = {
-			"query": query,
-			"language": "pt-br"
-		};
+		if($scope.selectedGenres == '') {
+			$scope.selectedGenres = 'null';
+		}else {
+			$scope.selectedGenres = $scope.selectedGenres.join(",");
+		}
 
-		tmdb.call("/search/movie", oParams,
-			function (searchResult) {
-				console.log(searchResult)
-			},
-			function (e) {
-				console.log("Error: " + e)
+		for (i = 0; i < languages.length; i++) {
+			if (languages[i].selected) {
+				$scope.selectedLanguage = languages[i].code;
 			}
-		);
+		}
 
-	},
+		$scope.selectedMinYear = yearMin + '-' + '01' + '-' + '01';
+		$scope.selectedMaxYear = yearMax + '-' + '12' + '-' + '31'
 
-		$scope.formatDate = function (date) {
-			$scope.day = date.getDate()
-			$scope.month = date.getMonth() + 1;
-			$scope.year = date.getFullYear();
+		$window.location.href = '#/filtersview/' + $scope.selectedGenres + '/' + $scope.selectedLanguage + '/' + $scope.selectedMinYear + '/' + $scope.selectedMaxYear + '/' + runtimeMin + '/' + runtimeMax;
+	}
 
-			if ($scope.day < 10) {
-				$scope.day = '0' + $scope.day
-			}
-			if ($scope.month < 10) {
-				$scope.month = '0' + $scope.month
-			}
-
-			return $scope.year + '-' + $scope.month + '-' + $scope.day;
-		},
-
-		$scope.getEndDate = function (initialDate, days) {
-
-			initialDate.setDate(initialDate.getDate() + days);
-			return initialDate;
-		},
-
-		$scope.loadCommingSoon = function () {
-			$scope.today = $scope.formatDate(new Date());
-			$scope.endDate = $scope.getEndDate(new Date(), 15);
-			$scope.endDate = $scope.formatDate($scope.endDate);
-			oParams = {
-				"primary_release_date.gte": $scope.today,
-				"primary_release_date.lte": $scope.endDate,
-				"language": "pt-BR"
-			};
-
-			$scope.commingSoon = [];
-			$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
-
-			tmdb.call("/discover/movie", oParams,
-				function (soon, commingSoon, imagePath) {
-					for (i = 0; i < 6; i++) {
-						$scope.commingSoon.push({
-							img: $scope.imagePath + soon.results[i].poster_path,
-							title: soon.results[i].title,
-							tmdb_id: soon.results[i].id
-						})
-					}
-				},
-				function (e) {
-					console.log("Error: " + e)
-				}
-			);
-		},
-
-		$scope.getRecommendation = function (movies) {
-			$scope.recommendation = [];
-			$scope.rating = [];
-			$scope.fullRecommendation = [];
-
-			$http.get('reco').success(function (data) {
-
-				for (i = 0; i < 6; i++) {
-					$scope.recommendation.push({
-						title: data[i].tmdb_title,
-						poster: data[i].tmdb_poster,
-						movie_id: data[i].movie_id,
-						tmdb_id: data[i].tmdb_movie_id,
-						rating: 0
-					});
-				}
-
-				for (i = 0; i < data.length; i++) {
-					$scope.fullRecommendation.push({
-						title: data[i].tmdb_title,
-						poster: data[i].tmdb_poster,
-						movie_id: data[i].movie_id,
-						tmdb_id: data[i].tmdb_movie_id,
-						rating: 0
-					});
-				}
-			});
-		},
-
-		// Call init function
-		$scope.init();
+	//--------------------------------------------Rating Handler--------------------------------------------
 
 	$scope.setUserRating = function (rating, movieID) {
 
@@ -458,10 +392,9 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 				console.log('Error: ', response)
 			}
 			);
-
-
 	}
 
+	//--------------------------------------------Add to watchlist Handler--------------------------------------------
 	$scope.addWatchlist = function (movieID) {
 
 		$http.post("addwatchlist/", {
@@ -502,8 +435,26 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 			}
 			);
 	}
+	//--------------------------------------------Search Handler--------------------------------------------
 
+	$scope.searchMovie = function (query) {
+		oParams = {
+			"query": query,
+			"language": "pt-br"
+		};
 
+		tmdb.call("/search/movie", oParams,
+			function (searchResult) {
+				console.log(searchResult)
+			},
+			function (e) {
+				console.log("Error: " + e)
+			}
+		);
+
+	},
+
+	//--------------------------------------------Toast Message Handler--------------------------------------------
 
 	$scope.toastMessege = function (msg) {
 		$scope.toastMessage = msg;
@@ -517,4 +468,12 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 	}
 
+	//--------------------------------------------Init--------------------------------------------
+	$scope.init = function () {
+
+		$scope.getRecommendation();
+		$scope.loadCommingSoon();
+	},
+
+	$scope.init();
 }]);
