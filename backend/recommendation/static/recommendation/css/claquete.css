@@ -471,4 +471,17 @@ However, delay the fade out process for 2.5 seconds */
     float: left;
 }
 
+.filterNotFoundLabel {
+    letter-spacing: .1rem;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.filterNotFoundLabel:before {
+  content: '\f119';
+  font-family: fontAwesome;
+  margin-right: 1em;
+  top: 3px; /* Adjust as needed */
+  }
+
 
