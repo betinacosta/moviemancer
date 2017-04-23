@@ -1,49 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="claqueteApp" class="singInBackground">
-
-<head>
-
-    <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8">
-    <title>Claquete16</title>
-    <meta name="Claquete16" content="">
-    <meta name="@betinacosta" content="">
-
-    <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/font-awesome/css/font-awesome.min.css' %}" />
-
-    <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/normalize.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/skeleton.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'recommendation/css/claquete.css' %}" />
-
-    <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <!--<link rel="icon" type="image/png" href="images/dice.png"> -->
-
-    <!-- Scripts
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-  <script src="{% static 'recommendation/node_modules/angular/angular.js' %}"></script>
-  <script src="{% static 'recommendation/js/app.js' %}"></script>
-  <script src="{% static 'recommendation/node_modules/angular-route/angular-route.js' %}"></script>
-
-  <!--<script src="{% static 'recommendation/js/loginController.js' %}"></script>-->
-</head>
-
-<body>
-
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
+  <div class="container" ng-controller="singupCtrl">
     <div class="row">
       <div class="twelve columns aboutBox" style="margin-top: 10%">
         <div class="six columns" style="margin: 20% 0% 20% 0%;">
@@ -71,8 +26,3 @@
                 
     </div>
   </div>
-
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-</body>
-</html>
