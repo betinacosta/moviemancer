@@ -1,3 +1,10 @@
+<div class="twelve columns searchBarBackground">
+    <form ng-submit="searchMovie(query)">
+        <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
+        <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
+    </form>
+</div>
+
 <div class="twelve columns filterTab" ng-controller="mainCtrl">
 
     <div>

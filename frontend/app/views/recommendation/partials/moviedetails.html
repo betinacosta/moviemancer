@@ -1,3 +1,10 @@
+<div class="twelve columns searchBarBackground">
+    <form ng-submit="searchMovie(query)">
+        <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
+        <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
+    </form>
+</div>
+
 <div class="twelve columns" ng-controller="movieCtrl">
     <div id="first-section" class="twelve columns first-section" style="background-color: #eee">
         <div id="poster-rating" class="four columns">
@@ -85,20 +92,20 @@
     <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
         <div id="reviews" style="margin: 1% 5% 2% 6%;">
             <div>
-            <h3>Críticas <button class="see-all">Ver Todos</button></h3>
+                <h3>Críticas <button class="see-all">Ver Todos</button></h3>
             </div>
-            <h5 >Achei Bom</h5>
+            <h5>Achei Bom</h5>
             <p style="margin-top: -20px;">por Error404not</p>
             <p style="font-size: large; text-align: justify">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam venenatis bibendum magna,
-                non varius libero aliquam quis. Maecenas non lorem a lacus malesuada blandit. Donec a erat orci. 
-                Nunc et vehicula turpis. In eget pretium ligula. Quisque eget metus mauris. Mauris blandit dui 
-                nulla, vel auctor nibh varius id. Donec hendrerit id diam vitae molestie. Suspendisse aliquam neque 
-                id felis interdum fringilla. Cras pellentesque urna mi, non feugiat ex blandit nec. nteger nec massa 
-                in lectus mollis bibendum vitae a metus. Mauris fringilla, arcu non tempor finibus, urna nisl lacinia 
-                neque, quis laoreet arcu massa at tortor. Nullam ultrices nec augue eu posuere. Aliquam suscipit, eros 
-                et ultricies cursus, mauris metus volutpat leo, congue vehicula lorem felis quis leo. Cras nec tortor 
-                quis est cursus fringilla. Ut mi felis, euismod in vehicula vitae, laoreet eu felis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam venenatis bibendum magna, non varius libero aliquam quis.
+                Maecenas non lorem a lacus malesuada blandit. Donec a erat orci. Nunc et vehicula turpis. In eget pretium
+                ligula. Quisque eget metus mauris. Mauris blandit dui nulla, vel auctor nibh varius id. Donec hendrerit id
+                diam vitae molestie. Suspendisse aliquam neque id felis interdum fringilla. Cras pellentesque urna mi, non
+                feugiat ex blandit nec. nteger nec massa in lectus mollis bibendum vitae a metus. Mauris fringilla, arcu
+                non tempor finibus, urna nisl lacinia neque, quis laoreet arcu massa at tortor. Nullam ultrices nec augue
+                eu posuere. Aliquam suscipit, eros et ultricies cursus, mauris metus volutpat leo, congue vehicula lorem
+                felis quis leo. Cras nec tortor quis est cursus fringilla. Ut mi felis, euismod in vehicula vitae, laoreet
+                eu felis.
             </p>
         </div>
     </div>
@@ -109,11 +116,11 @@
             <div class="two columns" style="background-color: #F6F6F6;margin-left: 6%;" ng-repeat="similar in similarMovies">
                 <div>
                     <a ng-href="#/moviedetails/{$ similar.tmdb_id $}/1" class="movie-title-link">
-                    <p class="movieTitleMaster">{$ similar.title $}</p>
-                    <img src="{$ similar.poster_path $}" width="202px" height="287px">
+                        <p class="movieTitleMaster">{$ similar.title $}</p>
+                        <img src="{$ similar.poster_path $}" width="202px" height="287px">
                     </a>
                 </div>
-        </div>   
+            </div>
         </div>
     </div>
     <div id="snackbar">{$ toastMessage $}</div>
