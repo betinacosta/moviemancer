@@ -5,6 +5,8 @@ var app = angular.module('vistoApp', ['ngRateIt']).config(function ($interpolate
 
 app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
 
+	$scope.menu = false;
+
 	//--------------------------------------------Get Watched List Handler--------------------------------------------
 
 	$scope.getWatchedList = function () {

@@ -181,11 +181,6 @@ ul.topnav li.icon {display: none;}
     line-height: 0px;
 }
 
-.menuItems {
-    margin-top: 23px;
-    width: 100%;
-}
-
 .menuListItems {
     margin: 0% 1% 0% 1%;
 }
@@ -486,4 +481,60 @@ However, delay the fade out process for 2.5 seconds */
   top: 3px; /* Adjust as needed */
   }
 
+ .sandubaMenu{
+    float: right;
+    margin-top: -4em;
+    padding-top: 1.2em;
+    color: white;
+    cursor: pointer;
+    cursor: hand;
+ }
+
+ .dropdownDiv{
+    background-color: #2b2b2b;
+    width: 20%;
+    float: right;
+    position: absolute;
+    margin-left: 80%;
+    margin-top: 3.4em;
+    height: 190px;
+
+ }
+
+ .dropdownItens {
+    padding: 8px;
+    letter-spacing: .1rem;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    text-decoration: none;
+    color: #eeeeee;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+ }
+
+ .dropdownItens:hover {
+    background-color: #eeeeee;
+    color: #2B2B2B !important;
+ }
+
+ .menuItems{
+    text-decoration: none;
+    color: inherit;
+ }
+
+ .menuItems:hover {
+     color:#2B2B2B;
+ }
+
+ .menuIcon {
+     float: left;
+    margin-left: 20px;
+    margin-right: -20px;
+    font-weight: normal;
+    margin-top: 3px;
+    color: #9a2726;
+ }
 

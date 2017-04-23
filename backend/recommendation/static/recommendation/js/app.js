@@ -1,4 +1,4 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp','filtersApp']);
+var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp','filtersApp','homeApp']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
