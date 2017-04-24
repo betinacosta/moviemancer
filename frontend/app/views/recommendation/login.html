@@ -1,26 +1,22 @@
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
- <div class="container" ng-controller="loginCtrl">
-    <div class="row">
-      <div class="twelve columns aboutBox" style="margin-top: 10%">
-        <div class="six columns" style="margin: 6% 0% 0% 0%;">
-          <img width="40%" style="margin-left: 30%;margin-right: 30%;" src="https://lh3.googleusercontent.com/-YvGGRxH6sSM/WCyACX1b3II/AAAAAAAABwc/IPCzzoQSZZQjTHN2g0kTIZjH4NGJQ8drwCJoC/w258-h279-p-rw/logo.png"/>
-          <p class="siteDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac
-            neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-        </div>
-        <div class="six columns">
-          <h4 class="loginText">Conectar</h4>
-          <form>
-            <div>
-              <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
-              <h6 class="loginText">ou</h6>
-              <input class="u-full-width loginFields" type="email" placeholder="Email" id="username" ng-model="sEmail">
-              <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
-              <a href="#/moviemancer">  <button class="button-primary u-full-width loginButton">ENTRAR</button></a>
-              <a href="#/singup">  <button class="button-primary u-full-width loginButton">ENTRAR</button></a>
-            </div>
-          </form>
-        </div>
-      </div>
+<div class="twelve columns aboutBox">
+    <div class="six columns" style="margin: 2% 8% 0% 0%;">
+        <img width="40%" style="margin-left: 30%;margin-right: 30%;margin-top: 1.3em;" src="https://uploaddeimagens.com.br/images/000/898/850/original/MOVIMANCER-RED-BIG.png?1492995210"
+        />
+        <p class="siteDescription">Moviemancer é um site de recomendação de filmes com multiplos filtros para você que está cansado de passar dois Retorno
+            do Rei escolhendo um filme para assistir. Venha conferir!
+        </p>
     </div>
-  </div>
+    <div class="five columns">
+        <h5 class="loginText">ENTRAR</h5>
+        <form>
+            <div>
+                <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
+                <h6 class="loginText">ou</h6>
+                <input class="u-full-width loginFields" type="email" placeholder="Email" id="username" ng-model="sEmail">
+                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
+                <a href="#/moviemancer"> <button class="button-primary u-full-width loginButton">ENTRAR</button></a>
+                <a href="#/singup"> <button class="button-primary u-full-width singupButton">CADASTRAR</button></a>
+            </div>
+        </form>
+    </div>
+</div>

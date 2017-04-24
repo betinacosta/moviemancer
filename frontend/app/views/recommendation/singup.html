@@ -1,28 +1,23 @@
-  <div class="container" ng-controller="singupCtrl">
-    <div class="row">
-      <div class="twelve columns aboutBox" style="margin-top: 10%">
-        <div class="six columns" style="margin: 20% 0% 20% 0%;">
-          <h1 class="siteTitle">Claquete 16</h1>
-          <p class="siteDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. 
-            Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-        </div>
-        <div class="six columns">
-          <h4 class="loginText">Conectar</h4>
-          <form>
-            <div>
-              <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
-              <h6 class="loginText">ou</h6>
-              <input class="u-full-width loginFields" type="text" placeholder="Username" id="username" ng-model="sUsername">
-              <input class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="sName">
-              <input class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="sEmail">
-              <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
-              <input class="u-full-width loginFields" type="password" placeholder="Confirmar Senha" id="passwordConfirm" ng-model="sPasswordConfirm">
-              <input class="button-primary u-full-width singupButton" type="submit" value="Cadastrar" ng-click="singIn(sUsername, sName, sEmail, sPassword, sPasswordConfirm)">
-            </div>
-          </form>
-        </div>
-      </div>
-                
+<div class="twelve columns aboutBox">
+    <div class="six columns" style="margin: 2% 8% 0% 0%;">
+        <img width="40%" style="margin-left: 30%;margin-right: 30%;margin-top: 1.3em;" src="https://uploaddeimagens.com.br/images/000/898/850/original/MOVIMANCER-RED-BIG.png?1492995210"
+        />
+        <p class="siteDescription">Moviemancer é um site de recomendação de filmes com multiplos filtros para você que está cansado de passar dois Retorno
+            do Rei escolhendo um filme para assistir. Venha conferir!
+        </p>
     </div>
-  </div>
+    <div class="five columns">
+        <h5 class="loginText">CADASTRAR</h5>
+        <form>
+            <div>
+                <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
+                <h6 class="loginText">ou</h6>
+                <input class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="name">
+                <input class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="email">
+                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="password">
+                <input class="u-full-width loginFields" type="password" placeholder="Confrimar Senha" id="passwordConfirm" ng-model="passwordConfirm">
+                <a href="#/singup"> <button class="button-primary u-full-width loginButton">CADASTRAR</button></a>
+            </div>
+        </form>
+    </div>
+</div>

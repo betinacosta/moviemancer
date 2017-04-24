@@ -1,12 +1,14 @@
 .aboutBox {
-    margin-top: 15%;
     padding: 5%;
-    background-color: rgba(0,0,0,0.75);
+    background-color: #eee;
 }
 
 .siteDescription {
-    color: #fff7c9;
+    color: #2B2B2B;
     text-align: justify;
+    letter-spacing: .1rem;
+    margin-top: 1em;
+    font-size: 1.2em;
 }
 
 .siteTitle {
@@ -15,29 +17,34 @@
 }
 
 .loginText {
-    color: #fff7c9;
+    color: #2B2B2B;
     text-align: center;
+    letter-spacing: .1rem;
 }
 
 .facebookButton {
     background-color: #3b5998 !important;
     border-color: #3b5998 !important;
+    border-radius: 2px !important;
 }
 
 .loginButton {
-    background-color: #642e68 !important;
-    border-color: #642e68 !important;
+    background-color: #9a2726 !important;
+    border-color: #9a2726 !important;
+    border-radius: 2px !important;
 }
 
 .singupButton {
-    background-color: #c68006 !important;
-    border-color: #c68006 !important;
+    background-color: #7cae7c  !important;
+    border-color: #7cae7c !important;
+    border-radius: 2px !important;
 }
 
 .loginFields {
-    background-color: rgba(0,0,0,0.69) !important;
-    color: #fff7c9 !important;
-    border-color: rgba(0,0,0,0.69) !important;
+    background-color: #eee !important;
+    color: #2B2B2B !important;
+    border-radius: 2px !important;
+    border-color: #7d7b7b !important;
 }
 
 .singInBackground {
@@ -536,5 +543,13 @@ However, delay the fade out process for 2.5 seconds */
     font-weight: normal;
     margin-top: 3px;
     color: #9a2726;
+ }
+
+ .back {
+     background-image: url(http://www.gablescinema.com/media/filmassets/slides/kill_bill_vol_2_4.jpg);
+    width: 100%;
+    background-repeat:no-repeat;
+background-size:contain;
+background-position:center;
  }
 
