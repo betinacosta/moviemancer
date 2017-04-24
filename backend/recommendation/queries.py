@@ -1,5 +1,6 @@
 from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type
 import json
+import hashlib
 
 def get_list_id_by_user(user_id):
     lists = []
@@ -204,3 +205,24 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
             rate_movie (user_id, movie_id, user_rating)
         else:
             print('Errro while adding new movie to list')
+
+#AUTHENTICATION HANDLERS
+
+def authenticate_user(email, password):
+    #hash_password = hashlib.sha224(password).hexdigest()
+    hash_password = password
+
+    user = User.objects.filter(email = email, password = hash_password)
+    print(user)
+
+    if user:
+        return True
+    else:
+        return False
+
+def get_user(email):
+    user = User.objects.filter(email = email)
+
+    user_info = {'user_id': user[0].user_id, 'name': user[0].name, 'email': user[0].email,}
+
+    return json.dumps(user_info)

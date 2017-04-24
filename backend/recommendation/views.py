@@ -4,7 +4,7 @@ from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from recommendation.queries import movie_by_user_list, rate_movie, get_watchedlist, remove_watched, get_watchlist, remove_movie_from_list
+from recommendation.queries import movie_by_user_list, rate_movie, get_watchedlist, remove_watched, get_watchlist, remove_movie_from_list, authenticate_user, get_user
 from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external, rate_external_movie
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -54,6 +54,26 @@ def ratemovie(request):
     
     #update recommendation
     add_recommentation_to_database(1)
+
+@csrf_exempt
+def get_auth(request):
+    if request.body:
+        request_auth = json.loads(request.body)
+        request_email = request_auth[u'email']
+        request_password = request_auth[u'password']
+
+        print('email', request_email, ' Senha: ', request_password)
+
+        if authenticate_user(request_email, request_password):
+            user_data = get_user(request_email)
+            return HttpResponse(user_data)
+        else:
+            return HttpResponse('Erro')
+    else:
+        return HttpResponse('Authentication Failure: No Response Body')
+
+def registration(request):
+    pass
 
 @csrf_exempt
 def rate_external(request):

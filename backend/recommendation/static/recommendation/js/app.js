@@ -1,4 +1,10 @@
-var claqueteApp = angular.module('claqueteApp', ['ngRoute', 'myApp', 'myApp2','myApp3','vistoApp','queroVerApp','filtersApp','homeApp','loginApp', 'singupApp']);
+'use strict';
+angular.module('Authentication', []);
+var claqueteApp = angular.module('claqueteApp', [   'ngRoute', 'myApp', 'myApp2',
+                                                    'myApp3','vistoApp','queroVerApp',
+                                                    'filtersApp','homeApp','loginApp', 
+                                                    'singupApp', 'Authentication',
+                                                    'ngRoute','ngCookies']);
 
 claqueteApp.config(['$routeProvider',
     function($routeProvider) {
@@ -35,7 +41,21 @@ claqueteApp.config(['$routeProvider',
         });
     }
 
-]);
+]).run(['$rootScope', '$location', '$cookieStore', '$http',
+    function ($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }
+  
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/' && !$rootScope.globals.currentUser) {
+                $location.path('/');
+            }
+        });
+    }]);
 
 claqueteApp.config([
     '$httpProvider', function ($httpProvider) {

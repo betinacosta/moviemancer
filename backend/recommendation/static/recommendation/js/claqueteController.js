@@ -3,7 +3,15 @@ var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($in
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
+
+	$scope.logedMenu = function() {
+        if($rootScope.globals.currentUser) {
+            $scope.sanduba = true;
+            $scope.userName = $rootScope.globals.currentUser.name;
+        }
+    }
+	$scope.logedMenu();
 
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 

@@ -112,7 +112,7 @@ class Type(models.Model):
 
 class User(models.Model):
     user_id = models.AutoField(db_column='user_ID', primary_key=True)  # Field name made lowercase.
-    username = models.CharField(max_length=50)
+    #username = models.CharField(max_length=50)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=50)

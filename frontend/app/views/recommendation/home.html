@@ -35,6 +35,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
   <script src="{% static 'recommendation/node_modules/angular/angular.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.js"></script>
   <script src="{% static 'recommendation/angular-rateit-master/dist/ng-rateit.js' %}"></script>
   <script src="{% static 'recommendation/angularjs-slider-master/dist/rzslider.js' %}"></script>
   <script src="{% static 'recommendation/angular-youtube-embed-master/dist/angular-youtube-embed.min.js' %}"></script>
@@ -53,6 +54,7 @@
   <script src="{% static 'recommendation/js/home.controller.js' %}"></script>
   <script src="{% static 'recommendation/js/login.controller.js' %}"></script>
   <script src="{% static 'recommendation/js/singup.controller.js' %}"></script>
+  <script src="{% static 'recommendation/js/authentication.service.js' %}"></script>
 
   <script>
         (function(d,s,id){
@@ -87,7 +89,7 @@
             <li class="menuListItems"> <a href="#/moviemancer"><img style="width: 10em;margin-top: 0.2em;" src="https://uploaddeimagens.com.br/images/000/898/377/original/moviemancer-hori.png?1492949519"></a></li>
         </ul>
 
-        <div class="sandubaMenu" ng-click="showMenu()">
+        <div class="sandubaMenu" ng-show="sanduba" ng-click="showMenu()">
           <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
         </div>
         
@@ -95,10 +97,10 @@
     </div>
     <div class="dropdownDiv" ng-show="menu">
           <ul style="list-style-type: none;">
-            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">BETINA COSTA</li>
+            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">{$userName$}</li>
             <li class="dropdownItens"><i class="fa fa-film menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">ASSISTIDOS</a></li>
             <li class="dropdownItens"><i class="fa fa-list menuIcon" aria-hidden="true"></i><a href="#/watchlistview" class="menuItems ">QUERO VER</a></li>
-            <li class="dropdownItens" style="margin-bottom: -12%;"><i class="fa fa-sign-out menuIcon" aria-hidden="true"></i><a href="#sair" class="menuItems">SAIR</a></li>
+            <li class="dropdownItens" style="margin-bottom: -12%;" ng-click="logOut()"><i class="fa fa-sign-out menuIcon" aria-hidden="true" ng-click="logOut()"></i>SAIR</li>
           </ul>
         </div>
 </div>

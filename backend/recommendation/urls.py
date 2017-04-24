@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^filters/$', views.show_filters, name='filters'),
     url(r'^login/$', views.show_login, name='login'),
     url(r'^singup/$', views.show_singup, name='singup'),
+    url(r'^authentication/$', views.get_auth, name='authentication'),
+    url(r'^registration/$', views.registration, name='registration'),
 
     
 
