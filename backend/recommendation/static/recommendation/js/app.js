@@ -1,12 +1,12 @@
 'use strict';
 angular.module('Authentication', []);
-var claqueteApp = angular.module('claqueteApp', [   'ngRoute', 'mainApp', 'recommendationApp',
+var moviemancerApp = angular.module('moviemancerApp', [   'ngRoute', 'mainApp', 'recommendationApp',
                                                     'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
                                                     'singupApp', 'Authentication',
                                                     'ngRoute','ngCookies']);
 
-claqueteApp.config(['$routeProvider',
+moviemancerApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         when('/', {
@@ -57,7 +57,7 @@ claqueteApp.config(['$routeProvider',
         });
     }]);
 
-claqueteApp.config([
+moviemancerApp.config([
     '$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.xsrfCookieName = 'csrfToken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
