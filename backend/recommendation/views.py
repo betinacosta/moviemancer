@@ -16,7 +16,7 @@ def index(request):
     return render(request,'recommendation/home.html')
 
 def main(request):
-    return render(request,'recommendation/partials/main.html')
+    return render(request,'recommendation/partials/moviemancer.html')
 
 def fullreco(request):
     return render(request,'recommendation/partials/recommendation.html')
