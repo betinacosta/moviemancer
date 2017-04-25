@@ -139,7 +139,7 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', '$rootScope', fu
 		$http.post("rateexternalmovie/", {
 			"tmdb_movie_id": $routeParams.tmdbID,
 			"rate_id": rating,
-			"user_id": $routeParams.userID,
+			"user_id": $rootScope.globals.currentUser.user_id,
 			"movie_poster": poster,
 			"movie_title": title
 		}, {
@@ -162,7 +162,7 @@ app.controller('movieCtrl', ['$scope', '$http', '$routeParams', '$rootScope', fu
 
 		$http.post("addwatchlistexternal/", {
 			"tmdb_movie_id": $routeParams.tmdbID,
-			"user_id": $routeParams.userID,
+			"user_id": $rootScope.globals.currentUser.user_id,
 			"movie_poster": poster,
 			"movie_title": title
 		}, {
