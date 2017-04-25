@@ -1,4 +1,4 @@
-var app = angular.module('myApp3', ['ngRateIt', 'youtube-embed']).config(function ($interpolateProvider) {
+var app = angular.module('moviedetailsApp', ['ngRateIt', 'youtube-embed']).config(function ($interpolateProvider) {
 	$interpolateProvider.startSymbol('{$');
 	$interpolateProvider.endSymbol('$}');
 });

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Authentication', []);
 var claqueteApp = angular.module('claqueteApp', [   'ngRoute', 'myApp', 'myApp2',
-                                                    'myApp3','vistoApp','queroVerApp',
+                                                    'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
                                                     'singupApp', 'Authentication',
                                                     'ngRoute','ngCookies']);
