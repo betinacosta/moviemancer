@@ -1,4 +1,4 @@
-var app = angular.module('myApp2', []).config(function ($interpolateProvider) {
+var app = angular.module('recommendationApp', []).config(function ($interpolateProvider) {
 	$interpolateProvider.startSymbol('{$');
 	$interpolateProvider.endSymbol('$}');
 });
