@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($interpolateProvider) {
+var app = angular.module('mainApp', ['ngRateIt', 'rzModule']).config(function ($interpolateProvider) {
 	$interpolateProvider.startSymbol('{$');
 	$interpolateProvider.endSymbol('$}');
 });
