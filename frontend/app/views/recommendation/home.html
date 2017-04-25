@@ -29,7 +29,7 @@
 
     <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <!--<link rel="icon" type="image/png" href="images/dice.png"> -->
+    <link rel="icon" type="image/png" href="https://uploaddeimagens.com.br/images/000/900/001/original/film-strip_%281%29.png.ico?1493100398">
 
     <!-- Scripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -89,15 +89,15 @@
             <li class="menuListItems"> <a href="#/moviemancer"><img style="width: 10em;margin-top: 0.2em;" src="https://uploaddeimagens.com.br/images/000/898/377/original/moviemancer-hori.png?1492949519"></a></li>
         </ul>
 
-        <div class="sandubaMenu" ng-click="showMenu()">
-          <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        <div ng-show="prop.sanduba" class="sandubaMenu" ng-click="showMenu()">
+          <i class="fa fa-bars fa-2x" aria-hidden="true" ></i>
         </div>
         
 </div>
     </div>
-    <div class="dropdownDiv" ng-show="menu">
+    <div class="dropdownDiv" ng-show="prop.menu">
           <ul style="list-style-type: none;">
-            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">{$userName$}</li>
+            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">PERFIL</li>
             <li class="dropdownItens"><i class="fa fa-film menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">ASSISTIDOS</a></li>
             <li class="dropdownItens"><i class="fa fa-list menuIcon" aria-hidden="true"></i><a href="#/watchlistview" class="menuItems ">QUERO VER</a></li>
             <li class="dropdownItens" style="margin-bottom: -12%;" ng-click="logOut()"><i class="fa fa-sign-out menuIcon" aria-hidden="true" ng-click="logOut()"></i>SAIR</li>
