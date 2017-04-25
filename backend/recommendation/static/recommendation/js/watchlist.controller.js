@@ -82,6 +82,7 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
             .then(
             function (response) {
                 console.log('Success: ', response.data)
+                $scope.getWatchlist();
                 $scope.toastMessege("Filme Adicionado a Lista de Vistos")
             },
             function (response) {
