@@ -1,5 +1,6 @@
-from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type
+from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type, Profile, Genre, ProfileGenre
 import json
+import hashlib
 
 def get_list_id_by_user(user_id):
     lists = []
@@ -40,6 +41,11 @@ def get_movie_by_user(user_id):
     for item in movie_by_user_list(user_id, 'watchedlist'):
         movies.append(item.movie_id)
     return movies
+
+def get_user_by_email(email):
+    user = User.objects.filter(email = email)
+
+    return user[0].user_id
 
 def get_tmdb_movies_id():
     movies = []
@@ -94,7 +100,7 @@ def get_movie_tmdb_id(movie_id):
 
 def get_watchedlist (user):
     watched_list = []
-    list_id = get_list_by_user(user, 3);
+    list_id = get_list_by_user(user, 3)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -110,7 +116,7 @@ def get_watchedlist (user):
 
 def get_watchlist(user):
     watchlist = []
-    list_id = get_list_by_user(user, 2);
+    list_id = get_list_by_user(user, 2)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -122,6 +128,28 @@ def get_watchlist(user):
         })
 
     return json.dumps(watchlist)
+
+def jsonify_reco_list(user_id, list_name):
+    movies = movie_by_user_list(user_id, list_name)
+    reco_list = []
+
+    for movie in movies:
+        reco_list.append({'tmdb_movie_id': movie.tmdb_movie_id, 'movie_id': movie.movie_id, 'tmdb_poster': movie.tmdb_poster, 'tmdb_title': movie.tmdb_title,})
+    
+    return json.dumps(reco_list)
+
+def get_genres_by_user(user_id):
+    profile_id = Profile.objects.filter(user_id = user_id)
+    profile_id = profile_id[0].profile_id
+
+    genre_id = ProfileGenre.objects.filter(profile_id = profile_id)
+
+    genre_1 = Genre.objects.filter(genre_id = genre_id[0].genre_id)
+    genre_2 = Genre.objects.filter(genre_id = genre_id[1].genre_id)
+    genre_3 = Genre.objects.filter(genre_id = genre_id[2].genre_id)
+
+    genres = {'genre_1': genre_1[0].tmdb_genre_id, 'genre_2': genre_2[0].tmdb_genre_id,'genre_3': genre_3[0].tmdb_genre_id}
+    return genres
 
 #UPDATE, DELETE, INSERT
 
@@ -204,3 +232,24 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
             rate_movie (user_id, movie_id, user_rating)
         else:
             print('Errro while adding new movie to list')
+
+#AUTHENTICATION HANDLERS
+
+def authenticate_user(email, password):
+    #hash_password = hashlib.sha224(password).hexdigest()
+    hash_password = password
+
+    user = User.objects.filter(email = email, password = hash_password)
+    print(user)
+
+    if user:
+        return True
+    else:
+        return False
+
+def get_user(email):
+    user = User.objects.filter(email = email)
+
+    user_info = {'user_id': user[0].user_id, 'name': user[0].name, 'email': user[0].email,}
+
+    return json.dumps(user_info)

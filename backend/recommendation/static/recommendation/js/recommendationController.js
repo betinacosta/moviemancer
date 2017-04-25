@@ -3,24 +3,28 @@ var app = angular.module('myApp2', []).config(function ($interpolateProvider) {
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('recoCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+	$rootScope.prop.menu = false;
 
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
 	$scope.getRecommendation = function () {
-		$scope.recommendationRequest = $http.get('reco');
-
-		$scope.recommendationRequest.then(
-			function (payload) {
+		$http.post("getrecommendation/", {
+			"user_id": $rootScope.globals.currentUser.user_id
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
 				$scope.fullRecommendation = [];
 				$scope.index = [];
 
-				for (i = 0; i < payload.data.length; i++) {
+				for (i = 0; i < response.data.length; i++) {
 					$scope.fullRecommendation.push({
-						title: payload.data[i].tmdb_title,
-						poster: payload.data[i].tmdb_poster,
-						movie_id: payload.data[i].movie_id,
-						tmdb_id: payload.data[i].tmdb_movie_id
+						title: response.data[i].tmdb_title,
+						poster: response.data[i].tmdb_poster,
+						movie_id: response.data[i].movie_id,
+						tmdb_id: response.data[i].tmdb_movie_id
 					});
 				}
 
@@ -33,8 +37,13 @@ app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
 				for (i = 0; i < $scope.fullList.length; i++) {
 					$scope.index.push(i);
 				}
+			},
+			function (response) {
+				console.log('Error: ', response)
 			});
-	}
+
+
+		}
 
 	//--------------------------------------------Filter Box Handlers--------------------------------------------
 	$scope.filterVisible = false;
@@ -340,7 +349,7 @@ app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
 		$http.post("ratemovie/", {
 			"movie_id": movieID,
 			"rate_id": rating,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -361,7 +370,7 @@ app.controller('recoCtrl', ['$scope', '$http', function ($scope, $http) {
 
 		$http.post("addwatchlist/", {
 			"movie_id": movieID,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})

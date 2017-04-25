@@ -21,6 +21,11 @@ urlpatterns = [
     url(r'^watchlist/$', views.show_watchlist, name='watchlist'),
     url(r'^getwatchlist/$', views.get_watch_list, name='getwatchlist'),
     url(r'^filters/$', views.show_filters, name='filters'),
+    url(r'^login/$', views.show_login, name='login'),
+    url(r'^singup/$', views.show_singup, name='singup'),
+    url(r'^authentication/$', views.get_auth, name='authentication'),
+    url(r'^registration/$', views.registration, name='registration'),
+    url(r'^getrecommendation/$', views.get_recommendation, name='getrecommendation'),
 
     
 

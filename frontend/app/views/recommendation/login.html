@@ -7,16 +7,15 @@
         </p>
     </div>
     <div class="five columns">
-        <h5 class="loginText">CADASTRAR</h5>
+        <h5 class="loginText">ENTRAR</h5>
         <form>
             <div>
                 <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
                 <h6 class="loginText">ou</h6>
-                <input class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="name">
-                <input class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="email">
-                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="password">
-                <input class="u-full-width loginFields" type="password" placeholder="Confrimar Senha" id="passwordConfirm" ng-model="passwordConfirm">
-                <a href="#/singup"> <button class="button-primary u-full-width loginButton">CADASTRAR</button></a>
+                <input class="u-full-width loginFields" type="email" placeholder="Email" id="username" ng-model="sEmail">
+                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
+                <button class="button-primary u-full-width loginButton" ng-click="login(sEmail,sPassword)">ENTRAR</button></a>
+                <a href="#/singup"> <button class="button-primary u-full-width singupButton">CADASTRAR</button></a>
             </div>
         </form>
     </div>

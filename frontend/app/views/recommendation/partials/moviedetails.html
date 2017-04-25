@@ -115,7 +115,7 @@
             <h3 style="margin-left: 6%;">Similares</h3>
             <div class="two columns" style="background-color: #F6F6F6;margin-left: 6%;" ng-repeat="similar in similarMovies">
                 <div>
-                    <a ng-href="#/moviedetails/{$ similar.tmdb_id $}/1" class="movie-title-link">
+                    <a ng-href="#/moviedetails/{$ similar.tmdb_id $}" class="movie-title-link">
                         <p class="movieTitleMaster">{$ similar.title $}</p>
                         <img src="{$ similar.poster_path $}" width="202px" height="287px">
                     </a>

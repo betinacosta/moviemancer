@@ -3,29 +3,40 @@ var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($in
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
+	$rootScope.prop.sanduba = true;
+	$rootScope.prop.menu = false;
+	$scope.userName = $rootScope.globals.currentUser.name;
 
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
 	$scope.getRecommendation = function () {
-			$scope.recommendationRequest = $http.get('reco');
-
-			$scope.recommendationRequest.then(
-            function (payload) {
-                $scope.recommendation = [];
+		$http.post("getrecommendation/", {
+			"user_id": $rootScope.globals.currentUser.user_id
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				$scope.recommendation = [];
 				$scope.rating = [];
 				$scope.fullRecommendation = [];
 
 				for (i = 0; i < 6; i++) {
 					$scope.recommendation.push({
-						title: payload.data[i].tmdb_title,
-						poster: payload.data[i].tmdb_poster,
-						movie_id: payload.data[i].movie_id,
-						tmdb_id: payload.data[i].tmdb_movie_id,
+						title: response.data[i].tmdb_title,
+						poster: response.data[i].tmdb_poster,
+						movie_id: response.data[i].movie_id,
+						tmdb_id: response.data[i].tmdb_movie_id,
 						rating: 0
 					});
 				}
+			},
+			function (response) {
+				console.log('Error: ', response)
 			});
+
+
 		}
 
 	//--------------------------------------------Get Comming Soon Handler--------------------------------------------
@@ -52,11 +63,12 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 
 		$scope.loadCommingSoon = function () {
 			$scope.today = $scope.formatDate(new Date());
-			$scope.endDate = $scope.getEndDate(new Date(), 15);
+			$scope.endDate = $scope.getEndDate(new Date(), 7);
 			$scope.endDate = $scope.formatDate($scope.endDate);
-			
-			$scope.baseUrl = 'http://api.themoviedb.org/3/discover/movie?api_key=5880f597a9fab4f284178ffe0e1f0dba&primary_release_date.gte=' +
-							$scope.today + '&primary_release_date.lte=' + $scope.endDate + '&language=pt-BR';
+
+			$scope.baseUrl = 	'https://api.themoviedb.org/3/discover/movie?api_key=5880f597a9fab4f284178ffe0e1f0dba' + 
+								'&language=pt-BR&region=BR&release_date.gte=' + $scope.today + '&release_date.lte=' + 
+								$scope.endDate;
 
 			$scope.commingSoon = [];
 			$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
@@ -378,7 +390,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 		$http.post("ratemovie/", {
 			"movie_id": movieID,
 			"rate_id": rating,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -399,7 +411,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 
 		$http.post("addwatchlist/", {
 			"movie_id": movieID,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -419,7 +431,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', function ($scope, $htt
 
 		$http.post("addwatchlistexternal/", {
 			"tmdb_movie_id": tmdb_id,
-			"user_id": 1,
+			"user_id": $rootScope.globals.currentUser.user_id,
 			"movie_poster": poster,
 			"movie_title": title
 		}, {

@@ -3,8 +3,8 @@ var app = angular.module('queroVerApp', ['ngRateIt']).config(function ($interpol
     $interpolateProvider.endSymbol('$}');
 });
 
-app.controller('watchlistCtrl', ['$scope', '$http', function ($scope, $http) {
-
+app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scope, $http, $rootScope) {
+    $rootScope.prop.menu = false;
     //--------------------------------------------Get Watchlist Handler--------------------------------------------
 
     $scope.getWatchlist = function () {
@@ -13,7 +13,7 @@ app.controller('watchlistCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.index = [];
 
         $http.post("getwatchlist/", {
-            "user_id": 1
+            "user_id": $rootScope.globals.currentUser.user_id
         }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
@@ -52,7 +52,7 @@ app.controller('watchlistCtrl', ['$scope', '$http', function ($scope, $http) {
 
         $http.post("removefromwatchlist/", {
             "movie_id": movieID,
-            "user_id": 1
+            "user_id": $rootScope.globals.currentUser.user_id
         }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
@@ -75,13 +75,14 @@ app.controller('watchlistCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.post("ratemovie/", {
             "movie_id": movieID,
             "rate_id": rating,
-            "user_id": 1
+            "user_id": $rootScope.globals.currentUser.user_id
         }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
             .then(
             function (response) {
                 console.log('Success: ', response.data)
+                $scope.getWatchlist();
                 $scope.toastMessege("Filme Adicionado a Lista de Vistos")
             },
             function (response) {
