@@ -6,7 +6,6 @@ var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($in
 app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
 	$rootScope.prop.sanduba = true;
 	$rootScope.prop.menu = false;
-	$scope.userName = $rootScope.globals.currentUser.name;
 
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
