@@ -19,7 +19,7 @@ def main(request):
     return render(request,'recommendation/partials/main.html')
 
 def fullreco(request):
-    return render(request,'recommendation/partials/full-recommendation.html')
+    return render(request,'recommendation/partials/recommendation.html')
 
 def moviedetails(request):
     return render(request,'recommendation/partials/moviedetails.html')
