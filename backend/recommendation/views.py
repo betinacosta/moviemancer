@@ -18,7 +18,7 @@ def index(request):
 def moviemancer(request):
     return render(request,'recommendation/partials/moviemancer.html')
 
-def fullreco(request):
+def recommendation(request):
     return render(request,'recommendation/partials/recommendation.html')
 
 def moviedetails(request):
