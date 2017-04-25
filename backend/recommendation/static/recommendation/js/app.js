@@ -25,7 +25,7 @@ claqueteApp.config(['$routeProvider',
         }).
         when('/moviedetails/:tmdbID', {
             templateUrl: 'moviedetails',
-            controller: 'movieCtrl'
+            controller: 'moviedetailsCtrl'
         }).
         when('/watchedlistview', {
             templateUrl: 'watchedlist',

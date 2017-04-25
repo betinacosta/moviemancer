@@ -3,7 +3,7 @@ var app = angular.module('moviedetailsApp', ['ngRateIt', 'youtube-embed']).confi
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('movieCtrl', ['$scope', '$http', '$routeParams', '$rootScope', function ($scope, $http, $routeParams, $rootScope) {
+app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootScope', function ($scope, $http, $routeParams, $rootScope) {
 	$rootScope.prop.menu = false;
 	//--------------------------------------------Get Movie Information--------------------------------------------
 
