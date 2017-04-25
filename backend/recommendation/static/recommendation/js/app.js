@@ -13,7 +13,7 @@ claqueteApp.config(['$routeProvider',
             templateUrl: 'login',  
             controller: 'loginCtrl'
         }).when('/moviemancer', {
-            templateUrl: 'main',  
+            templateUrl: 'moviemancer',  
             controller: 'mainCtrl'
         }).when('/singup', {
             templateUrl: 'singup',  

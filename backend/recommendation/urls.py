@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^movies/$', views.MovieView.as_view(), name='movies'),
-    url(r'^main/$', views.main, name='main'),
+    url(r'^moviemancer/$', views.moviemancer, name='moviemancer'),
     url(r'^recommendation/$', views.fullreco, name='fullreco'),
     url(r'^ratemovie/$', views.ratemovie, name='ratemovie'),
     url(r'^moviedetails/$', views.moviedetails, name='moviedetails'),

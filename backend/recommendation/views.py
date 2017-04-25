@@ -15,7 +15,7 @@ import json
 def index(request):
     return render(request,'recommendation/home.html')
 
-def main(request):
+def moviemancer(request):
     return render(request,'recommendation/partials/moviemancer.html')
 
 def fullreco(request):
