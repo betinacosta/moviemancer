@@ -16,24 +16,32 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
 	$scope.getRecommendation = function () {
-			$scope.recommendationRequest = $http.get('reco');
-
-			$scope.recommendationRequest.then(
-            function (payload) {
-                $scope.recommendation = [];
+		$http.post("getrecommendation/", {
+			"user_id": $rootScope.globals.currentUser.user_id
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				$scope.recommendation = [];
 				$scope.rating = [];
 				$scope.fullRecommendation = [];
 
 				for (i = 0; i < 6; i++) {
 					$scope.recommendation.push({
-						title: payload.data[i].tmdb_title,
-						poster: payload.data[i].tmdb_poster,
-						movie_id: payload.data[i].movie_id,
-						tmdb_id: payload.data[i].tmdb_movie_id,
+						title: response.data[i].tmdb_title,
+						poster: response.data[i].tmdb_poster,
+						movie_id: response.data[i].movie_id,
+						tmdb_id: response.data[i].tmdb_movie_id,
 						rating: 0
 					});
 				}
+			},
+			function (response) {
+				console.log('Error: ', response)
 			});
+
+
 		}
 
 	//--------------------------------------------Get Comming Soon Handler--------------------------------------------
@@ -386,7 +394,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 		$http.post("ratemovie/", {
 			"movie_id": movieID,
 			"rate_id": rating,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -407,7 +415,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 
 		$http.post("addwatchlist/", {
 			"movie_id": movieID,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -427,7 +435,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 
 		$http.post("addwatchlistexternal/", {
 			"tmdb_movie_id": tmdb_id,
-			"user_id": 1,
+			"user_id": $rootScope.globals.currentUser.user_id,
 			"movie_poster": poster,
 			"movie_title": title
 		}, {

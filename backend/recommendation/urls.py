@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^singup/$', views.show_singup, name='singup'),
     url(r'^authentication/$', views.get_auth, name='authentication'),
     url(r'^registration/$', views.registration, name='registration'),
+    url(r'^getrecommendation/$', views.get_recommendation, name='getrecommendation'),
 
     
 

@@ -102,9 +102,31 @@ def user_recommendations(person):
 	recommendataions_list = [recommend_item for score,recommend_item in rankings]
 	return recommendataions_list
 
+def get_recommendation_by_genres(genre):
+	movies = tmdb.Genres(genre)
+	response = movies.movies(page=1, language = 'pt-BR', include_all_movies=False)
+	movie_list = []
+
+	for item in response['results']:
+		movie_list.append(item['id'])
+
+	return movie_list
+
 def add_recommentation_to_database(user):
 	recommendation = build_recommendation_dataset(user)
 	list_id = get_list_by_user(user, 1)
+	user_recos =  MovieList.objects.filter(list_id = list_id)
+
+	if not recommendation and not user_recos:
+		genres_by_user = get_genres_by_user(user)
+		g1 = get_recommendation_by_genres(genres_by_user['genre_1'])
+		g2 = get_recommendation_by_genres(genres_by_user['genre_2'])
+		g3 = get_recommendation_by_genres(genres_by_user['genre_3'])
+		reco_by_genre = g1 + g2 + g3
+
+		for tmdb_id in reco_by_genre:
+			add_movie_to_database(tmdb_id)
+		recommendation = get_movie_id(reco_by_genre)
 
 	movies =[]
 
