@@ -23,7 +23,7 @@ claqueteApp.config(['$routeProvider',
             templateUrl: 'full-recommendation',  
             controller: 'recoCtrl'
         }).
-        when('/moviedetails/:tmdbID/:userID', {
+        when('/moviedetails/:tmdbID', {
             templateUrl: 'moviedetails',
             controller: 'movieCtrl'
         }).

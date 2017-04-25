@@ -5,7 +5,7 @@ var app = angular.module('loginApp', []).config(function ($interpolateProvider) 
 });
 
 app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', function ($scope, $rootScope, $location, AuthenticationService) {
-	console.log('bananaan')
+	$rootScope.prop.menu = false;
 	// reset login status
         AuthenticationService.ClearCredentials();
   

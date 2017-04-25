@@ -3,28 +3,26 @@ var app = angular.module('homeApp', []).config(function ($interpolateProvider) {
     $interpolateProvider.endSymbol('$}');
 });
 
-app.controller('homeCtrl', ['$scope','$window', 'AuthenticationService', '$location', '$rootScope', function ($scope, $window, AuthenticationService, $location, $rootScope) {
-    
-    $scope.logedMenu = function() {
-        if($rootScope.globals.currentUser) {
-            $scope.sanduba = true;
+app.controller('homeCtrl', ['$scope', '$window', 'AuthenticationService', '$location', '$rootScope', function ($scope, $window, AuthenticationService, $location, $rootScope) {
+    $rootScope.prop = { sanduba: false };
+    $rootScope.prop = { menu: false };
+    $scope.logedMenu = function () {
+        if ($rootScope.globals.currentUser) {
+            $rootScope.prop.sanduba = true;
             $scope.userName = $rootScope.globals.currentUser.name;
         }
     }
 
-    $scope.menu = false;
-    $scope.sanduba = false;
     $scope.logedMenu();
 
-    console.log($rootScope)
 
-$scope.showMenu = function(){
-    $scope.menu = !$scope.menu;
-},
+    $scope.showMenu = function () {
+        $rootScope.prop.menu = !$rootScope.prop.menu;
+    },
 
-$scope.logOut = function(){
-    AuthenticationService.ClearCredentials();
-    $location.path('/');
-}
+        $scope.logOut = function () {
+            AuthenticationService.ClearCredentials();
+            $location.path('/');
+        }
 
 }]);

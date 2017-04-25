@@ -3,9 +3,9 @@ var app = angular.module('vistoApp', ['ngRateIt']).config(function ($interpolate
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('watchedListCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-	$scope.menu = false;
+	$rootScope.prop.menu = false;
 
 	//--------------------------------------------Get Watched List Handler--------------------------------------------
 
@@ -15,7 +15,7 @@ app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
 		$scope.index = [];
 
 		$http.post("getwatchedlist/", {
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -54,7 +54,7 @@ app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
 
 		$http.post("removefromwatchedlist/", {
 			"movie_id": movieID,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -77,7 +77,7 @@ app.controller('watchedListCtrl', ['$scope', '$http', function ($scope, $http) {
 		$http.post("ratemovie/", {
 			"movie_id": movieID,
 			"rate_id": rating,
-			"user_id": 1
+			"user_id": $rootScope.globals.currentUser.user_id
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})

@@ -4,14 +4,9 @@ var app = angular.module('myApp', ['ngRateIt', 'rzModule']).config(function ($in
 });
 
 app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
-
-	$scope.logedMenu = function() {
-        if($rootScope.globals.currentUser) {
-            $scope.sanduba = true;
-            $scope.userName = $rootScope.globals.currentUser.name;
-        }
-    }
-	$scope.logedMenu();
+	$rootScope.prop.sanduba = true;
+	$rootScope.prop.menu = false;
+	$scope.userName = $rootScope.globals.currentUser.name;
 
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
@@ -68,11 +63,12 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 
 		$scope.loadCommingSoon = function () {
 			$scope.today = $scope.formatDate(new Date());
-			$scope.endDate = $scope.getEndDate(new Date(), 15);
+			$scope.endDate = $scope.getEndDate(new Date(), 7);
 			$scope.endDate = $scope.formatDate($scope.endDate);
-			
-			$scope.baseUrl = 'http://api.themoviedb.org/3/discover/movie?api_key=5880f597a9fab4f284178ffe0e1f0dba&primary_release_date.gte=' +
-							$scope.today + '&primary_release_date.lte=' + $scope.endDate + '&language=pt-BR';
+
+			$scope.baseUrl = 	'https://api.themoviedb.org/3/discover/movie?api_key=5880f597a9fab4f284178ffe0e1f0dba' + 
+								'&language=pt-BR&region=BR&release_date.gte=' + $scope.today + '&release_date.lte=' + 
+								$scope.endDate;
 
 			$scope.commingSoon = [];
 			$scope.imagePath = 'https://image.tmdb.org/t/p/original/';

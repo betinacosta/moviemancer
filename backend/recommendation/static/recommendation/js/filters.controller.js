@@ -3,11 +3,12 @@ var app = angular.module('filtersApp', ['ngRateIt', 'rzModule']).config(function
     $interpolateProvider.endSymbol('$}');
 });
 
-app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', function ($scope, $http, $routeParams, $window) {
+app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$rootScope',function ($scope, $http, $routeParams, $window, $rootScope) {
 
     //--------------------------------------------Filter Box Handlers--------------------------------------------
     $scope.filterVisible = false;
     $scope.toggle = true;
+    $rootScope.prop.menu = false;
 
     $scope.getGenres = function () {
         return ([
@@ -422,7 +423,7 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', fun
         $http.post("rateexternalmovie/", {
             "tmdb_movie_id": id,
             "rate_id": rating,
-            "user_id": 1,
+            "user_id": $rootScope.globals.currentUser.user_id,
             "movie_poster": poster,
             "movie_title": title
         }, {
@@ -445,7 +446,7 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', fun
 
         $http.post("addwatchlistexternal/", {
             "tmdb_movie_id": tmdb_id,
-            "user_id": 1,
+            "user_id": $rootScope.globals.currentUser.user_id,
             "movie_poster": poster,
             "movie_title": title
         }, {
