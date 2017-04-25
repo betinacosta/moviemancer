@@ -19,8 +19,8 @@ claqueteApp.config(['$routeProvider',
             templateUrl: 'singup',  
             controller: 'singupCtrl'
         }).
-        when('/full-recommendation', {
-            templateUrl: 'full-recommendation',  
+        when('/recommendation', {
+            templateUrl: 'recommendation',  
             controller: 'recoCtrl'
         }).
         when('/moviedetails/:tmdbID', {
