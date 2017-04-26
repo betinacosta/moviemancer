@@ -51,7 +51,9 @@ moviemancerApp.config(['$routeProvider',
   
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
-            if ($location.path() !== '/' && !$rootScope.globals.currentUser) {
+            var restrictedPage = $.inArray($location.path(), ['/login', '/singup']) === -1;
+            var loggedIn = $rootScope.globals.currentUser;
+            if (restrictedPage && !loggedIn) {
                 $location.path('/');
             }
         });
