@@ -7,6 +7,13 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 	$rootScope.prop.sanduba = true;
 	$rootScope.prop.menu = false;
 
+	$scope.footerID = document.getElementById('footer');
+    $scope.bodyID = document.getElementById('body');
+    $scope.footerID.style.position = 'relative';
+    $scope.footerID.style.bottom = '0';
+    $scope.footerID.style.width = '100%';
+    $scope.bodyID.style.backgroundColor = 'white';
+
 	//--------------------------------------------Get Recommendation Handler--------------------------------------------
 
 	$scope.getRecommendation = function () {

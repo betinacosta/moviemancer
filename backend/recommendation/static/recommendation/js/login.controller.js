@@ -6,6 +6,14 @@ var app = angular.module('loginApp', []).config(function ($interpolateProvider) 
 
 app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', function ($scope, $rootScope, $location, AuthenticationService) {
 	$rootScope.prop.menu = false;
+
+    $scope.footerID = document.getElementById('footer');
+    $scope.bodyID = document.getElementById('body');
+    $scope.footerID.style.position = 'absolute';
+    $scope.footerID.style.bottom = '0';
+    $scope.footerID.style.width = '100%';
+    $scope.bodyID.style.backgroundColor = '#eee';
+
 	// reset login status
         AuthenticationService.ClearCredentials();
   
