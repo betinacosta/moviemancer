@@ -6,9 +6,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^movies/$', views.MovieView.as_view(), name='movies'),
-    url(r'^reco/$', views.RecoView.as_view(), name='recommendation'),
-    url(r'^main/$', views.main, name='main'),
-    url(r'^full-recommendation/$', views.fullreco, name='fullreco'),
+    url(r'^moviemancer/$', views.moviemancer, name='moviemancer'),
+    url(r'^recommendation/$', views.recommendation, name='recommendation'),
     url(r'^ratemovie/$', views.ratemovie, name='ratemovie'),
     url(r'^moviedetails/$', views.moviedetails, name='moviedetails'),
     url(r'^addwatchlist/$', views.add_watchlist, name='addwatchlist'),
@@ -26,11 +25,6 @@ urlpatterns = [
     url(r'^authentication/$', views.get_auth, name='authentication'),
     url(r'^registration/$', views.registration, name='registration'),
     url(r'^getrecommendation/$', views.get_recommendation, name='getrecommendation'),
-
-    
-
-
-    
 
 ]
 

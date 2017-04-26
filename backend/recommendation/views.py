@@ -15,11 +15,11 @@ import json
 def index(request):
     return render(request,'recommendation/home.html')
 
-def main(request):
-    return render(request,'recommendation/partials/main.html')
+def moviemancer(request):
+    return render(request,'recommendation/partials/moviemancer.html')
 
-def fullreco(request):
-    return render(request,'recommendation/partials/full-recommendation.html')
+def recommendation(request):
+    return render(request,'recommendation/partials/recommendation.html')
 
 def moviedetails(request):
     return render(request,'recommendation/partials/moviedetails.html')
@@ -181,11 +181,5 @@ def get_watch_list(request):
 class MovieView(generics.ListAPIView):
     model = Movie
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-
-class RecoView (generics.ListAPIView):
-    model = Movie
-    add_recommentation_to_database(1)
-    queryset = movie_by_user_list(1, 'recommendation')
     serializer_class = MovieSerializer
 

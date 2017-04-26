@@ -1,31 +1,31 @@
 'use strict';
 angular.module('Authentication', []);
-var claqueteApp = angular.module('claqueteApp', [   'ngRoute', 'myApp', 'myApp2',
-                                                    'myApp3','vistoApp','queroVerApp',
+var moviemancerApp = angular.module('moviemancerApp', [   'ngRoute', 'mainApp', 'recommendationApp',
+                                                    'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
                                                     'singupApp', 'Authentication',
                                                     'ngRoute','ngCookies']);
 
-claqueteApp.config(['$routeProvider',
+moviemancerApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         when('/', {
             templateUrl: 'login',  
             controller: 'loginCtrl'
         }).when('/moviemancer', {
-            templateUrl: 'main',  
+            templateUrl: 'moviemancer',  
             controller: 'mainCtrl'
         }).when('/singup', {
             templateUrl: 'singup',  
             controller: 'singupCtrl'
         }).
-        when('/full-recommendation', {
-            templateUrl: 'full-recommendation',  
+        when('/recommendation', {
+            templateUrl: 'recommendation',  
             controller: 'recoCtrl'
         }).
         when('/moviedetails/:tmdbID', {
             templateUrl: 'moviedetails',
-            controller: 'movieCtrl'
+            controller: 'moviedetailsCtrl'
         }).
         when('/watchedlistview', {
             templateUrl: 'watchedlist',
@@ -57,7 +57,7 @@ claqueteApp.config(['$routeProvider',
         });
     }]);
 
-claqueteApp.config([
+moviemancerApp.config([
     '$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.xsrfCookieName = 'csrfToken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
