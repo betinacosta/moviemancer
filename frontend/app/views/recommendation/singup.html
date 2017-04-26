@@ -12,11 +12,11 @@
             <div>
                 <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
                 <h6 class="loginText">ou</h6>
-                <input class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="name">
-                <input class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="email">
-                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="password">
-                <input class="u-full-width loginFields" type="password" placeholder="Confrimar Senha" id="passwordConfirm" ng-model="passwordConfirm">
-                <a href="#/singup"> <button class="button-primary u-full-width loginButton">CADASTRAR</button></a>
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="name" ng-click="clearField('name')">
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="email" ng-click="clearField('email')">
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="password" ng-click="clearField('password')">
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="password" placeholder="Confrimar Senha" id="passwordConfirm" ng-model="passwordConfirm" ng-click="clearField('passwordConfirm')">
+                <button class="button-primary u-full-width loginButton" ng-click="validateEntry(name, email, password, passwordConfirm)">CADASTRAR</button>
             </div>
         </form>
     </div>
