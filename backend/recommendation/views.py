@@ -39,6 +39,9 @@ def show_login(request):
 def show_singup(request):
     return render(request,'recommendation/singup.html')
 
+def register_genres(request):
+    return render(request,'recommendation/registergenres.html')
+
 @csrf_exempt
 def get_recommendation(request):
     if request.body:

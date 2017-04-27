@@ -553,3 +553,23 @@ background-size:contain;
 background-position:center;
  }
 
+ .genreDiv {
+    float: left;
+    width: 200px;
+    background-color: #eee;
+ }
+
+ .genresRow {
+     margin-left: 7% !important;
+     margin-right: 8%;
+ }
+
+.genreLabel {
+    margin-bottom: .1rem;
+    margin-top: .1rem;
+    font-size: larger;
+    text-align: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    letter-spacing: .1rem;
+}

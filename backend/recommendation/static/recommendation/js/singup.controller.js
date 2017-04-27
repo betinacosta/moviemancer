@@ -42,10 +42,8 @@ app.controller('singupCtrl', ['$scope', '$window','$rootScope', function ($scope
     $scope.chooseGenres = function(name, email, password, confirmedPassword) {
 
         $rootScope.registration = {name: name, email: email, password: password, confirmedPassword: confirmedPassword}
-        console.log($rootScope.registration);
-        console.log('Ops')
 
-        //$window.location('/registration')
+        $window.location.href = '#/registergenres';
     }
 
     $scope.clearField = function(fieldID){

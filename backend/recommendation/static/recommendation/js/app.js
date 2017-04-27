@@ -3,7 +3,7 @@ angular.module('Authentication', []);
 var moviemancerApp = angular.module('moviemancerApp', [   'ngRoute', 'mainApp', 'recommendationApp',
                                                     'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
-                                                    'singupApp', 'Authentication',
+                                                    'singupApp', 'registergenresApp', 'Authentication',
                                                     'ngRoute','ngCookies']);
 
 moviemancerApp.config(['$routeProvider',
@@ -35,6 +35,10 @@ moviemancerApp.config(['$routeProvider',
             templateUrl: 'watchlist',
             controller: 'watchlistCtrl'
         }).
+        when('/registergenres', {
+            templateUrl: 'registergenres',
+            controller: 'registergenresCtrl'
+        }).
         when('/filtersview/:genres/:language/:yearMin/:yearMax/:runtimeMin/:runtimeMax', {
             templateUrl: 'filters',
             controller: 'filtersCtrl'
@@ -51,7 +55,7 @@ moviemancerApp.config(['$routeProvider',
   
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
-            var restrictedPage = $.inArray($location.path(), ['/login', '/singup']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/singup', '/registergenres']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
                 $location.path('/');
