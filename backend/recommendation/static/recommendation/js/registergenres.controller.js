@@ -125,7 +125,7 @@ app.controller('registergenresCtrl', ['$scope', '$window','$rootScope', function
 				if ($scope.countSelected()) {
 				console.log('dalhe')
 				$scope.genres[genreIndex].selected = true;
-				document.getElementById(cssID).style.backgroundColor = '#7cae7c';
+				document.getElementById(cssID).style.backgroundColor = '#006400';
 				document.getElementById(cssID).style.color = '#eeeeee';
 				$scope.remainigGenres--;
 
