@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^registration/$', views.registration, name='registration'),
     url(r'^getrecommendation/$', views.get_recommendation, name='getrecommendation'),
     url(r'^registergenres/$', views.register_genres, name='registergenres'),
+    url(r'^validateuser/$', views.validate_user, name='validateuser'),
 
 ]
 

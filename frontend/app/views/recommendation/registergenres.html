@@ -1,6 +1,6 @@
 <div class="pickGenresTitle">
-    <h2>Selecione os seus 3 Gêneros Favoritos</h2>
-    <h4>Restantes: <b>{$ remainigGenres $}</b></h4>
+    <h3 style="letter-spacing: .1rem">Selecione os seus 3 Gêneros Favoritos</h2>
+    <h5 style="color: #9c9c9c; margin-top: 0">Restantes: <b>{$ remainigGenres $}</b></h4>
 </div>
 <div class="twelve columns wrapper">
     <div>
@@ -48,3 +48,6 @@
         </div>
     </div>
 </div>
+<div  class="twelve columns wrapper" ng-show="displayOkBtn">
+        <button class="genresBtn" ng-click="registerUser()">Continuar</button>
+    </div>

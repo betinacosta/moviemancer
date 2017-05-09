@@ -641,13 +641,25 @@ However, delay the fade out process for 2.5 seconds */
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
-    margin-bottom: 5em;
+    margin-bottom: 1.5em;
 }
 
 .pickGenresTitle {
     text-align: center;
-    letter-spacing: .1rem !important;
-    margin-bottom: 3em;
+    margin-bottom: 0em;
     padding-top: 5.5em;
+}
+
+.genresBtn {
+    margin-top: 0;
+    font-size: 1.5em;
+    background-color: #9a2726;
+    color: #eeeeee;
+    height: 55px;
+}
+
+.genresBtn:hover {
+    background-color: #75ba89;
+    color: #eeeeee;
 }
 
