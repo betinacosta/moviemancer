@@ -151,6 +151,19 @@ def get_genres_by_user(user_id):
     genres = {'genre_1': genre_1[0].tmdb_genre_id, 'genre_2': genre_2[0].tmdb_genre_id,'genre_3': genre_3[0].tmdb_genre_id}
     return genres
 
+def user_exists(user_email):
+    user = User.objects.filter(email = user_email)
+
+    if not user:
+        return False
+    else:
+        return True
+
+def get_profile_id(user_id):
+    profile = Profile.objects.filter(user_id = user_id)
+
+    return profile[0].profile_id
+
 #UPDATE, DELETE, INSERT
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
@@ -158,7 +171,6 @@ def add_rating_to_movie(user_id, movie_id, local_rate_id):
 
     if not rating_query:
         user_rating = Rating(user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
-        print (user_rating)
         user_rating.save()
     else:
         for item in rating_query:
@@ -233,14 +245,61 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
         else:
             print('Errro while adding new movie to list')
 
+def register_user(name, email, password, genre_1, genre_2, genre_3):
+    user_id = create_user(name, email, password)
+    profile_id = create_user_profile(user_id)
+    genres = []
+    genres.append(get_genre_id(genre_1))
+    genres.append(get_genre_id(genre_2))
+    genres.append(get_genre_id(genre_3))
+
+    add_genres_to_user(profile_id, genres)
+    create_list_to_user(user_id, 1)
+    create_list_to_user(user_id, 2)
+    create_list_to_user(user_id, 3)
+
+def create_user(name, email, password):
+    hash_password = hashlib.sha224(password).hexdigest()
+
+    user = User(name = name, email = email, password = hash_password, description = '')
+    user.save()
+    user_id = get_user_id(email)
+
+    return user_id
+
+def create_user_profile(user_id):
+    profile = Profile(user_id = user_id)
+    profile.save()
+    profile_id = get_profile_id(user_id)
+
+    return profile_id
+
+def get_genre_id(genre_tmdb_id):
+    genre = Genre.objects.filter(tmdb_genre_id = genre_tmdb_id)
+    genre_id = genre[0].genre_id
+
+    return genre_id
+
+def add_genres_to_user(profile_id, genres):
+
+    for genre in genres:
+        profile_genre = ProfileGenre(profile_id = profile_id, genre_id = genre)
+        profile_genre.save()
+
+def create_list_to_user(user_id, type_id):
+    user_list = List(user_id = user_id, type_id = type_id)
+    user_list.save()
+
+
 #AUTHENTICATION HANDLERS
 
 def authenticate_user(email, password):
-    #hash_password = hashlib.sha224(password).hexdigest()
-    hash_password = password
+    hash_password = hashlib.sha224(password).hexdigest()
+    #hash_password = password
+    print(hash_password)
 
     user = User.objects.filter(email = email, password = hash_password)
-    print(user)
+    #print(user)
 
     if user:
         return True
@@ -253,3 +312,8 @@ def get_user(email):
     user_info = {'user_id': user[0].user_id, 'name': user[0].name, 'email': user[0].email,}
 
     return json.dumps(user_info)
+
+def get_user_id(email):
+    user = User.objects.filter(email = email)
+
+    return user[0].user_id

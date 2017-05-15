@@ -4,7 +4,7 @@ from recommendation.models import Movie, User
 from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from recommendation.queries import movie_by_user_list, rate_movie, get_watchedlist, remove_watched, get_watchlist, remove_movie_from_list, authenticate_user, get_user,jsonify_reco_list, get_user_by_email
+from recommendation.queries import *
 from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external, rate_external_movie
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -38,6 +38,9 @@ def show_login(request):
 
 def show_singup(request):
     return render(request,'recommendation/singup.html')
+
+def register_genres(request):
+    return render(request,'recommendation/registergenres.html')
 
 @csrf_exempt
 def get_recommendation(request):
@@ -83,8 +86,32 @@ def get_auth(request):
     else:
         return HttpResponse('Authentication Failure: No Response Body')
 
+@csrf_exempt
 def registration(request):
-    pass
+    if request.body:
+        request_register = json.loads(request.body)
+        request_name = request_register[u'name']
+        request_email = request_register[u'email']
+        request_password = request_register[u'password']
+        request_genre_1 = request_register[u'genre_1']
+        request_genre_2 = request_register[u'genre_2']
+        request_genre_3 = request_register[u'genre_3']
+
+        register_user(request_name, request_email, request_password, request_genre_1, request_genre_2, request_genre_3)
+        return HttpResponse('Success')
+    else:
+        return HttpResponseServerError('Erro no cadastro')
+
+@csrf_exempt
+def validate_user(request):
+    if request.body:
+        request_validation = json.loads(request.body)
+        request_email = request_validation[u'email']
+
+        if not user_exists(request_email):
+            return HttpResponse('Success')
+        else:
+            return HttpResponseServerError('User already registered')
 
 @csrf_exempt
 def rate_external(request):
