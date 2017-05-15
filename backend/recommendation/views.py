@@ -42,6 +42,9 @@ def show_singup(request):
 def register_genres(request):
     return render(request,'recommendation/registergenres.html')
 
+def profile(request):
+    return render(request,'recommendation/profile.html')
+
 @csrf_exempt
 def get_recommendation(request):
     if request.body:
