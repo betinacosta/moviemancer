@@ -4,5 +4,5 @@ var app = angular.module('profileApp', []).config(function ($interpolateProvider
 });
 
 app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
-
+    $scope.user_id = $rootScope.globals.currentUser.user_id;
 }]);
