@@ -296,10 +296,8 @@ def create_list_to_user(user_id, type_id):
 def authenticate_user(email, password):
     hash_password = hashlib.sha224(password).hexdigest()
     #hash_password = password
-    print(hash_password)
 
     user = User.objects.filter(email = email, password = hash_password)
-    #print(user)
 
     if user:
         return True
@@ -317,3 +315,15 @@ def get_user_id(email):
     user = User.objects.filter(email = email)
 
     return user[0].user_id
+
+#PROFILE HANDLERS
+
+def get_user_details(user_id):
+    user = User.objects.filter(user_id = user_id)
+    genres = get_genres_by_user(user_id)
+
+    genres = [ genres['genre_1'],  genres['genre_2'], genres['genre_3']]
+
+    user_details = {'name': user[0].name, 'email': user[0].email, 'genres': genres }
+
+    return json.dumps(user_details)

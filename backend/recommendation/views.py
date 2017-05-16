@@ -43,7 +43,7 @@ def register_genres(request):
     return render(request,'recommendation/registergenres.html')
 
 def profile(request):
-    return render(request,'recommendation/profile.html')
+    return render(request,'recommendation/partials/profile.html')
 
 @csrf_exempt
 def get_recommendation(request):
@@ -53,6 +53,17 @@ def get_recommendation(request):
 
         recommendation_list = jsonify_reco_list(request_user_id, 'recommendation')
         return HttpResponse(recommendation_list)
+    else:
+        return HttpResponse("You are on your own")
+        
+@csrf_exempt
+def get_profile(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+
+        profile = get_user_details(request_user_id)
+        return HttpResponse(profile)
     else:
         return HttpResponse("You are on your own")        
 

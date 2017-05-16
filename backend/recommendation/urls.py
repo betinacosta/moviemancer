@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^registergenres/$', views.register_genres, name='registergenres'),
     url(r'^validateuser/$', views.validate_user, name='validateuser'),
     url(r'^profile/$', views.profile, name='profile'),
+    url(r'^getprofile/$', views.get_profile, name='getprofile'),
 
 ]
 
