@@ -65,6 +65,34 @@ def get_profile(request):
         profile = get_user_details(request_user_id)
         return HttpResponse(profile)
     else:
+        return HttpResponse("You are on your own") 
+
+@csrf_exempt
+def update_user(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+        request_email = request_profile[u'email']
+        request_name = request_profile[u'name']
+        request_password = request_profile[u'password']
+
+        update_user_info(request_user_id, request_email, request_name, request_password)
+        return HttpResponse('Success')
+    else:
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def update_genres(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+        request_firstG = request_profile[u'firstG']
+        request_secondG = request_profile[u'secondG']
+        request_thirdG = request_profile[u'thirdG']
+
+        update_user_genres(request_user_id, request_firstG, request_secondG, request_thirdG)
+        return HttpResponse('Success')
+    else:
         return HttpResponse("You are on your own")        
 
 @csrf_exempt

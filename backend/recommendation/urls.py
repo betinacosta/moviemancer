@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^validateuser/$', views.validate_user, name='validateuser'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^getprofile/$', views.get_profile, name='getprofile'),
+    url(r'^updateuser/$', views.update_user, name='updateuser'),
+    url(r'^updategenres/$', views.update_genres, name='updategenres'),
 
 ]
 
