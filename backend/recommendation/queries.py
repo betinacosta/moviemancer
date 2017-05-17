@@ -290,6 +290,12 @@ def create_list_to_user(user_id, type_id):
     user_list = List(user_id = user_id, type_id = type_id)
     user_list.save()
 
+def update_user_info(user_id, email, name, password):
+    pass
+
+def update_user_genres(user_id, firstG, secondG, thirdG):
+    pass
+
 
 #AUTHENTICATION HANDLERS
 
