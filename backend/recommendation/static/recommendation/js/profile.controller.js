@@ -8,6 +8,7 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 	$scope.init = function () {
 		$scope.getProfile();
 	}
+	$scope.batata = 28
 
 	$scope.genres = [{
 			id: 28,
@@ -104,7 +105,7 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 	$scope.getGenreName = function (genreID) {
 		for (i=0;i<$scope.genres.length; i++) {
 			if($scope.genres[i].id == genreID) {
-				return $scope.genres[i].name
+				return $scope.genres[i]
 			}
 		}
 	}
@@ -119,17 +120,50 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 			function (response) {
 				$scope.name = response.data.name;
 				$scope.email = response.data.email;
-				$scope.genre1 = $scope.getGenreName(response.data.genres[0]);
-				$scope.genre2 = $scope.getGenreName(response.data.genres[1]);
-				$scope.genre3 = $scope.getGenreName(response.data.genres[2]);
+				$scope.newName = $scope.name;
+				$scope.newEmail = $scope.email;
+				$scope.firstG = $scope.getGenreName(response.data.genres[0]);
+				$scope.secondG = $scope.getGenreName(response.data.genres[1]);
+				$scope.thirdG = $scope.getGenreName(response.data.genres[2]);
 			},
 			function (response) {
 				console.log('Error: ', response)
 			});
-		}
+	}
+	$scope.firstG = $scope.genres[0].name
 
-	$scope.validateEntry = function(name, email, password, confirmedPassword) {
-       
+
+	$scope.updateGenres = function () {
+		console.log('genre');
+	}
+
+	$scope.updateUser = function () {
+		console.log('user');
+	}
+
+	$scope.validateEntry = function() {
+       if ($scope.newPassword == $scope.confirmedPassword) {
+			$http.post("authentication/", {
+				"email": $scope.email,
+				"password": $scope.currentPasswordUser
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				if (response.data != 'Erro') {
+					$scope.updateUser($scope.newName, $scope.newEmail, $scope.newPassword)
+				}else {
+					$scope.toastMessege('Senha Incorreta');
+				}
+			},
+			function (response) {
+				console.log('Error: ', response)
+				$scope.toastMessege('Senha Incorreta')
+			});
+	   }else {
+		   $scope.toastMessege('Senhas não combinam')
+	   }
     }
 
 	 $scope.clearField = function(fieldID){
@@ -143,14 +177,60 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
     }
 
 	$scope.validateGenres = function() {
-		if ($scope.firstG == $scope.secondG || $scope.firstG == $scope.thirdG || $scope.secondG == $scope.secondG) {
-			if ($scope.firstG == $scope.secondG) {
-				
+		if ($scope.firstG.id == $scope.secondG.id || $scope.firstG.id == $scope.thirdG.id || $scope.secondG.id == $scope.thirdG.id) {
+			if ($scope.firstG.id == $scope.secondG.id && $scope.firstG.id == $scope.thirdG.id && $scope.secondG.id == $scope.thirdG.id) {
+				$scope.invalidateField('secondG');
+				$scope.invalidateField('thirdG');
+				$scope.invalidateField('firstG');
+			} else if ($scope.firstG.id == $scope.thirdG.id) {
+				$scope.invalidateField('firstG');
+				$scope.invalidateField('thirdG');
+				$scope.clearField('secondG');
+			}else if ($scope.secondG.id == $scope.thirdG.id) {
+				$scope.invalidateField('secondG');
+				$scope.invalidateField('thirdG');
+				$scope.clearField('firstG');
+			}else if ($scope.firstG.id == $scope.secondG.id) {
+				$scope.invalidateField('firstG');
+				$scope.invalidateField('secondG');
+				$scope.clearField('thirdG');
 			}
 
 		} else {
-			$scope.updateGenres();
+			$http.post("authentication/", {
+				"email": $scope.email,
+				"password": $scope.currentPasswordGenre
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				if (response.data != 'Erro') {
+					$scope.updateGenres();
+				} else {
+					$scope.toastMessege('Senha Incorreta')
+				}
+			},
+			function (response) {
+				console.log('Error: ', response)
+				$scope.toastMessege('Senha Incorreta')
+			});
+			
 		}
+	}
+
+	//--------------------------------------------Toast Message Handler--------------------------------------------
+
+	$scope.toastMessege = function (msg) {
+		$scope.toastMessage = msg;
+		// Get the snackbar DIV
+		var x = document.getElementById("snackbar")
+
+		// Add the "show" class to DIV
+		x.className = "show";
+
+		// After 3 seconds, remove the show class from DIV
+		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 	}
 
 	$scope.init();

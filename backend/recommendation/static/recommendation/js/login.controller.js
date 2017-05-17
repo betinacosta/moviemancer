@@ -20,7 +20,7 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'Authenticatio
         $scope.login = function (email, password) {
             $scope.dataLoading = true;
             AuthenticationService.Login(email, password, function(response) {
-                if(response != 'Erro') {
+                if(response.data != 'Erro') {
 					console.log(response.email);
                     AuthenticationService.SetCredentials(email, password, response.user_id, response.name);
                     $location.path('/moviemancer');
