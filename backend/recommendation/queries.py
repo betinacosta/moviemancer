@@ -164,6 +164,15 @@ def get_profile_id(user_id):
 
     return profile[0].profile_id
 
+def get_profile_genre_id(profile_id):
+    profile = ProfileGenre.objects.filter(profile_id = profile_id)
+
+    profile_genre = []
+    for p in profile:
+        profile_genre.append(p.profile_genre_id)
+
+    return profile_genre
+
 #UPDATE, DELETE, INSERT
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
@@ -291,11 +300,35 @@ def create_list_to_user(user_id, type_id):
     user_list.save()
 
 def update_user_info(user_id, email, name, password):
-    pass
+    old_user = User.objects.filter(user_id = user_id)
+    if not email or email == ' ':
+        email = old_user[0].email
+    if not name or name == ' ':
+        name = old_user[0].name
+    if not password or password == ' ':
+        password = old_user[0].password
+    else:
+        password = hashlib.sha224(password).hexdigest()
+
+    user = User(user_id = user_id, name = name, email = email, password = password)
+    user.save()
 
 def update_user_genres(user_id, firstG, secondG, thirdG):
-    pass
+    profile_id = get_profile_id(user_id)
+    profile_genres_id = get_profile_genre_id(profile_id)
 
+    firstG = get_genre_id(firstG)
+    secondG = get_genre_id(secondG)
+    thirdG = get_genre_id(thirdG)
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[0], profile_id = profile_id, genre_id = firstG)
+    g.save()
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[1], profile_id = profile_id, genre_id = secondG)
+    g.save()
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[2], profile_id = profile_id, genre_id = thirdG)
+    g.save()
 
 #AUTHENTICATION HANDLERS
 

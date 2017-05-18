@@ -7,6 +7,8 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 
 	$scope.init = function () {
 		$scope.getProfile();
+		$scope.newPassword = '';
+		$scope.confirmedPassword = '';
 	}
 	$scope.batata = 28
 
@@ -134,11 +136,45 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 
 
 	$scope.updateGenres = function () {
-		console.log('genre');
+		$http.post("updategenres/", {
+				"user_id": $rootScope.globals.currentUser.user_id,
+				"firstG": $scope.firstG,
+				"secondG": $scope.secondG,
+				"thirdG": $scope.thirdG
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				$scope.getProfile();
+				$scope.toastMessege('Preferências Alteradas com Sucesso');
+				
+			},
+			function (response) {
+				console.log('Error: ', response)
+				$scope.toastMessege('Erro ao Alterar Preferências')
+			});
 	}
 
 	$scope.updateUser = function () {
-		console.log('user');
+		$http.post("updateuser/", {
+				"user_id": $rootScope.globals.currentUser.user_id,
+				"name": $scope.newName,
+				"email": $scope.newEmail,
+				"password": $scope.newPassword
+			}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				$scope.getProfile();
+				$scope.toastMessege('Dados Alterados com Sucesso');
+				
+			},
+			function (response) {
+				console.log('Error: ', response)
+				$scope.toastMessege('Erro ao Alterar Dados')
+			});
 	}
 
 	$scope.validateEntry = function() {
