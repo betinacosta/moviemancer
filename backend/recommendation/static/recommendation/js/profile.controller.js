@@ -138,9 +138,9 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 	$scope.updateGenres = function () {
 		$http.post("updategenres/", {
 				"user_id": $rootScope.globals.currentUser.user_id,
-				"firstG": $scope.firstG,
-				"secondG": $scope.secondG,
-				"thirdG": $scope.thirdG
+				"firstG": $scope.firstG.id,
+				"secondG": $scope.secondG.id,
+				"thirdG": $scope.thirdG.id
 			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
@@ -168,6 +168,10 @@ app.controller('profileCtrl', ['$scope', '$http', '$rootScope', function ($scope
 			.then(
 			function (response) {
 				$scope.getProfile();
+				$scope.newPassword = ''
+				$scope.currentPasswordUser = ''
+				$scope.confirmedPassword = ''
+
 				$scope.toastMessege('Dados Alterados com Sucesso');
 				
 			},
