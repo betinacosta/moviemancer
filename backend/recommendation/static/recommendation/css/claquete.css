@@ -198,6 +198,8 @@ ul.topnav li.icon {
     font-size: 10px;
     height: 32px;
     line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer
 }
 
 .menuListItems {

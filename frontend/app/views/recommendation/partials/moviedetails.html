@@ -4,7 +4,6 @@
         <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
     </form>
 </div>
-
 <div class="twelve columns" ng-controller="moviedetailsCtrl">
     <div id="first-section" class="twelve columns first-section" style="background-color: #eee">
         <div id="poster-rating" class="four columns">
@@ -21,14 +20,12 @@
                 </div>
             </div>
         </div>
-
         <div id=movie-info class="eight columns">
             <div id="title-overview" style="margin: 5% 10% 0% 0%;">
                 <h3 class="movie-title-detail pin" ng-click="addWatchlistExternal(movieDetails.poster_path, movieDetails.title)">{$ movieDetails.title $} ({$ movieDetails.year $})</h3>
                 <p class="movie-overview">{$ movieDetails.overview $}</p>
             </div>
         </div>
-
         <div id=movie-crew class="eight columns">
             <div id="director" class="four columns">
                 <p style="font-size: large;"><b>Diretor(a): </b>{$ movieCrew.director $}</p>
@@ -37,7 +34,6 @@
                 <p style="font-size: large;"><b>Roteirista: </b>{$ movieCrew.writer $}</p>
             </div>
         </div>
-
         <div id=movie-genre-rotten class="eight columns">
             <div id="genre" class="four columns">
                 <p style="font-size: large;"><b>Gêneros: </b>{$ movieDetails.genres $}</p>
@@ -48,11 +44,9 @@
                 </span>
             </div>
         </div>
-
         <div id=casting class="eight columns" style="margin-top: 1%;">
             <p style="font-size: large;"><b>Elenco Principal: </b>
         </div>
-
         <div id=casting class="eight columns">
             <div class="two columns" ng-repeat="cast in movieCast">
                 <img src="{$ cast.profile_img $}" width='62px' height="93px">
@@ -62,7 +56,6 @@
             </div>
         </div>
     </div>
-
     <div id="second-section" class="twelve columns first-section">
         <div id="video" class="four columns" style="margin: 1% 0% 2% 6%;">
             <h3>Trailer</h3>
@@ -70,25 +63,20 @@
                 <youtube-video class="embed-responsive-item" video-id="movieVideo.youtube_id"></youtube-video>
             </div>
         </div>
-
-
         <div id="more-details" class="six columns" style="width: 59%">
             <div class="more_details" style="width: 50%; float: left;">
                 <p><b>Título Original:</b> {$ movieDetails.original_title $}</p>
                 <p><b>Duração:</b> {$ movieDetails.runtime $}</p>
                 <p><b>Links:</b> <a ng-href="{$ movieDetails.imdb_link $}"> IMDb</a> </p>
             </div>
-
             <div id="keywords" class="keywors">
                 <p style="font-size: large"><b>Palavras-Chave:</b></p>
                 <div ng-repeat="key in movieKeywords">
                     <button class="keywors-btn">{$ key $}</button>
                 </div>
             </div>
-
         </div>
     </div>
-
     <div id="fourth-section" class="twelve columns first-section" style="margin-bottom: 2%; background-color: #eee;padding-bottom: 3%;">
         <div style="margin-top: 1%;">
             <h3 style="margin-left: 6%;">Similares</h3>
@@ -102,7 +90,6 @@
             </div>
         </div>
     </div>
-
     <div id="third-section" class="twelve columns first-section">
         <div id="reviews" style="margin: 0% 5% 2% 6%;">
             <div>
@@ -114,27 +101,45 @@
             <button class="sendCommentBtn" ng-click="validateComment()">Enviar</button>
         </div>
     </div>
-
-     <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
+    <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
         <div id="reviews" style="margin: 1% 5% 2% 6%;">
-            <div>
-                <h3 style="margin-bottom: 0.3em;">Críticas <button class="see-all">Ver Todos</button></h3>
+            <div style="margin-bottom: 1em;">
+                <h3 style="margin-bottom: 0.3em;float: left">Críticas </h3><button class="see-all" ng-click="showAllComments()">Ver Todos</button>
             </div>
-            <h5>Achei Bom</h5>
-            <p style="margin-top: -20px;">por Error404not</p>
-            <p style="font-size: large; text-align: justify">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam venenatis bibendum magna, non varius libero aliquam quis.
-                Maecenas non lorem a lacus malesuada blandit. Donec a erat orci. Nunc et vehicula turpis. In eget pretium
-                ligula. Quisque eget metus mauris. Mauris blandit dui nulla, vel auctor nibh varius id. Donec hendrerit id
-                diam vitae molestie. Suspendisse aliquam neque id felis interdum fringilla. Cras pellentesque urna mi, non
-                feugiat ex blandit nec. nteger nec massa in lectus mollis bibendum vitae a metus. Mauris fringilla, arcu
-                non tempor finibus, urna nisl lacinia neque, quis laoreet arcu massa at tortor. Nullam ultrices nec augue
-                eu posuere. Aliquam suscipit, eros et ultricies cursus, mauris metus volutpat leo, congue vehicula lorem
-                felis quis leo. Cras nec tortor quis est cursus fringilla. Ut mi felis, euismod in vehicula vitae, laoreet
-                eu felis.
-            </p>
+
+            <div>
+                <h5 style="float: left;margin-bottom: 0;">{$ comments[0].user_name $}</h5>
+                <div style="margin-top: 1em;margin-bottom: 1%;">
+                    <style>
+                        .ngrateit-star {
+                            background-size: 12px;
+                        }
+                    </style>
+                    <ng-rate-it style="margin-left: 10%;margin-bottom: 1%;" ng-model="comments[0].rate" step="1" resetable="false" min="0" max="5"
+                        star-width="12" star-height="12"></ng-rate-it>
+                </div>
+                <p style="font-size: large; text-align: justify">
+                    {$ comments[0].comment $}
+                </p>
+            </div>
+
+            <div ng-show="allComments" ng-repeat="comment in comments">
+                <h5 style="float: left;margin-bottom: 0;">{$ comment.user_name $}</h5>
+                <div style="margin-top: 1em;margin-bottom: 1%;">
+                    <style>
+                        .ngrateit-star {
+                            background-size: 12px;
+                        }
+                    </style>
+                    <ng-rate-it style="margin-left: 10%;margin-bottom: 1%;" ng-model="comment.rate" step="1" resetable="false" min="0" max="5"
+                        star-width="12" star-height="12"></ng-rate-it>
+                </div>
+                <p style="font-size: large; text-align: justify">
+                    {$ comment.comment $}
+                </p>
+            </div>
+
         </div>
     </div>
-
     <div id="snackbar">{$ toastMessage $}</div>
 </div>

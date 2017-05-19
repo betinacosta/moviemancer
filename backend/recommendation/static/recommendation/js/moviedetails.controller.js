@@ -180,7 +180,12 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	}
 
 	//--------------------------------------------Comments---------------------------------------------------------
-	$scope.comments = []
+	$scope.allComments = false;
+
+	$scope.showAllComments = function() {
+		$scope.allComments = true
+	}
+
 	$scope.loadComments = function() {
 		$http.post("getcomments/", {
 			"tmdb_movie_id": $routeParams.tmdbID
@@ -189,8 +194,15 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			})
 			.then(
 			function (response) {
-				
-				console.log('Success: ', response.data[0])
+				$scope.comments = []
+				for(i=0;i<response.data.length;i++){
+					$scope.comments.push({
+						"user_name": response.data[i].user_name,
+						"rate": response.data[i].rate,
+						"comment": response.data[i].comment,
+						"comment_id": response.data[i].comment_id
+					});
+				}
 			},
 			function (response) {
 				console.log('Error: ', response)
@@ -218,6 +230,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			.then(
 			function (response) {
 				console.log('Success: ', response.data)
+				$scope.loadComments();
 			},
 			function (response) {
 				console.log('Error: ', response)
