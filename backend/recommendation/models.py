@@ -2,6 +2,15 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+class Comments(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', models.DO_NOTHING)
+    movie = models.ForeignKey('Movie', models.DO_NOTHING)
+    comment = models.TextField()
+
+    class Meta:
+        managed = True
+        db_table = 'comments'
 
 class Cast(models.Model):
     cast_id = models.AutoField(db_column='cast_ID', primary_key=True)  # Field name made lowercase.

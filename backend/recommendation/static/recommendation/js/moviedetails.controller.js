@@ -179,6 +179,57 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			);
 	}
 
+	//--------------------------------------------Comments---------------------------------------------------------
+	$scope.loadComments = function() {
+		$http.post("getcomments/", {
+			"tmdb_movie_id": $routeParams.tmdbID,
+			"user_id": $rootScope.globals.currentUser.user_id
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				console.log('Success: ', response.data[0])
+			},
+			function (response) {
+				console.log('Error: ', response)
+			});
+	}
+
+	 $scope.clearField = function(fieldID){
+        $scope.nameID = document.getElementById(fieldID);
+        $scope.nameID.style.borderColor  = '#7d7b7b';
+    }
+
+    $scope.invalidateField = function(fieldID){
+        $scope.nameID = document.getElementById(fieldID);
+        $scope.nameID.style.borderColor  = 'red';
+    }
+
+	$scope.createComment = function () {
+		$http.post("addcomment/", {
+			"tmdb_movie_id": $routeParams.tmdbID,
+			"user_id": $rootScope.globals.currentUser.user_id,
+			"comment": $scope.userComment
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				console.log('Success: ', response.data)
+			},
+			function (response) {
+				console.log('Error: ', response)
+			});
+	}
+
+	$scope.validateComment = function() {
+		if ($scope.userComment == '' || $scope.userComment == ' ' || $scope.userComment == undefined) {
+			$scope.invalidateField('userComment');
+		}else {
+			$scope.createComment();
+		}
+	}
 	//--------------------------------------------Toast Message Handler--------------------------------------------
 
 	$scope.toastMessege = function (msg) {

@@ -89,10 +89,36 @@
         </div>
     </div>
 
-    <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
+    <div id="fourth-section" class="twelve columns first-section" style="margin-bottom: 2%; background-color: #eee;padding-bottom: 3%;">
+        <div style="margin-top: 1%;">
+            <h3 style="margin-left: 6%;">Similares</h3>
+            <div class="two columns" style="background-color: #F6F6F6;margin-left: 6%;" ng-repeat="similar in similarMovies">
+                <div>
+                    <a ng-href="#/moviedetails/{$ similar.tmdb_id $}" class="movie-title-link">
+                        <p class="movieTitleMaster">{$ similar.title $}</p>
+                        <img src="{$ similar.poster_path $}" width="202px" height="287px">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="third-section" class="twelve columns first-section">
+        <div id="reviews" style="margin: 0% 5% 2% 6%;">
+            <div>
+                <h3 style="margin-bottom: 0.5em;">Deixe sua Crítica</h3>
+            </div>
+            <div>
+                <textarea class="u-full-width commentsForm" placeholder="Sua Crítica" id="userComment" ng-model="userComment" ng-click="clearField('userComment')"></textarea>
+            </div>
+            <button class="sendCommentBtn" ng-click="validateComment()">Enviar</button>
+        </div>
+    </div>
+
+     <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
         <div id="reviews" style="margin: 1% 5% 2% 6%;">
             <div>
-                <h3>Críticas <button class="see-all">Ver Todos</button></h3>
+                <h3 style="margin-bottom: 0.3em;">Críticas <button class="see-all">Ver Todos</button></h3>
             </div>
             <h5>Achei Bom</h5>
             <p style="margin-top: -20px;">por Error404not</p>
@@ -110,18 +136,5 @@
         </div>
     </div>
 
-    <div id="fourth-section" class="twelve columns first-section" style="margin-bottom: 2%;">
-        <div style="margin-top: 1%;">
-            <h3 style="margin-left: 6%;">Similares</h3>
-            <div class="two columns" style="background-color: #F6F6F6;margin-left: 6%;" ng-repeat="similar in similarMovies">
-                <div>
-                    <a ng-href="#/moviedetails/{$ similar.tmdb_id $}" class="movie-title-link">
-                        <p class="movieTitleMaster">{$ similar.title $}</p>
-                        <img src="{$ similar.poster_path $}" width="202px" height="287px">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="snackbar">{$ toastMessage $}</div>
 </div>

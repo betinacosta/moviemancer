@@ -1,4 +1,4 @@
-from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type, Profile, Genre, ProfileGenre
+from recommendation.models import *
 import json
 import hashlib
 
@@ -366,3 +366,28 @@ def get_user_details(user_id):
     user_details = {'name': user[0].name, 'email': user[0].email, 'genres': genres }
 
     return json.dumps(user_details)
+
+#COMMENTS HANDLERS
+
+def get_comments(movie_tmdb_id):
+    movie_id = get_movie_id_by_tmdb_id(movie_tmdb_id)
+    comments = Comments.objects.filter(movie_id = movie_id)
+    commnets_by_movie = []
+
+    for comment in comments:
+        user = User.objects.filter(user_id = comment.user_id)
+        name = user[0].name
+        rate = get_rate_by_movie(movie_id, comment.user_id)
+        commnets_by_movie.append({"comment_id": comment.comment_id, "user_name": name,"comment": comment.comment, "rate": rate})
+
+    return json.dumps(commnets_by_movie)
+
+def add_comment(movie_tmdb_id, user_id, comment):
+    movie_id = get_movie_id_by_tmdb_id(movie_tmdb_id)
+
+    comment = Comments(movie_id = movie_id, user_id = user_id, comment = comment)
+    comment.save()
+
+def delete_comment(comment_id):
+    Comments.objects.filter(comment_id = comment_id).delete()
+

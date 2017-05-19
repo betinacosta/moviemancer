@@ -704,3 +704,26 @@ However, delay the fade out process for 2.5 seconds */
     color: #c68006;
     margin-top: -0.6em;
 }
+
+.commentsForm {
+    border-radius: 2px;
+    letter-spacing: .1rem;
+    border-color: #7d7b7b;
+    margin-top: 0.5em;
+    height: 160px;
+}
+
+.commentsForm:focus {
+    border-color: #2B2B2B
+}
+
+.sendCommentBtn {
+    float: right;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    margin-bottom: 2.5em;
+    background-color: #9a2726;
+    color: #eee;
+    border-color: #9a2726;
+}
