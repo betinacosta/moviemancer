@@ -180,6 +180,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	}
 
 	//--------------------------------------------Comments---------------------------------------------------------
+	$scope.comments = []
 	$scope.loadComments = function() {
 		$http.post("getcomments/", {
 			"tmdb_movie_id": $routeParams.tmdbID
@@ -188,6 +189,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			})
 			.then(
 			function (response) {
+				
 				console.log('Success: ', response.data[0])
 			},
 			function (response) {
