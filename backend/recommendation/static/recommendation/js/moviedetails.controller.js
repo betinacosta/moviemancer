@@ -251,6 +251,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 		$scope.loadCrew();
 		$scope.loadKeywords();
 		$scope.loadSimilarMovies();
+		$scope.loadComments();
 	}
 
 	$scope.init();
