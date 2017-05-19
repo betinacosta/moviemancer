@@ -31,7 +31,9 @@ urlpatterns = [
     url(r'^getprofile/$', views.get_profile, name='getprofile'),
     url(r'^updateuser/$', views.update_user, name='updateuser'),
     url(r'^updategenres/$', views.update_genres, name='updategenres'),
-
+    url(r'^getcomments/$', views.get_all_comments, name='getcomments'),
+    url(r'^addcomment/$', views.add_new_comment, name='addcomment'),
+    url(r'^deletecomment/$', views.delete_user_comment, name='deletecomment'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

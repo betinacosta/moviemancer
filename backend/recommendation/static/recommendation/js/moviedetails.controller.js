@@ -182,8 +182,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	//--------------------------------------------Comments---------------------------------------------------------
 	$scope.loadComments = function() {
 		$http.post("getcomments/", {
-			"tmdb_movie_id": $routeParams.tmdbID,
-			"user_id": $rootScope.globals.currentUser.user_id
+			"tmdb_movie_id": $routeParams.tmdbID
 		}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})

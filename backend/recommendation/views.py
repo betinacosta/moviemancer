@@ -93,7 +93,42 @@ def update_genres(request):
         update_user_genres(request_user_id, request_firstG, request_secondG, request_thirdG)
         return HttpResponse('Success')
     else:
-        return HttpResponse("You are on your own")        
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def get_all_comments(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
+
+        all_comments = get_comments(request_movie_tmdb_id)
+        return HttpResponse(all_comments)
+    else:
+        return HttpResponse("Erroa o carregar comentarios")  
+
+@csrf_exempt
+def add_new_comment(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
+        request_user_id = request_comments[u'user_id']
+        request_comment = request_comments[u'comment']
+
+        add_comment(request_movie_tmdb_id, request_user_id, request_comment)
+        return HttpResponse('Success')
+    else:
+        return HttpResponse("Erro ao criar comentario")
+
+@csrf_exempt
+def delete_user_comment(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_comment_id = request_comments[u'comment_id']
+
+        delete_comment(request_comment_id)
+        return HttpResponse("Success")
+    else:
+        return HttpResponse("Erro ao deletar comentario")          
 
 @csrf_exempt
 def ratemovie(request):
