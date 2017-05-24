@@ -183,7 +183,8 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	$scope.allComments = false;
 
 	$scope.showAllComments = function() {
-		$scope.allComments = true
+		getRecommendation();
+		$scope.allComments = true;
 	}
 
 	$scope.loadComments = function() {
@@ -231,6 +232,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			function (response) {
 				console.log('Success: ', response.data)
 				$scope.loadComments();
+				$scope.toastMessage('Crítica adicionada com Sucesso')
 			},
 			function (response) {
 				console.log('Error: ', response)
@@ -266,7 +268,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 		$scope.loadCrew();
 		$scope.loadKeywords();
 		$scope.loadSimilarMovies();
-		$scope.loadComments();
+		//$scope.loadComments();
 	}
 
 	$scope.init();
