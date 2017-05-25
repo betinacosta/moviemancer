@@ -29,7 +29,7 @@
                             background-size: 28px;
                         }
                     </style>
-                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRatingExternal(movie.rating, movie.poster, movie.title, movie.tmdb_id)"></ng-rate-it>
                 </div>
             </div>
         </div>

@@ -45,6 +45,30 @@ app.controller('searchCtrl', ['$scope', '$http', '$routeParams', '$rootScope', f
 
     $scope.search();
 
+	 //--------------------------------------------Rating Handler--------------------------------------------
+
+    $scope.setUserRatingExternal = function (rating, poster, title, id) {
+
+        $http.post("rateexternalmovie/", {
+            "tmdb_movie_id": id,
+            "rate_id": rating,
+            "user_id": $rootScope.globals.currentUser.user_id,
+            "movie_poster": poster,
+            "movie_title": title
+        }, {
+                'Content-Type': 'application/json; charset=utf-8'
+            })
+            .then(
+            function (response) {
+                console.log('Success: ', response.data)
+                $scope.toastMessege("Filme Adicionado a Lista de Vistos")
+            },
+            function (response) {
+                console.log('Error: ', response)
+            }
+            );
+    }
+
     //--------------------------------------------Add to watchlist Handler--------------------------------------------
 	$scope.addWatchlistExternal = function (tmdb_id, poster, title) {
 

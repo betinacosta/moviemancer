@@ -5,7 +5,7 @@ from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from recommendation.queries import *
-from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external, rate_external_movie
+from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
@@ -205,11 +205,13 @@ def rate_external(request):
         request_movie_poster = request_user_rating[u'movie_poster']
         request_movie_title = request_user_rating[u'movie_title']
 
-        rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title)
-        add_recommentation_to_database(request_user_id)
-        return HttpResponse(request.body)
+        if rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
+            add_recommentation_to_database(request_user_id)
+            return HttpResponse('Success')
+        else:
+            return HttpResponseServerError('Error')
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponseServerError("You are on your own")
 
 @csrf_exempt
 def add_watchlist(request):
