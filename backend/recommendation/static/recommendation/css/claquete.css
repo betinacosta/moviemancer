@@ -729,3 +729,37 @@ However, delay the fade out process for 2.5 seconds */
     color: #eee;
     border-color: #9a2726;
 }
+
+.single-comment {
+    padding: 0.2em 1em 0.1em 1em;
+    background-color: white;
+    border-width: 1px;
+    border-radius: 2px;
+    margin-bottom: 1em;
+}
+
+.comment-rating {
+    margin-bottom: 1%;
+    margin-top: 0.6em;
+}
+
+.delete-comment {
+    float: right;
+    cursor: pointer;
+    margin-top: 0.1em;
+    margin-right: -0.4em;
+}
+
+.delete-comment:hover {
+    color: #9a2726;
+}
+
+.display-all-comments {
+    height: 32px;
+    line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer;
+    border-radius: 2px !important;
+    background-color: #2b2b2b !important;
+    color: #eee !important;
+}

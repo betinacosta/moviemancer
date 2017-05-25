@@ -391,3 +391,8 @@ def add_comment(movie_tmdb_id, user_id, comment):
 def delete_comment(comment_id):
     Comments.objects.filter(comment_id = comment_id).delete()
 
+    if not Comments.objects.filter(comment_id = comment_id):
+        return True
+    else:
+        return False
+

@@ -93,7 +93,7 @@
     <div id="third-section" class="twelve columns first-section">
         <div id="reviews" style="margin: 0% 5% 2% 6%;">
             <div>
-                <h3 style="margin-bottom: 0.5em;">Deixe sua Crítica</h3>
+                <h3 style="margin-bottom: 0.5em;">Comente:</h3>
             </div>
             <div>
                 <textarea class="u-full-width commentsForm" placeholder="Sua Crítica" id="userComment" ng-model="userComment" ng-click="clearField('userComment')"></textarea>
@@ -103,36 +103,25 @@
     </div>
     <div id="third-section" class="twelve columns first-section" style="background-color: #eee;">
         <div id="reviews" style="margin: 1% 5% 2% 6%;">
-            <div style="margin-bottom: 1em;">
-                <h3 style="margin-bottom: 0.3em;float: left">Críticas </h3><button class="see-all" ng-click="showAllComments()">Ver Todos</button>
+            <div style="margin-bottom: 1em;" ng-if="!allComments">
+                <h3 style="text-align:center"><button class="display-all-comments" ng-click="showAllComments()">Mostrar Comentários</button></h3>
             </div>
 
-            <!--<div>
-                <h5 style="float: left;margin-bottom: 0;">{$ comments[0].user_name $}</h5>
-                <div style="margin-top: 1em;margin-bottom: 1%;">
-                    <style>
-                        .ngrateit-star {
-                            background-size: 12px;
-                        }
-                    </style>
-                    <ng-rate-it style="margin-left: 10%;margin-bottom: 1%;" ng-model="comments[0].rate" step="1" resetable="false" min="0" max="5"
-                        star-width="12" star-height="12"></ng-rate-it>
-                </div>
-                <p style="font-size: large; text-align: justify">
-                    {$ comments[0].comment $}
-                </p>
-            </div>-->
+            <div style="margin-bottom: 1em;" ng-if="allComments">
+                <h3 style="text-align:center"><button class="display-all-comments" ng-click="hideAllComments()">Esconder Comentários</button></h3>
+            </div>
 
-            <div ng-show="allComments" ng-repeat="comment in comments">
-                <h5 style="float: left;margin-bottom: 0;">{$ comment.user_name $}</h5>
-                <div style="margin-top: 1em;margin-bottom: 1%;">
+            <div ng-show="allComments" ng-repeat="comment in comments" class="single-comment">
+                <i ng-show = "comment.isUserComment" class="fa fa-trash delete-comment" aria-hidden="true" ng-click="deleteComment(comment.comment_id)"></i>
+                <h5 style="float: left;margin-bottom: 0;margin-right: 0.5em;">{$ comment.user_name $}</h5>
+                <div class="comment-rating">
                     <style>
                         .ngrateit-star {
-                            background-size: 12px;
+                            background-size: 18px;
                         }
                     </style>
-                    <ng-rate-it style="margin-left: 10%;margin-bottom: 1%;" ng-model="comment.rate" step="1" resetable="false" min="0" max="5"
-                        star-width="12" star-height="12"></ng-rate-it>
+                    <ng-rate-it ng-model="comment.rate" step="1" resetable="false" min="0" max="5"
+                        star-width="18" star-height="18" read-only="true"></ng-rate-it>
                 </div>
                 <p style="font-size: large; text-align: justify">
                     {$ comment.comment $}

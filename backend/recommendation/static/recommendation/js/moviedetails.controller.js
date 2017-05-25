@@ -179,12 +179,30 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			);
 	}
 
+	//--------------------------------------------Toast Message Handler--------------------------------------------
+
+	$scope.toastMessege = function (msg) {
+		$scope.toastMessage = msg;
+		// Get the snackbar DIV
+		var x = document.getElementById("snackbar")
+
+		// Add the "show" class to DIV
+		x.className = "show";
+
+		// After 3 seconds, remove the show class from DIV
+		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+	}
+
 	//--------------------------------------------Comments---------------------------------------------------------
 	$scope.allComments = false;
 
 	$scope.showAllComments = function() {
-		getRecommendation();
+		$scope.loadComments();
 		$scope.allComments = true;
+	}
+
+	$scope.hideAllComments = function() {
+		$scope.allComments = false;
 	}
 
 	$scope.loadComments = function() {
@@ -196,18 +214,44 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			.then(
 			function (response) {
 				$scope.comments = []
-				for(i=0;i<response.data.length;i++){
+				for(i=response.data.length-1;i>-1;i--){
+					if (response.data[i].user_name == $rootScope.globals.currentUser.name) {
+						$scope.isUserComment = true;
+					}else {
+						$scope.isUserComment = false;
+					}
+
 					$scope.comments.push({
 						"user_name": response.data[i].user_name,
 						"rate": response.data[i].rate,
 						"comment": response.data[i].comment,
-						"comment_id": response.data[i].comment_id
+						"comment_id": response.data[i].comment_id,
+						"isUserComment": $scope.isUserComment,
+						"color": $scope.color
 					});
 				}
 			},
 			function (response) {
 				console.log('Error: ', response)
 			});
+	}
+
+	$scope.deleteComment = function (commentID) {
+
+		$http.post("deletecomment/", {
+			"comment_id": commentID
+		}, {
+				'Content-Type': 'application/json; charset=utf-8'
+			})
+			.then(
+			function (response) {
+				$scope.loadComments();
+				$scope.toastMessege('Comentário Deletado');
+			},
+			function (response) {
+				$scope.toastMessege('Erro ao Deletar Comentário');
+			});
+
 	}
 
 	 $scope.clearField = function(fieldID){
@@ -232,7 +276,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			function (response) {
 				console.log('Success: ', response.data)
 				$scope.loadComments();
-				$scope.toastMessage('Crítica adicionada com Sucesso')
+				$scope.toastMessege('Obrigada pelo Comentário')
 			},
 			function (response) {
 				console.log('Error: ', response)
@@ -245,19 +289,6 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 		}else {
 			$scope.createComment();
 		}
-	}
-	//--------------------------------------------Toast Message Handler--------------------------------------------
-
-	$scope.toastMessege = function (msg) {
-		$scope.toastMessage = msg;
-		// Get the snackbar DIV
-		var x = document.getElementById("snackbar")
-
-		// Add the "show" class to DIV
-		x.className = "show";
-
-		// After 3 seconds, remove the show class from DIV
-		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 	}
 
 	//--------------------------------------------Init--------------------------------------------

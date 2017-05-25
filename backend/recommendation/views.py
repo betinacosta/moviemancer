@@ -125,10 +125,12 @@ def delete_user_comment(request):
         request_comments = json.loads(request.body)
         request_comment_id = request_comments[u'comment_id']
 
-        delete_comment(request_comment_id)
-        return HttpResponse("Success")
+        if delete_comment(request_comment_id):
+            return HttpResponse("Success")
+        else:
+            return HttpResponseServerError("Erro ao deletar comentario")
     else:
-        return HttpResponse("Erro ao deletar comentario")          
+        return HttpResponseServerError("Erro ao deletar comentario")          
 
 @csrf_exempt
 def ratemovie(request):
