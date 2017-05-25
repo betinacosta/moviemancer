@@ -56,6 +56,7 @@
   <script src="{% static 'recommendation/js/singup.controller.js' %}"></script>
   <script src="{% static 'recommendation/js/authentication.service.js' %}"></script>
   <script src="{% static 'recommendation/js/registergenres.controller.js' %}"></script>
+  <script src="{% static 'recommendation/js/profile.controller.js' %}"></script>
 
   <script>
         (function(d,s,id){
@@ -98,7 +99,7 @@
     </div>
     <div class="dropdownDiv" ng-show="prop.menu">
           <ul style="list-style-type: none;">
-            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">PERFIL</li>
+            <li class="dropdownItens"><i class="fa fa-cog menuIcon" aria-hidden="true"></i><a href="#/profile" class="menuItems">PERFIL</li>
             <li class="dropdownItens"><i class="fa fa-film menuIcon" aria-hidden="true"></i><a href="#/watchedlistview" class="menuItems">ASSISTIDOS</a></li>
             <li class="dropdownItens"><i class="fa fa-list menuIcon" aria-hidden="true"></i><a href="#/watchlistview" class="menuItems ">QUERO VER</a></li>
             <li class="dropdownItens" style="margin-bottom: -12%;" ng-click="logOut()"><i class="fa fa-sign-out menuIcon" aria-hidden="true" ng-click="logOut()"></i>SAIR</li>

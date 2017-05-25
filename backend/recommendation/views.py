@@ -42,6 +42,9 @@ def show_singup(request):
 def register_genres(request):
     return render(request,'recommendation/registergenres.html')
 
+def profile(request):
+    return render(request,'recommendation/partials/profile.html')
+
 @csrf_exempt
 def get_recommendation(request):
     if request.body:
@@ -51,7 +54,83 @@ def get_recommendation(request):
         recommendation_list = jsonify_reco_list(request_user_id, 'recommendation')
         return HttpResponse(recommendation_list)
     else:
-        return HttpResponse("You are on your own")        
+        return HttpResponse("You are on your own")
+        
+@csrf_exempt
+def get_profile(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+
+        profile = get_user_details(request_user_id)
+        return HttpResponse(profile)
+    else:
+        return HttpResponse("You are on your own") 
+
+@csrf_exempt
+def update_user(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+        request_email = request_profile[u'email']
+        request_name = request_profile[u'name']
+        request_password = request_profile[u'password']
+
+        update_user_info(request_user_id, request_email, request_name, request_password)
+        return HttpResponse('Success')
+    else:
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def update_genres(request):
+    if request.body:
+        request_profile = json.loads(request.body)
+        request_user_id = request_profile[u'user_id']
+        request_firstG = request_profile[u'firstG']
+        request_secondG = request_profile[u'secondG']
+        request_thirdG = request_profile[u'thirdG']
+
+        update_user_genres(request_user_id, request_firstG, request_secondG, request_thirdG)
+        return HttpResponse('Success')
+    else:
+        return HttpResponse("You are on your own")
+
+@csrf_exempt
+def get_all_comments(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
+
+        all_comments = get_comments(request_movie_tmdb_id)
+        return HttpResponse(all_comments)
+    else:
+        return HttpResponse("Erroa o carregar comentarios")  
+
+@csrf_exempt
+def add_new_comment(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
+        request_user_id = request_comments[u'user_id']
+        request_comment = request_comments[u'comment']
+
+        add_comment(request_movie_tmdb_id, request_user_id, request_comment)
+        return HttpResponse('Success')
+    else:
+        return HttpResponse("Erro ao criar comentario")
+
+@csrf_exempt
+def delete_user_comment(request):
+    if request.body:
+        request_comments = json.loads(request.body)
+        request_comment_id = request_comments[u'comment_id']
+
+        if delete_comment(request_comment_id):
+            return HttpResponse("Success")
+        else:
+            return HttpResponseServerError("Erro ao deletar comentario")
+    else:
+        return HttpResponseServerError("Erro ao deletar comentario")          
 
 @csrf_exempt
 def ratemovie(request):

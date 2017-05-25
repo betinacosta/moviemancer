@@ -3,7 +3,7 @@ angular.module('Authentication', []);
 var moviemancerApp = angular.module('moviemancerApp', [   'ngRoute', 'mainApp', 'recommendationApp',
                                                     'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
-                                                    'singupApp', 'registergenresApp', 'Authentication',
+                                                    'singupApp', 'registergenresApp', 'profileApp','Authentication',
                                                     'ngRoute','ngCookies']);
 
 moviemancerApp.config(['$routeProvider',
@@ -42,6 +42,10 @@ moviemancerApp.config(['$routeProvider',
         when('/filtersview/:genres/:language/:yearMin/:yearMax/:runtimeMin/:runtimeMax', {
             templateUrl: 'filters',
             controller: 'filtersCtrl'
+        }).
+        when('/profile', {
+            templateUrl: 'profile',
+            controller: 'profileCtrl'
         });
     }
 

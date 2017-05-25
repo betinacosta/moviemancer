@@ -1,4 +1,4 @@
-from recommendation.models import Movie, User, List, Rating, Rate, MovieList, Type, Profile, Genre, ProfileGenre
+from recommendation.models import *
 import json
 import hashlib
 
@@ -164,6 +164,15 @@ def get_profile_id(user_id):
 
     return profile[0].profile_id
 
+def get_profile_genre_id(profile_id):
+    profile = ProfileGenre.objects.filter(profile_id = profile_id)
+
+    profile_genre = []
+    for p in profile:
+        profile_genre.append(p.profile_genre_id)
+
+    return profile_genre
+
 #UPDATE, DELETE, INSERT
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
@@ -290,16 +299,44 @@ def create_list_to_user(user_id, type_id):
     user_list = List(user_id = user_id, type_id = type_id)
     user_list.save()
 
+def update_user_info(user_id, email, name, password):
+    old_user = User.objects.filter(user_id = user_id)
+    if not email or email == ' ':
+        email = old_user[0].email
+    if not name or name == ' ':
+        name = old_user[0].name
+    if not password or password == ' ':
+        password = old_user[0].password
+    else:
+        password = hashlib.sha224(password).hexdigest()
+
+    user = User(user_id = user_id, name = name, email = email, password = password)
+    user.save()
+
+def update_user_genres(user_id, firstG, secondG, thirdG):
+    profile_id = get_profile_id(user_id)
+    profile_genres_id = get_profile_genre_id(profile_id)
+
+    firstG = get_genre_id(firstG)
+    secondG = get_genre_id(secondG)
+    thirdG = get_genre_id(thirdG)
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[0], profile_id = profile_id, genre_id = firstG)
+    g.save()
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[1], profile_id = profile_id, genre_id = secondG)
+    g.save()
+
+    g = ProfileGenre(profile_genre_id = profile_genres_id[2], profile_id = profile_id, genre_id = thirdG)
+    g.save()
 
 #AUTHENTICATION HANDLERS
 
 def authenticate_user(email, password):
     hash_password = hashlib.sha224(password).hexdigest()
     #hash_password = password
-    print(hash_password)
 
     user = User.objects.filter(email = email, password = hash_password)
-    #print(user)
 
     if user:
         return True
@@ -317,3 +354,45 @@ def get_user_id(email):
     user = User.objects.filter(email = email)
 
     return user[0].user_id
+
+#PROFILE HANDLERS
+
+def get_user_details(user_id):
+    user = User.objects.filter(user_id = user_id)
+    genres = get_genres_by_user(user_id)
+
+    genres = [ genres['genre_1'],  genres['genre_2'], genres['genre_3']]
+
+    user_details = {'name': user[0].name, 'email': user[0].email, 'genres': genres }
+
+    return json.dumps(user_details)
+
+#COMMENTS HANDLERS
+
+def get_comments(movie_tmdb_id):
+    movie_id = get_movie_id_by_tmdb_id(movie_tmdb_id)
+    comments = Comments.objects.filter(movie_id = movie_id)
+    commnets_by_movie = []
+
+    for comment in comments:
+        user = User.objects.filter(user_id = comment.user_id)
+        name = user[0].name
+        rate = get_rate_by_movie(movie_id, comment.user_id)
+        commnets_by_movie.append({"comment_id": comment.comment_id, "user_name": name,"comment": comment.comment, "rate": rate})
+
+    return json.dumps(commnets_by_movie)
+
+def add_comment(movie_tmdb_id, user_id, comment):
+    movie_id = get_movie_id_by_tmdb_id(movie_tmdb_id)
+
+    comment = Comments(movie_id = movie_id, user_id = user_id, comment = comment)
+    comment.save()
+
+def delete_comment(comment_id):
+    Comments.objects.filter(comment_id = comment_id).delete()
+
+    if not Comments.objects.filter(comment_id = comment_id):
+        return True
+    else:
+        return False
+

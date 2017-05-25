@@ -198,6 +198,8 @@ ul.topnav li.icon {
     font-size: 10px;
     height: 32px;
     line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer
 }
 
 .menuListItems {
@@ -663,3 +665,101 @@ However, delay the fade out process for 2.5 seconds */
     color: #eeeeee;
 }
 
+.updateProfile {
+    padding: 2em 10% 2em 10%;
+}
+
+.profileTitle {
+    letter-spacing: .1rem;
+}
+
+.genreSelect {
+    float: left;
+    width: 13em;
+    letter-spacing: .1rem;
+    height: 3em;
+}
+
+.updateFields {
+    background-color: #eee !important;
+    color: #9a2726 !important;
+    border-radius: 2px !important;
+    border: none !important;
+    height: 3em !important;
+    font-size: 1.1em;
+    letter-spacing: .1rem;
+    border-radius: 2px !important;
+}
+
+.updateBtn {
+    height: 3.5em;
+    font-size: 0.9em;
+    letter-spacing: .1rem;
+    background-color: #9a2726 !important;
+    border: none !important;
+}
+
+.currentPref {
+    font-size: 2rem;
+    letter-spacing: .1rem;
+    font-style: italic;
+    color: #c68006;
+    margin-top: -0.6em;
+}
+
+.commentsForm {
+    border-radius: 2px;
+    letter-spacing: .1rem;
+    border-color: #7d7b7b;
+    margin-top: 0.5em;
+    height: 160px;
+}
+
+.commentsForm:focus {
+    border-color: #2B2B2B
+}
+
+.sendCommentBtn {
+    float: right;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    margin-bottom: 2.5em;
+    background-color: #9a2726;
+    color: #eee;
+    border-color: #9a2726;
+}
+
+.single-comment {
+    padding: 0.2em 1em 0.1em 1em;
+    background-color: white;
+    border-width: 1px;
+    border-radius: 2px;
+    margin-bottom: 1em;
+}
+
+.comment-rating {
+    margin-bottom: 1%;
+    margin-top: 0.6em;
+}
+
+.delete-comment {
+    float: right;
+    cursor: pointer;
+    margin-top: 0.1em;
+    margin-right: -0.4em;
+}
+
+.delete-comment:hover {
+    color: #9a2726;
+}
+
+.display-all-comments {
+    height: 32px;
+    line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer;
+    border-radius: 2px !important;
+    background-color: #2b2b2b !important;
+    color: #eee !important;
+}
