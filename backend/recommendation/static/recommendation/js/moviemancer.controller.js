@@ -3,7 +3,7 @@ var app = angular.module('mainApp', ['ngRateIt', 'rzModule']).config(function ($
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
+app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', '$location', function ($scope, $http, $window, $rootScope, $location) {
 	$rootScope.prop.sanduba = true;
 	$rootScope.prop.menu = false;
 
@@ -456,21 +456,8 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$rootScope', function
 	//--------------------------------------------Search Handler--------------------------------------------
 
 	$scope.searchMovie = function (query) {
-		oParams = {
-			"query": query,
-			"language": "pt-br"
-		};
-
-		tmdb.call("/search/movie", oParams,
-			function (searchResult) {
-				console.log(searchResult)
-			},
-			function (e) {
-				console.log("Error: " + e)
-			}
-		);
-
-	},
+		$location.path('/search/' + query);
+	}
 
 	//--------------------------------------------Toast Message Handler--------------------------------------------
 

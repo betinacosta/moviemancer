@@ -45,6 +45,9 @@ def register_genres(request):
 def profile(request):
     return render(request,'recommendation/partials/profile.html')
 
+def search(request):
+    return render(request,'recommendation/partials/search.html')
+
 @csrf_exempt
 def get_recommendation(request):
     if request.body:
