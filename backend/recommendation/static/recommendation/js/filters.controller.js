@@ -463,6 +463,11 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$r
             );
     }
 
+    //--------------------------------------------Search--------------------------------------------
+	$scope.searchMovie = function (query) {
+		$location.path('/search/' + query);
+	}
+
     //--------------------------------------------Toast Message Handler--------------------------------------------
     $scope.toastMessege = function (msg) {
         $scope.toastMessage = msg;

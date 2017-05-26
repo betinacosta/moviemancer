@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from recommendation.queries import *
 from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 import json
 
 

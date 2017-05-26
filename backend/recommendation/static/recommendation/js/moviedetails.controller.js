@@ -137,22 +137,22 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	$scope.setUserRatingExternal = function (rating, poster, title) {
 
 		$http.post("rateexternalmovie/", {
-			"tmdb_movie_id": $routeParams.tmdbID,
-			"rate_id": rating,
-			"user_id": $rootScope.globals.currentUser.user_id,
-			"movie_poster": poster,
-			"movie_title": title
-		}, {
+				"tmdb_movie_id": $routeParams.tmdbID,
+				"rate_id": rating,
+				"user_id": $rootScope.globals.currentUser.user_id,
+				"movie_poster": poster,
+				"movie_title": title
+			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-			function (response) {
-				console.log('Success: ', response.data)
-				$scope.toastMessege("Filme Adicionado a Lista de Vistos")
-			},
-			function (response) {
-				console.log('Error: ', response)
-			}
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
 			);
 	}
 
@@ -161,21 +161,21 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 	$scope.addWatchlistExternal = function (poster, title) {
 
 		$http.post("addwatchlistexternal/", {
-			"tmdb_movie_id": $routeParams.tmdbID,
-			"user_id": $rootScope.globals.currentUser.user_id,
-			"movie_poster": poster,
-			"movie_title": title
-		}, {
+				"tmdb_movie_id": $routeParams.tmdbID,
+				"user_id": $rootScope.globals.currentUser.user_id,
+				"movie_poster": poster,
+				"movie_title": title
+			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-			function (response) {
-				console.log('Success: ', response.data)
-				$scope.toastMessege("Filme Adicionado a Quero Ver")
-			},
-			function (response) {
-				console.log('Error: ', response)
-			}
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.toastMessege("Filme Adicionado a Quero Ver")
+				},
+				function (response) {
+					console.log('Error: ', response)
+				}
 			);
 	}
 
@@ -190,105 +190,112 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 		x.className = "show";
 
 		// After 3 seconds, remove the show class from DIV
-		setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+		setTimeout(function () {
+			x.className = x.className.replace("show", "");
+		}, 3000);
 	}
 
 	//--------------------------------------------Comments---------------------------------------------------------
 	$scope.allComments = false;
 
-	$scope.showAllComments = function() {
+	$scope.showAllComments = function () {
 		$scope.loadComments();
 		$scope.allComments = true;
 	}
 
-	$scope.hideAllComments = function() {
+	$scope.hideAllComments = function () {
 		$scope.allComments = false;
 	}
 
-	$scope.loadComments = function() {
+	$scope.loadComments = function () {
 		$http.post("getcomments/", {
-			"tmdb_movie_id": $routeParams.tmdbID
-		}, {
+				"tmdb_movie_id": $routeParams.tmdbID
+			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-			function (response) {
-				$scope.comments = []
-				for(i=response.data.length-1;i>-1;i--){
-					if (response.data[i].user_name == $rootScope.globals.currentUser.name) {
-						$scope.isUserComment = true;
-					}else {
-						$scope.isUserComment = false;
-					}
+				function (response) {
+					$scope.comments = []
+					for (i = response.data.length - 1; i > -1; i--) {
+						if (response.data[i].user_name == $rootScope.globals.currentUser.name) {
+							$scope.isUserComment = true;
+						} else {
+							$scope.isUserComment = false;
+						}
 
-					$scope.comments.push({
-						"user_name": response.data[i].user_name,
-						"rate": response.data[i].rate,
-						"comment": response.data[i].comment,
-						"comment_id": response.data[i].comment_id,
-						"isUserComment": $scope.isUserComment,
-						"color": $scope.color
-					});
-				}
-			},
-			function (response) {
-				console.log('Error: ', response)
-			});
+						$scope.comments.push({
+							"user_name": response.data[i].user_name,
+							"rate": response.data[i].rate,
+							"comment": response.data[i].comment,
+							"comment_id": response.data[i].comment_id,
+							"isUserComment": $scope.isUserComment,
+							"color": $scope.color
+						});
+					}
+				},
+				function (response) {
+					console.log('Error: ', response)
+				});
 	}
 
 	$scope.deleteComment = function (commentID) {
 
 		$http.post("deletecomment/", {
-			"comment_id": commentID
-		}, {
+				"comment_id": commentID
+			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-			function (response) {
-				$scope.loadComments();
-				$scope.toastMessege('Comentário Deletado');
-			},
-			function (response) {
-				$scope.toastMessege('Erro ao Deletar Comentário');
-			});
+				function (response) {
+					$scope.loadComments();
+					$scope.toastMessege('Comentário Deletado');
+				},
+				function (response) {
+					$scope.toastMessege('Erro ao Deletar Comentário');
+				});
 
 	}
 
-	 $scope.clearField = function(fieldID){
-        $scope.nameID = document.getElementById(fieldID);
-        $scope.nameID.style.borderColor  = '#7d7b7b';
-    }
+	$scope.clearField = function (fieldID) {
+		$scope.nameID = document.getElementById(fieldID);
+		$scope.nameID.style.borderColor = '#7d7b7b';
+	}
 
-    $scope.invalidateField = function(fieldID){
-        $scope.nameID = document.getElementById(fieldID);
-        $scope.nameID.style.borderColor  = 'red';
-    }
+	$scope.invalidateField = function (fieldID) {
+		$scope.nameID = document.getElementById(fieldID);
+		$scope.nameID.style.borderColor = 'red';
+	}
 
 	$scope.createComment = function () {
 		$http.post("addcomment/", {
-			"tmdb_movie_id": $routeParams.tmdbID,
-			"user_id": $rootScope.globals.currentUser.user_id,
-			"comment": $scope.userComment
-		}, {
+				"tmdb_movie_id": $routeParams.tmdbID,
+				"user_id": $rootScope.globals.currentUser.user_id,
+				"comment": $scope.userComment
+			}, {
 				'Content-Type': 'application/json; charset=utf-8'
 			})
 			.then(
-			function (response) {
-				console.log('Success: ', response.data)
-				$scope.loadComments();
-				$scope.toastMessege('Obrigada pelo Comentário')
-			},
-			function (response) {
-				console.log('Error: ', response)
-			});
+				function (response) {
+					console.log('Success: ', response.data)
+					$scope.loadComments();
+					$scope.toastMessege('Obrigada pelo Comentário')
+				},
+				function (response) {
+					console.log('Error: ', response)
+				});
 	}
 
-	$scope.validateComment = function() {
+	$scope.validateComment = function () {
 		if ($scope.userComment == '' || $scope.userComment == ' ' || $scope.userComment == undefined) {
 			$scope.invalidateField('userComment');
-		}else {
+		} else {
 			$scope.createComment();
 		}
+	}
+
+	//--------------------------------------------Search--------------------------------------------
+	$scope.searchMovie = function (query) {
+		$location.path('/search/' + query);
 	}
 
 	//--------------------------------------------Init--------------------------------------------
@@ -299,7 +306,6 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 		$scope.loadCrew();
 		$scope.loadKeywords();
 		$scope.loadSimilarMovies();
-		//$scope.loadComments();
 	}
 
 	$scope.init();

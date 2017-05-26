@@ -3,7 +3,7 @@ var app = angular.module('queroVerApp', ['ngRateIt']).config(function ($interpol
     $interpolateProvider.endSymbol('$}');
 });
 
-app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scope, $http, $rootScope) {
+app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
     $rootScope.prop.menu = false;
     //--------------------------------------------Get Watchlist Handler--------------------------------------------
 
@@ -13,35 +13,37 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
         $scope.index = [];
 
         $http.post("getwatchlist/", {
-            "user_id": $rootScope.globals.currentUser.user_id
-        }, {
+                "user_id": $rootScope.globals.currentUser.user_id
+            }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
             .then(
-            function (response) {
-                for (i = 0; i < response.data.length; i++) {
-                    $scope.fullList.push({
-                        title: response.data[i].title,
-                        poster: response.data[i].poster,
-                        movie_id: response.data[i].movie_id,
-                        tmdb_id: response.data[i].tmdb_movie_id,
-                        rating: response.data[i].rating
-                    });
-                }
+                function (response) {
+                    for (i = 0; i < response.data.length; i++) {
+                        $scope.fullList.push({
+                            title: response.data[i].title,
+                            poster: response.data[i].poster,
+                            movie_id: response.data[i].movie_id,
+                            tmdb_id: response.data[i].tmdb_movie_id,
+                            rating: response.data[i].rating
+                        });
+                    }
 
-                $scope.chunk_size = 6;
-                $scope.watchlist = $scope.fullList.map(function (e, i) {
-                    return i % $scope.chunk_size === 0 ? $scope.fullList.slice(i, i + $scope.chunk_size) : null;
-                })
-                    .filter(function (e) { return e; });
+                    $scope.chunk_size = 6;
+                    $scope.watchlist = $scope.fullList.map(function (e, i) {
+                            return i % $scope.chunk_size === 0 ? $scope.fullList.slice(i, i + $scope.chunk_size) : null;
+                        })
+                        .filter(function (e) {
+                            return e;
+                        });
 
-                for (i = 0; i < $scope.watchlist.length; i++) {
-                    $scope.index.push(i);
+                    for (i = 0; i < $scope.watchlist.length; i++) {
+                        $scope.index.push(i);
+                    }
+                },
+                function (response) {
+                    console.log('Error: ', response)
                 }
-            },
-            function (response) {
-                console.log('Error: ', response)
-            }
             );
 
     }
@@ -51,20 +53,20 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
     $scope.removeFromWatchlist = function (movieID) {
 
         $http.post("removefromwatchlist/", {
-            "movie_id": movieID,
-            "user_id": $rootScope.globals.currentUser.user_id
-        }, {
+                "movie_id": movieID,
+                "user_id": $rootScope.globals.currentUser.user_id
+            }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
             .then(
-            function (response) {
-                console.log('Success: ', response.data)
-                $scope.getWatchlist();
-                $scope.toastMessege("Filme Removido da Lista de Quero Ver")
-            },
-            function (response) {
-                console.log('Error: ', response)
-            }
+                function (response) {
+                    console.log('Success: ', response.data)
+                    $scope.getWatchlist();
+                    $scope.toastMessege("Filme Removido da Lista de Quero Ver")
+                },
+                function (response) {
+                    console.log('Error: ', response)
+                }
             );
     }
 
@@ -73,21 +75,21 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
     $scope.setUserRating = function (rating, movieID, watchedlist) {
 
         $http.post("ratemovie/", {
-            "movie_id": movieID,
-            "rate_id": rating,
-            "user_id": $rootScope.globals.currentUser.user_id
-        }, {
+                "movie_id": movieID,
+                "rate_id": rating,
+                "user_id": $rootScope.globals.currentUser.user_id
+            }, {
                 'Content-Type': 'application/json; charset=utf-8'
             })
             .then(
-            function (response) {
-                console.log('Success: ', response.data)
-                $scope.getWatchlist();
-                $scope.toastMessege("Filme Adicionado a Lista de Vistos")
-            },
-            function (response) {
-                console.log('Error: ', response)
-            }
+                function (response) {
+                    console.log('Success: ', response.data)
+                    $scope.getWatchlist();
+                    $scope.toastMessege("Filme Adicionado a Lista de Vistos")
+                },
+                function (response) {
+                    console.log('Error: ', response)
+                }
             );
 
     }
@@ -115,8 +117,7 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
     };
 
     $scope.getGenres = function () {
-        return ([
-            {
+        return ([{
                 id: 28,
                 name: "Ação",
                 selected: false
@@ -210,8 +211,7 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
     }
 
     $scope.getLanguages = function () {
-        return ([
-            {
+        return ([{
                 code: 'pt',
                 name: 'Português',
                 selected: false
@@ -352,12 +352,12 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
 
     $scope.showFilterBar = function () {
 
-        $scope.filterVisible = !$scope.filterVisible;
-        $scope.toggle = !$scope.toggle;
-        if ($scope.filterVisible)
-            $scope.refreshSlider();
+            $scope.filterVisible = !$scope.filterVisible;
+            $scope.toggle = !$scope.toggle;
+            if ($scope.filterVisible)
+                $scope.refreshSlider();
 
-    },
+        },
         //--------------------------------------------Filter Request Handlers--------------------------------------------
 
         $scope.handleFilters = function (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages) {
@@ -389,6 +389,11 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
             $window.location.href = '#/filtersview/' + $scope.selectedGenres + '/' + $scope.selectedLanguage + '/' + $scope.selectedMinYear + '/' + $scope.selectedMaxYear + '/' + runtimeMin + '/' + runtimeMax;
         }
 
+    //--------------------------------------------Search--------------------------------------------
+    $scope.searchMovie = function (query) {
+        $location.path('/search/' + query);
+    }
+
     //--------------------------------------------Toast Message Handler--------------------------------------------
 
     $scope.toastMessege = function (msg) {
@@ -400,14 +405,16 @@ app.controller('watchlistCtrl', ['$scope', '$http', '$rootScope',function ($scop
         x.className = "show";
 
         // After 3 seconds, remove the show class from DIV
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 3000);
     }
 
     //--------------------------------------------Init--------------------------------------------
     $scope.init = function () {
 
-        $scope.getWatchlist();
-    },
+            $scope.getWatchlist();
+        },
 
         $scope.init();
 }]);

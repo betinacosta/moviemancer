@@ -391,6 +391,11 @@ app.controller('watchedListCtrl', ['$scope', '$http', '$rootScope', function ($s
 			$window.location.href = '#/filtersview/' + $scope.selectedGenres + '/' + $scope.selectedLanguage + '/' + $scope.selectedMinYear + '/' + $scope.selectedMaxYear + '/' + runtimeMin + '/' + runtimeMax;
 		}
 
+	//--------------------------------------------Search--------------------------------------------
+	$scope.searchMovie = function (query) {
+		$location.path('/search/' + query);
+	}
+
 	//--------------------------------------------Toast Message Handler--------------------------------------------
 
 	$scope.toastMessege = function (msg) {

@@ -386,6 +386,11 @@ app.controller('recoCtrl', ['$scope', '$http', '$rootScope', function ($scope, $
 			);
 	}
 
+	//--------------------------------------------Search--------------------------------------------
+	$scope.searchMovie = function (query) {
+		$location.path('/search/' + query);
+	}
+
 	//--------------------------------------------Toast Message Handler--------------------------------------------
 
 	$scope.toastMessege = function (msg) {

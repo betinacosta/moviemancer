@@ -6,6 +6,11 @@ var app = angular.module('registergenresApp', []).config(function ($interpolateP
 app.controller('registergenresCtrl', ['$scope', '$window', '$rootScope','$http', function ($scope, $window, $rootScope, $http) {
 	//console.log($rootScope.registration);
 
+	$scope.footerID = document.getElementById('footer');
+    $scope.bodyID = document.getElementById('body');
+    $scope.footerID.style.display = 'none';
+	$scope.bodyID.style.backgroundColor = 'white';
+
 	$scope.remainigGenres = 3;
 	$scope.displayOkBtn = false;
 
