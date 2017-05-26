@@ -6,17 +6,20 @@
             do Rei escolhendo um filme para assistir. Venha conferir!
         </p>
     </div>
-    <div class="five columns">
-        <h5 class="loginText">ENTRAR</h5>
-        <form>
-            <div>
-                <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
-                <h6 class="loginText">ou</h6>
-                <input class="u-full-width loginFields" type="email" placeholder="Email" id="username" ng-model="sEmail">
-                <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
-                <button class="button-primary u-full-width loginButton" ng-click="login(sEmail,sPassword)">ENTRAR</button></a>
-                <a href="#/singup"> <button class="button-primary u-full-width singupButton">CADASTRAR</button></a>
-            </div>
-        </form>
+    <div class="five columns" id='loginGroup'>
+        <div class="loader" ng-show="dataLoading"></div>
+        <div ng-show="loginGroup">
+            <h5 class="loginText">ENTRAR</h5>
+            <form>
+                <div>
+                    <input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
+                    <h6 class="loginText">ou</h6>
+                    <input class="u-full-width loginFields" type="email" placeholder="Email" id="username" ng-model="sEmail">
+                    <input class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="sPassword">
+                    <button class="button-primary u-full-width loginButton" ng-click="login(sEmail,sPassword)">ENTRAR</button></a>
+                    <a href="#/singup"> <button class="button-primary u-full-width singupButton">CADASTRAR</button></a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

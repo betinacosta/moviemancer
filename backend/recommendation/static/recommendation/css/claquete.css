@@ -763,3 +763,17 @@ However, delay the fade out process for 2.5 seconds */
     background-color: #2b2b2b !important;
     color: #eee !important;
 }
+
+.loader {
+    border: 0.5em solid #ffffff;
+    border-top: 0.5em solid #2b2b2b;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
