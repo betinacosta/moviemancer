@@ -1,14 +1,14 @@
 'use strict';
 var app = angular.module('loginApp', []).config(function ($interpolateProvider) {
-	$interpolateProvider.startSymbol('{$');
-	$interpolateProvider.endSymbol('$}');
+    $interpolateProvider.startSymbol('{$');
+    $interpolateProvider.endSymbol('$}');
 });
 
 app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', function ($scope, $rootScope, $location, AuthenticationService) {
-	$rootScope.prop.menu = false;
+    $rootScope.prop.menu = false;
 
-    $scope.dataLoading = true;
-    $scope.loginGroup = false;
+    $scope.dataLoading = false;
+    $scope.loginGroup = true;
 
     $scope.footerID = document.getElementById('footer');
     $scope.bodyID = document.getElementById('body');
@@ -17,25 +17,38 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'Authenticatio
     $scope.footerID.style.bottom = '0';
     $scope.footerID.style.width = '100%';
     $scope.bodyID.style.backgroundColor = '#eee';
-    
 
-	// reset login status
-        AuthenticationService.ClearCredentials();
-  
-        $scope.login = function (email, password) {
-            $scope.loginGroup = false;
-            $scope.dataLoading = true;
 
-            AuthenticationService.Login(email, password, function(response) {
-                if(response != 'Erro') {
-                    AuthenticationService.SetCredentials(email, password, response.user_id, response.name);
-                    $location.path('/moviemancer');
-                } else {
-                    $scope.error = response;
-                    $scope.loginGroup = true;
-                    $scope.dataLoading = false;
-                    document.getElementById('loginGroup').style.display = 'none';
-                }
-            });
-        };
+    // reset login status
+    AuthenticationService.ClearCredentials();
+
+    $scope.login = function (email, password) {
+        $scope.loginGroup = false;
+        $scope.dataLoading = true;
+
+        AuthenticationService.Login(email, password, function (response) {
+            if (response.status == 200) {
+                AuthenticationService.SetCredentials(email, password, response.data.user_id, response.data.name);
+                $location.path('/moviemancer');
+            } else {
+                $scope.toastMessege(response.data);
+                $scope.loginGroup = true;
+                $scope.dataLoading = false;
+            }
+        });
+    };
+
+    //--------------------------------------------Toast Message Handler--------------------------------------------
+
+    $scope.toastMessege = function (msg) {
+        $scope.toastMessage = msg;
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar")
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    }
 }]);

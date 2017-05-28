@@ -1,4 +1,8 @@
-<div class="twelve columns aboutBox">
+<div style="padding-top: 18%" ng-show="dataLoading">
+    <div class="loader"></div>
+    <p class="loadingText"> Aguarde, preparando suas recoemndações... </p>
+</div>
+<div class="twelve columns aboutBox" ng-show="loginGroup">
     <div class="six columns" style="margin: 2% 8% 0% 0%;">
         <img width="40%" style="margin-left: 30%;margin-right: 30%;margin-top: 1.3em;" src="https://uploaddeimagens.com.br/images/000/898/850/original/MOVIMANCER-RED-BIG.png?1492995210"
         />
@@ -6,9 +10,9 @@
             do Rei escolhendo um filme para assistir. Venha conferir!
         </p>
     </div>
-    <div class="five columns" id='loginGroup'>
-        <div class="loader" ng-show="dataLoading"></div>
-        <div ng-show="loginGroup">
+    <div class="five columns">
+        
+        <div >
             <h5 class="loginText">ENTRAR</h5>
             <form>
                 <div>
@@ -23,3 +27,4 @@
         </div>
     </div>
 </div>
+<div id="snackbar">{$ toastMessage $}</div>

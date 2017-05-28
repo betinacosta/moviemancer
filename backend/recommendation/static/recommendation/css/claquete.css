@@ -771,9 +771,18 @@ However, delay the fade out process for 2.5 seconds */
     width: 3em;
     height: 3em;
     animation: spin 2s linear infinite;
+    display: block;
+    margin: 0 auto;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.loadingText {
+    text-align: center;
+    letter-spacing: .1rem;
+    font-size: 1.2em;
+    margin-top: 1em;
 }

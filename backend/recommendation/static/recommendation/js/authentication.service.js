@@ -12,9 +12,15 @@ angular.module('Authentication')
             $http.post('authentication/', {"email": username, "password": password},
             {
 				'Content-Type': 'application/json; charset=utf-8'
-			}).success(function (response) {
+			}).then (
+                function (response) {
                    callback(response);
-               });
+               },
+               function (response) {
+                   callback(response);
+               },
+
+            );
         }
   
         service.SetCredentials = function (username, password, user_id, name) {

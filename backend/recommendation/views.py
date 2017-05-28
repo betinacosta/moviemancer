@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 
 from recommendation.models import Movie, User
@@ -164,9 +166,9 @@ def get_auth(request):
             user_data = get_user(request_email)
             return HttpResponse(user_data)
         else:
-            return HttpResponse('Erro')
+            return HttpResponseServerError('Usuário e Senha não combinam')
     else:
-        return HttpResponse('Authentication Failure: No Response Body')
+        return HttpResponseServerError('Authentication Failure: No Response Body')
 
 @csrf_exempt
 def registration(request):
