@@ -7,7 +7,8 @@ from recommendation.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from recommendation.queries import *
-from recommendation.reco import add_recommentation_to_database, add_to_list, add_to_list_external
+from recommendation.reco import add_to_list, add_to_list_external
+from recommendation.reco_refactor import generate_recommendation, update_recommendation
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseServerError
 import json
@@ -146,7 +147,7 @@ def ratemovie(request):
         request_rate_id = request_user_rating[u'rate_id']
 
         rate_movie (request_user_id, request_movie_id, request_rate_id)
-        add_recommentation_to_database(request_user_id)
+        update_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -162,7 +163,7 @@ def get_auth(request):
 
         if authenticate_user(request_email, request_password):
             user_id = get_user_by_email(request_email)
-            add_recommentation_to_database(user_id)
+            generate_recommendation(user_id)
             user_data = get_user(request_email)
             return HttpResponse(user_data)
         else:
@@ -208,7 +209,7 @@ def rate_external(request):
         request_movie_title = request_user_rating[u'movie_title']
 
         if rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
-            add_recommentation_to_database(request_user_id)
+            update_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
             return HttpResponseServerError('Error')
@@ -227,7 +228,7 @@ def add_watchlist(request):
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    add_recommentation_to_database(request_user_id)
+    update_recommendation(request_user_id)
 
 @csrf_exempt
 def add_watchlist_external(request):
@@ -266,7 +267,7 @@ def remove_from_watched_list(request):
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    add_recommentation_to_database(request_user_id)
+    update_recommendation(request_user_id)
 
 @csrf_exempt
 def remove_from_watchlist(request):

@@ -19,6 +19,19 @@ def movie_by_user_list(user_id, list_name):
     movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
     return movie_list
 
+def get_rated_movies_by_user(user_id):
+    movies =[]
+    rate_list = {}
+
+    for item in movie_by_user_list(user_id, 'watchedlist'):
+        movies.append(item.movie_id)
+
+    for movie in movies:
+        rate = get_rate_by_movie(movie, user_id)
+        rate_list.update({movie: rate})
+
+    return rate_list
+
 def get_rate_by_movie(movie_id, user_id):
     rate_id = 0
     movie_rate = 0
