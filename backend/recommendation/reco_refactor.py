@@ -160,7 +160,7 @@ def is_movie_on_database(tmdb_movie_id):
         return True
 
 def remove_repeated_recommendations(user_id, reco_list, list_name):
-    for item in movie_by_user_list(user_id, 'recommendation'):
+    for item in movie_by_user_list(user_id, list_name):
         if item.movie_id in reco_list:
             reco_list.remove(item.movie_id)
     return reco_list
@@ -177,7 +177,6 @@ def update_recommendation(user_id):
 def generate_recommendation(user_id):
     #get recommendation by CF
     reco_list = user_recommendations(user_id)
-    print '1. reco_list: ', reco_list
 
     #check if there are item that are already in the user recommendation or watchlist and remove it
     reco_list = remove_repeated_recommendations(user_id, reco_list, 'recommendation')
@@ -187,7 +186,6 @@ def generate_recommendation(user_id):
     #check if there are enough recommendations
     if len(reco_list) < 100:
         higher_rated = get_higher_rated(user_id)
-        print '1. higher_rated: ', higher_rated
 
         if len(higher_rated) > 2:
             for i in range(0,2):
