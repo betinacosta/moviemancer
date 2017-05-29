@@ -3,274 +3,70 @@ var app = angular.module('filtersApp', ['ngRateIt', 'rzModule']).config(function
     $interpolateProvider.endSymbol('$}');
 });
 
-app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$rootScope',function ($scope, $http, $routeParams, $window, $rootScope) {
+app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$rootScope', '$location', 'MoviemancerService', function ($scope, $http, $routeParams, $window, $rootScope, $location, MoviemancerService) {
 
-    //--------------------------------------------Filter Box Handlers--------------------------------------------
-    $scope.filterVisible = false;
-    $scope.toggle = true;
-    $rootScope.prop.menu = false;
+   //--------------------------------------------Filter Box Handlers--------------------------------------------
+	$scope.filterVisible = false;
+	$scope.toggle = true;
 
-    $scope.getGenres = function () {
-        return ([
-            {
-                id: 28,
-                name: "Ação",
-                selected: false
-            },
-            {
-                id: 12,
-                name: "Aventura",
-                selected: false
-            },
-            {
-                id: 16,
-                name: "Animação",
-                selected: false
-            },
-            {
-                id: 35,
-                name: "Comédia",
-                selected: false
-            },
-            {
-                id: 80,
-                name: "Crime",
-                selected: false
-            },
-            {
-                id: 99,
-                name: "Documentário",
-                selected: false
-            },
-            {
-                id: 18,
-                name: "Drama",
-                selected: false
-            },
-            {
-                id: 14,
-                name: "Fantasia",
-                selected: false
-            },
-            {
-                id: 36,
-                name: "História",
-                selected: false
-            },
-            {
-                id: 27,
-                name: "Terror",
-                selected: false
-            },
-            {
-                id: 10402,
-                name: "Musical",
-                selected: false
-            },
-            {
-                id: 9648,
-                name: "Mistério",
-                selected: false
-            },
-            {
-                id: 10749,
-                name: "Romance",
-                selected: false
-            },
-            {
-                id: 878,
-                name: "Ficção Científica",
-                selected: false
-            },
-            {
-                id: 53,
-                name: "Thriller",
-                selected: false
-            },
-            {
-                id: 10752,
-                name: "Guerra",
-                selected: false
-            },
-            {
-                id: 37,
-                name: "Faroeste",
-                selected: false
-            },
-            {
-                id: 10751,
-                name: "Família",
-                selected: false
-            },
-        ])
-    }
+	$scope.yearSlider = {
+		minValue: 1920,
+		maxValue: 2017,
+		options: {
+			floor: 1920,
+			ceil: 2017,
+		}
+	};
 
-    $scope.getLanguage = function () {
-        return ([
-            {
-                code: 'pt',
-                name: 'Português',
-                selected: false
-            },
-            {
-                code: 'en',
-                name: 'Inglês',
-                selected: false
-            },
-            {
-                code: 'de',
-                name: 'Alemão',
-                selected: false
-            },
-            {
-                code: 'it',
-                name: 'Italiano',
-                selected: false
-            },
-            {
-                code: 'ja',
-                name: 'Japonês',
-                selected: false
-            },
-            {
-                code: 'fr',
-                name: 'Francês',
-                selected: false
-            }
-        ])
-    }
+	$scope.runtimeSlider = {
+		minValue: 50,
+		maxValue: 300,
+		options: {
+			floor: 50,
+			ceil: 300,
+		}
+	};
 
-    $scope.genresSelector = $scope.getGenres();
-    $scope.languages = $scope.getLanguage();
+	$scope.genresSelector = MoviemancerService.getGenres();
+	$scope.languages = MoviemancerService.getLanguages();
 
-    $scope.selectGenre = function (id, index) {
-        $scope.genresSelector[index].selected = !$scope.genresSelector[index].selected;
-        $scope.btn = document.getElementById(id);
+	$scope.selectPT = function () {
+		$scope.languages = MoviemancerService.selectPT($scope.languages);
+	}
 
-        if ($scope.genresSelector[index].selected) {
-            $scope.btn.style.backgroundColor = '#9a2726';
-            $scope.btn.style.color = '#fff';
-        } else {
-            $scope.btn.style.backgroundColor = '#7d7b7b';
-            $scope.btn.style.color = '#fff';
-        }
+	$scope.selectEN = function () {
+		$scope.languages = MoviemancerService.selectEN($scope.languages);
+	}
 
-    }
+	$scope.selectDE = function () {
+		$scope.languages = MoviemancerService.selectDE($scope.languages);
+	}
 
-    $scope.uncheckLanguage = function (index, id) {
-        $scope.languages[index].selected = false;
-        $scope.btn = document.getElementById(id);
-        $scope.btn.style.backgroundColor = '#7d7b7b';
-    }
+	$scope.selectIT = function () {
+		$scope.languages = MoviemancerService.selectIT($scope.languages);
+	}
 
-    $scope.checkLanguage = function (index, id) {
-        $scope.languages[index].selected = !$scope.languages[index].selected;
-        if ($scope.languages[index].selected) {
-            $scope.btn = document.getElementById(id);
-            $scope.btn.style.backgroundColor = '#9a2726';
-        } else {
-            $scope.btn = document.getElementById(id);
-            $scope.btn.style.backgroundColor = '#7d7b7b';
-        }
-    }
+	$scope.selectJA = function () {
+		$scope.languages = MoviemancerService.selectJA($scope.languages);
+	}
 
-    $scope.selectPT = function () {
-        //Selected
-        $scope.checkLanguage(0, 'pt')
-        //Outros
-        $scope.uncheckLanguage(1, 'en');
-        $scope.uncheckLanguage(2, 'de');
-        $scope.uncheckLanguage(3, 'it');
-        $scope.uncheckLanguage(4, 'ja');
-        $scope.uncheckLanguage(5, 'fr');
-    }
+	$scope.selectFR = function () {
+		$scope.languages = MoviemancerService.selectFR($scope.languages);
+	}
 
-    $scope.selectEN = function () {
-        //Selected
-        $scope.checkLanguage(1, 'en')
-        //Outros
-        $scope.uncheckLanguage(0, 'pt');
-        $scope.uncheckLanguage(2, 'de');
-        $scope.uncheckLanguage(3, 'it');
-        $scope.uncheckLanguage(4, 'ja');
-        $scope.uncheckLanguage(5, 'fr');
-    }
+	$scope.selectGenre = function (id, index) {
+		$scope.genresSelector = MoviemancerService.selectGenre(id, index, $scope.genresSelector);
+	}
 
-    $scope.selectDE = function () {
-        //Selected
-        $scope.checkLanguage(2, 'de')
-        //Outros
-        $scope.uncheckLanguage(1, 'en');
-        $scope.uncheckLanguage(0, 'pt');
-        $scope.uncheckLanguage(3, 'it');
-        $scope.uncheckLanguage(4, 'ja');
-        $scope.uncheckLanguage(5, 'fr');
-    }
+	$scope.showFilterBar = function () {
+		$scope.filterVisible = !$scope.filterVisible;
+		$scope.toggle = !$scope.toggle;
+	},
+	//--------------------------------------------Filter Request Handlers--------------------------------------------
 
-    $scope.selectIT = function () {
-        //Selected
-        $scope.checkLanguage(3, 'it')
-        //Outros
-        $scope.uncheckLanguage(1, 'en');
-        $scope.uncheckLanguage(2, 'de');
-        $scope.uncheckLanguage(0, 'pt');
-        $scope.uncheckLanguage(4, 'ja');
-        $scope.uncheckLanguage(5, 'fr');
-    }
-
-    $scope.selectJA = function () {
-        //Selected
-        $scope.checkLanguage(4, 'ja')
-        //Outros
-        $scope.uncheckLanguage(1, 'en');
-        $scope.uncheckLanguage(2, 'de');
-        $scope.uncheckLanguage(3, 'it');
-        $scope.uncheckLanguage(0, 'pt');
-        $scope.uncheckLanguage(5, 'fr');
-    }
-
-    $scope.selectFR = function () {
-        //Selected
-        $scope.checkLanguage(5, 'fr')
-        //Outros
-        $scope.uncheckLanguage(1, 'en');
-        $scope.uncheckLanguage(2, 'de');
-        $scope.uncheckLanguage(3, 'it');
-        $scope.uncheckLanguage(4, 'ja');
-        $scope.uncheckLanguage(0, 'pt');
-    }
-
-    $scope.refreshSlider = function () {
-        $timeout(function () {
-            $scope.$broadcast('rzSliderForceRender');
-        });
-    };
-
-    $scope.showFilterBar = function () {
-
-        $scope.filterVisible = !$scope.filterVisible;
-        $scope.toggle = !$scope.toggle;
-        if ($scope.filterVisible)
-            $scope.refreshSlider();
-    }
-
-    $scope.yearSlider = {
-        minValue: 1920,
-        maxValue: 2017,
-        options: {
-            floor: 1920,
-            ceil: 2017,
-        }
-    };
-
-    $scope.runtimeSlider = {
-        minValue: 50,
-        maxValue: 300,
-        options: {
-            floor: 50,
-            ceil: 300,
-        }
-    };
+	$scope.handleFilters = function (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages) {
+		MoviemancerService.handleFilters (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages);
+	}
 
     //--------------------------------------------Get Filters Result Handlers--------------------------------------------
 
@@ -305,7 +101,7 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$r
                 for (i = 0; i < payload.data.results.length; i++) {
                     $scope.fullList.push({
                         title: payload.data.results[i].title,
-                        poster: 'https://image.tmdb.org/t/p/original/' + payload.data.results[i].poster_path,
+                        poster: 'http://image.tmdb.org/t/p/original/' + payload.data.results[i].poster_path,
                         tmdb_id: payload.data.results[i].id
                     });
                 }
@@ -326,7 +122,7 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$r
     $scope.getFilterResult();
 
     $scope.getSelectedGenres = function () {
-        $scope.genresSelector = $scope.getGenres();
+        $scope.genresSelector = MoviemancerService.getGenres();;
         if ($routeParams.genres == 'null') {
             return ('Não Selecionado')
         } else {
@@ -386,82 +182,43 @@ app.controller('filtersCtrl', ['$scope', '$http', '$routeParams', '$window', '$r
 
     $scope.getSelectedFilters();
 
-    //--------------------------------------------Filter Request Handlers--------------------------------------------
-    $scope.handleFilters = function (genres, yearMin, yearMax, runtimeMin, runtimeMax, languages) {
-        $scope.selectedGenres = [];
-        $scope.selectedLanguage = 'null';
-        $scope.aux = 0;
-
-        for (i = 0; i < genres.length; i++) {
-            if (genres[i].selected) {
-                $scope.selectedGenres.push(genres[i].id);
-            }
-        }
-
-        if ($scope.selectedGenres == '') {
-            $scope.selectedGenres = 'null';
-        } else {
-            $scope.selectedGenres = $scope.selectedGenres.join(",");
-        }
-
-        for (i = 0; i < languages.length; i++) {
-            if (languages[i].selected) {
-                $scope.selectedLanguage = languages[i].code;
-            }
-        }
-
-        $scope.selectedMinYear = yearMin + '-' + '01' + '-' + '01';
-        $scope.selectedMaxYear = yearMax + '-' + '12' + '-' + '31'
-
-        $window.location.href = '#/filtersview/' + $scope.selectedGenres + '/' + $scope.selectedLanguage + '/' + $scope.selectedMinYear + '/' + $scope.selectedMaxYear + '/' + runtimeMin + '/' + runtimeMax;
-    }
-
     //--------------------------------------------Rating Handler--------------------------------------------
 
     $scope.setUserRatingExternal = function (rating, poster, title, id) {
-
-        $http.post("rateexternalmovie/", {
-            "tmdb_movie_id": id,
-            "rate_id": rating,
-            "user_id": $rootScope.globals.currentUser.user_id,
-            "movie_poster": poster,
-            "movie_title": title
-        }, {
-                'Content-Type': 'application/json; charset=utf-8'
-            })
-            .then(
-            function (response) {
-                console.log('Success: ', response.data)
-                $scope.toastMessege("Filme Adicionado a Lista de Vistos")
-            },
-            function (response) {
-                console.log('Error: ', response)
+		MoviemancerService.setUserRatingExternal(rating, poster, title, id, $rootScope.globals.currentUser.user_id, function (response) {
+            if (response.status == 200) {
+				console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+            } else {
+                $scope.toastMessege("Erro ao Classificar Filme")
             }
-            );
-    }
+        });
+	}
+
+    $scope.setUserRating = function (rating, movieID) {
+		MoviemancerService.setUserRating(rating, movieID, $rootScope.globals.currentUser.user_id, function (response) {
+            if (response.status == 200) {
+				console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+            } else {
+                $scope.toastMessege("Erro ao Classificar Filme")
+            }
+        });
+	}
 
     //--------------------------------------------Add to watchlist Handler--------------------------------------------
 
     $scope.addWatchlistExternal = function (tmdb_id, poster, title) {
 
-        $http.post("addwatchlistexternal/", {
-            "tmdb_movie_id": tmdb_id,
-            "user_id": $rootScope.globals.currentUser.user_id,
-            "movie_poster": poster,
-            "movie_title": title
-        }, {
-                'Content-Type': 'application/json; charset=utf-8'
-            })
-            .then(
-            function (response) {
+		MoviemancerService.addWatchlistExternal(tmdb_id, poster, title, $rootScope.globals.currentUser.user_id, function (response) {
+            if (response.status == 200) {
                 console.log('Success: ', response.data)
-                $scope.toastMessege("Filme Adicionado a Quero Ver")
-            },
-            function (response) {
-                console.log('Error: ', response)
+				$scope.toastMessege("Filme Adicionado a Quero Ver")
+            } else {
+                $scope.toastMessege("Erro ao Adicionar a Watchlist")
             }
-            );
-    }
+        });
+	}
 
     //--------------------------------------------Search--------------------------------------------
 	$scope.searchMovie = function (query) {

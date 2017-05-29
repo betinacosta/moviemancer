@@ -1,10 +1,11 @@
 'use strict';
 angular.module('Authentication', []);
+angular.module('Moviemancer', []);
 var moviemancerApp = angular.module('moviemancerApp', [   'ngRoute', 'mainApp', 'recommendationApp',
                                                     'moviedetailsApp','vistoApp','queroVerApp',
                                                     'filtersApp','homeApp','loginApp', 
                                                     'singupApp', 'registergenresApp', 'profileApp', 'searchApp','Authentication',
-                                                    'ngRoute','ngCookies']);
+                                                    'ngRoute','ngCookies', 'Moviemancer']);
 
 moviemancerApp.config(['$routeProvider',
     function($routeProvider) {

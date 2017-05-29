@@ -201,7 +201,7 @@ def build_recommendation_dataset(user):
 def get_tmdb_poster(tmdb_movie_id):
 	movie = tmdb.Movies(tmdb_movie_id)
 	response = movie.info(language='pt-BR')
-	path = 'https://image.tmdb.org/t/p/original' + response["poster_path"]
+	path = 'http://image.tmdb.org/t/p/original' + response["poster_path"]
 
 	return path
 

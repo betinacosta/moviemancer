@@ -3,7 +3,7 @@ var app = angular.module('moviedetailsApp', ['ngRateIt', 'youtube-embed']).confi
 	$interpolateProvider.endSymbol('$}');
 });
 
-app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootScope', function ($scope, $http, $routeParams, $rootScope) {
+app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootScope', 'MoviemancerService', '$location', function ($scope, $http, $routeParams, $rootScope, MoviemancerService, $location) {
 	$rootScope.prop.menu = false;
 	//--------------------------------------------Get Movie Information--------------------------------------------
 
@@ -17,7 +17,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 			function (payload) {
 				$scope.movieDetails = {};
 				$scope.movieGenres = [];
-				$scope.imagePath = 'https://image.tmdb.org/t/p/original/';
+				$scope.imagePath = 'http://image.tmdb.org/t/p/original/';
 
 				for (i = 0; i < payload.data.genres.length; i++) {
 					$scope.movieGenres.push(payload.data.genres[i].name);
@@ -25,7 +25,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 
 				$scope.movieDetails = {
 					title: payload.data.title,
-					poster_path: 'https://image.tmdb.org/t/p/original/' + payload.data.poster_path,
+					poster_path: 'http://image.tmdb.org/t/p/original/' + payload.data.poster_path,
 					original_title: payload.data.original_title,
 					overview: payload.data.overview,
 					year: new Date(payload.data.release_date).getFullYear(),
@@ -64,7 +64,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 					$scope.movieCast.push({
 						character: payload.data.cast[i].character,
 						actor: payload.data.cast[i].name,
-						profile_img: 'https://image.tmdb.org/t/p/original/' + payload.data.cast[i].profile_path
+						profile_img: 'http://image.tmdb.org/t/p/original/' + payload.data.cast[i].profile_path
 					});
 				}
 			});
@@ -125,7 +125,7 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 				for (i = 0; i < 5; i++) {
 					$scope.similarMovies.push({
 						title: payload.data.results[i].title,
-						poster_path: 'https://image.tmdb.org/t/p/original/' + payload.data.results[i].poster_path,
+						poster_path: 'http://image.tmdb.org/t/p/original/' + payload.data.results[i].poster_path,
 						tmdb_id: payload.data.results[i].id
 					});
 				}
@@ -134,49 +134,29 @@ app.controller('moviedetailsCtrl', ['$scope', '$http', '$routeParams', '$rootSco
 
 	//--------------------------------------------Rating Handler--------------------------------------------
 
-	$scope.setUserRatingExternal = function (rating, poster, title) {
-
-		$http.post("rateexternalmovie/", {
-				"tmdb_movie_id": $routeParams.tmdbID,
-				"rate_id": rating,
-				"user_id": $rootScope.globals.currentUser.user_id,
-				"movie_poster": poster,
-				"movie_title": title
-			}, {
-				'Content-Type': 'application/json; charset=utf-8'
-			})
-			.then(
-				function (response) {
-					console.log('Success: ', response.data)
-					$scope.toastMessege("Filme Adicionado a Lista de Vistos")
-				},
-				function (response) {
-					console.log('Error: ', response)
-				}
-			);
+	$scope.setUserRatingExternal = function (rating, poster, title, id) {
+		MoviemancerService.setUserRatingExternal(rating, poster, title, $routeParams.tmdbID, $rootScope.globals.currentUser.user_id, function (response) {
+            if (response.status == 200) {
+				console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Lista de Vistos")
+            } else {
+                $scope.toastMessege("Erro ao Classificar Filme")
+            }
+        });
 	}
 
 	//--------------------------------------------Add to watchlist Handler--------------------------------------------
 
 	$scope.addWatchlistExternal = function (poster, title) {
 
-		$http.post("addwatchlistexternal/", {
-				"tmdb_movie_id": $routeParams.tmdbID,
-				"user_id": $rootScope.globals.currentUser.user_id,
-				"movie_poster": poster,
-				"movie_title": title
-			}, {
-				'Content-Type': 'application/json; charset=utf-8'
-			})
-			.then(
-				function (response) {
-					console.log('Success: ', response.data)
-					$scope.toastMessege("Filme Adicionado a Quero Ver")
-				},
-				function (response) {
-					console.log('Error: ', response)
-				}
-			);
+		MoviemancerService.addWatchlistExternal($routeParams.tmdbID, poster, title, $rootScope.globals.currentUser.user_id, function (response) {
+            if (response.status == 200) {
+                console.log('Success: ', response.data)
+				$scope.toastMessege("Filme Adicionado a Quero Ver")
+            } else {
+                $scope.toastMessege("Erro ao Adicionar a Watchlist")
+            }
+        });
 	}
 
 	//--------------------------------------------Toast Message Handler--------------------------------------------
