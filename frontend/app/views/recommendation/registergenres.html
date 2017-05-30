@@ -1,53 +1,98 @@
-<div class="pickGenresTitle">
-    <h3 style="letter-spacing: .1rem">Selecione os seus 3 Gêneros Favoritos</h2>
-    <h5 style="color: #9c9c9c; margin-top: 0">Restantes: <b>{$ remainigGenres $}</b></h4>
-</div>
-<div class="twelve columns wrapper">
+<div>
+    <div style="padding-top: 5em;">
+        <h3 style="text-align: center">Nos Ajude a Conhecer você</h3>
+        <h6 style="text-align: center;margin-top: -0.8em;margin-bottom: 2em;font-size: large;">Classifique alguns filmes</h5>
+    </div>
+
     <div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="zero" class="genreLine" ng-click="selectGenre(0,'zero')">{$ genres[0].name $}</li>
-                <li id="one" class="genreLine" ng-click="selectGenre(1,'one')">{$ genres[1].name $}</li>
-                <li id="two" class="genreLine" ng-click="selectGenre(2,'two')">{$ genres[2].name $}</li>
-            </ul>
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index].rating, movies[index].movie_id)"></ng-rate-it>
+                </div>
         </div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="three" ng-click="selectGenre(3,'three')" class="genreLine">{$ genres[3].name $}</li>
-                <li id="four" ng-click="selectGenre(4,'four')" class="genreLine">{$ genres[4].name $}</li>
-                <li id="five" ng-click="selectGenre(5, 'five')" class="genreLine">{$ genres[5].name $}</li>
-            </ul>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+1].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+1].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+1].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+1].rating, movies[index+1].movie_id)"></ng-rate-it>
+                </div>
         </div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="six" ng-click="selectGenre(6,'six')" class="genreLine">{$ genres[6].name $}</li>
-                <li id="seven" ng-click="selectGenre(7, 'seven')" class="genreLine">{$ genres[7].name $}</li>
-                <li id="eight" ng-click="selectGenre(8, 'eight')" class="genreLine">{$ genres[8].name $}</li>
-            </ul>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+2].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+2].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+2].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+2].rating, movies[index+2].movie_id)"></ng-rate-it>
+                </div>
         </div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="nine" ng-click="selectGenre(9,'nine')" class="genreLine">{$ genres[9].name $}</li>
-                <li id="ten" ng-click="selectGenre(10,'ten')" class="genreLine">{$ genres[10].name $}</li>
-                <li id="eleven" ng-click="selectGenre(11,'eleven')" class="genreLine">{$ genres[11].name $}</li>
-            </ul>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+3].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+3].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+3].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+3].rating, movies[index+3].movie_id)"></ng-rate-it>
+                </div>
         </div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="twelve" ng-click="selectGenre(12,'twelve')" class="genreLine">{$ genres[12].name $}</li>
-                <li id="thirteen" ng-click="selectGenre(13,'thirteen')" class="genreLine">{$ genres[13].name $}</li>
-                <li id="fourteen" ng-click="selectGenre(14,'fourteen')" class="genreLine">{$ genres[14].name $}</li>
-            </ul>
+    </div>
+
+
+    <div style="margin-left: auto;margin-right: auto;width: 26em;margin-top: 27em;">
+        <div style="float: left;">
+            <i class="fa fa-chevron-left  arrow" aria-hidden="true" ng-click="back()" ng-show="backBtn"></i>
         </div>
-        <div class="genre">
-            <ul style="list-style-type:none">
-                <li id="fifteen" ng-click="selectGenre(15,'fifteen')" class="genreLine">{$ genres[15].name $}</li>
-                <li id="sixteen" ng-click="selectGenre(16,'sixteen')" class="genreLine">{$ genres[16].name $}</li>
-                <li id="seventeen" ng-click="selectGenre(17,'seventeen')" class="genreLine">{$ genres[17].name $}</li>
-            </ul>
+
+        <div style="float: left" ng-if="!sendRGBtn">
+            <button class="sendRGBtn" ng-click="register()">Enviar</button>
+        </div>
+
+        <div style="float: left; " ng-show="sendRGBtn">
+            <button class="sendRGBtnDisabled" >Enviar</button>
+        </div>
+        <div>
+           <i class="fa fa-chevron-right arrow" aria-hidden="true" ng-click="forward()" ng-show="forwardBtn"></i>
         </div>
     </div>
 </div>
-<div  class="twelve columns wrapper" ng-show="displayOkBtn">
-        <button class="genresBtn" ng-click="registerUser()">Continuar</button>
-    </div>

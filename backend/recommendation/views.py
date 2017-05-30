@@ -178,12 +178,12 @@ def registration(request):
         request_name = request_register[u'name']
         request_email = request_register[u'email']
         request_password = request_register[u'password']
-        request_genre_1 = request_register[u'genre_1']
-        request_genre_2 = request_register[u'genre_2']
-        request_genre_3 = request_register[u'genre_3']
 
-        register_user(request_name, request_email, request_password, request_genre_1, request_genre_2, request_genre_3)
-        return HttpResponse('Success')
+        user_id = register_user(request_name, request_email, request_password)
+        if user_id:
+            return HttpResponse(user_id)
+        else:
+            return HttpResponseServerError('Erro no cadastro')
     else:
         return HttpResponseServerError('Erro no cadastro')
 
@@ -291,6 +291,11 @@ def get_watch_list(request):
         return HttpResponse(user_watchlist)
     else:
         return HttpResponse("You are on your own")
+
+def get_rated(request):
+    rated_movies = get_rated_movies()
+    print rated_movies
+    return HttpResponse(rated_movies)
 
 class MovieView(generics.ListAPIView):
     model = Movie

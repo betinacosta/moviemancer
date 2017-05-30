@@ -18,6 +18,8 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'Authenticatio
     $scope.footerID.style.width = '100%';
     $scope.bodyID.style.backgroundColor = '#eee';
 
+    $scope.sEmail = $rootScope.registration_email;
+
 
     // reset login status
     AuthenticationService.ClearCredentials();
@@ -27,13 +29,14 @@ app.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'Authenticatio
         $scope.dataLoading = true;
 
         AuthenticationService.Login(email, password, function (response) {
-            if (response.status == 200) {
-                AuthenticationService.SetCredentials(email, password, response.data.user_id, response.data.name);
-                $location.path('/moviemancer');
-            } else {
+            if (response.status == 500) {
                 $scope.toastMessege(response.data);
                 $scope.loginGroup = true;
                 $scope.dataLoading = false;
+            } else {
+                AuthenticationService.SetCredentials(email, password, response.data.user_id, response.data.name);
+                $location.path('/moviemancer');
+                
             }
         });
     };

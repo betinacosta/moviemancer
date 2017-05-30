@@ -192,6 +192,66 @@ ul.topnav li.icon {
     margin: 2px 5px 2px 5px;
 }
 
+.RGposter {
+    width: 12em;
+    height: 17em;
+    margin-left: 25%;
+}
+
+.arrow {
+    cursor: pointer;
+    font-size: 2.5em;
+    color: #acacac;
+}
+
+.sendRGBtn {
+    margin-left: 10em;
+    margin-right: 10em;
+    border-radius: 2px;
+    background-color: #9a2726;
+    color: #eee;
+    border: none;
+}
+
+.sendRGBtn:hover {
+    background-color: #9a2726;
+    color: #eee;
+    border: none;
+}
+
+.sendRGBtnDisabled {
+    margin-left: 10em;
+    margin-right: 10em;
+    border-radius: 2px;
+    background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+
+.sendRGBtnDisabled:hover {
+    background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+.sendRGBtnDisabled::selection {
+     background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+
+.movieTitleRG {
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 0.4em;
+
+}
+
 .see-all {
     margin-left: 1%;
     padding: 0 7px;

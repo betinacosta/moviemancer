@@ -269,18 +269,14 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
         else:
             return false
 
-def register_user(name, email, password, genre_1, genre_2, genre_3):
+def register_user(name, email, password):
     user_id = create_user(name, email, password)
-    profile_id = create_user_profile(user_id)
-    genres = []
-    genres.append(get_genre_id(genre_1))
-    genres.append(get_genre_id(genre_2))
-    genres.append(get_genre_id(genre_3))
-
-    add_genres_to_user(profile_id, genres)
+   
     create_list_to_user(user_id, 1)
     create_list_to_user(user_id, 2)
     create_list_to_user(user_id, 3)
+
+    return user_id
 
 def create_user(name, email, password):
     hash_password = hashlib.sha224(password).hexdigest()
@@ -410,4 +406,15 @@ def delete_comment(comment_id):
         return True
     else:
         return False
+
+def get_rated_movies():
+    ratings = Rating.objects.all()
+    rated_movies = []
+
+    for movie in ratings:
+        movie_info = Movie.objects.filter(movie_id = movie.movie_id)
+        if movie_info:
+            rated_movies.append({'movie_id': movie_info[0].movie_id, 'title': movie_info[0].tmdb_title, 'poster': movie_info[0].tmdb_poster})
+
+    return json.dumps(rated_movies)
 

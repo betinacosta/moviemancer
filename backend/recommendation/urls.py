@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^addcomment/$', views.add_new_comment, name='addcomment'),
     url(r'^deletecomment/$', views.delete_user_comment, name='deletecomment'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^getratedmovies/$', views.get_rated, name='getratedmovies'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
