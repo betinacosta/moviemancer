@@ -1,0 +1,172 @@
+<div class="twelve columns searchBarBackground">
+    <form ng-submit="searchMovie(query)">
+        <span class="icon"><i id ="searchIcon" class="fa fa-search searchIcon" ng-click="searchMovie(query)"></i></span>
+        <input class="u-full-width searchBar" type="text" name="search" placeholder="Buscar Filmes.." ng-model="query">
+    </form>
+</div>
+
+<div class="twelve columns filterTab" ng-controller="mainCtrl">
+
+    <div>
+        <h6 class="filterText" style="text-align: center">
+            <i class="fa fa-caret-square-o-down" id="toggleDown" aria-hidden="true" ng-show="toggle" ng-click="showFilterBar()"></i>
+            <i class="fa fa-caret-square-o-up" id="toggleUp" aria-hidden="true" ng-show="filterVisible" ng-click="showFilterBar()"></i>            Filtros
+        </h6>
+    </div>
+    <div ng-show='filterVisible' id="filterBar">
+        <div style='padding-left:1.5em;'>
+            <div class="six columns">
+                <p class="genre-filter-label">GÊNEROS</p>
+                <div style="margin-right:2em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[0].selected" ng-click="selectGenre('acao', 0)"
+                                id="acao">{$genresSelector[0].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[1].selected" ng-click="selectGenre('aventura', 1)"
+                                id="aventura">{$genresSelector[1].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[2].selected" ng-click="selectGenre('animacao', 2)"
+                                id="animacao">{$genresSelector[2].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="margin-right:2em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[3].selected" ng-click="selectGenre('comedia', 3)"
+                                id="comedia">{$genresSelector[3].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[4].selected" ng-click="selectGenre('crime', 4)"
+                                id="crime">{$genresSelector[4].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[5].selected" ng-click="selectGenre('documentario', 5)"
+                                id="documentario">{$genresSelector[5].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="margin-right:2em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[6].selected" ng-click="selectGenre('drama', 6)"
+                                id="drama">{$genresSelector[6].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[7].selected" ng-click="selectGenre('fantasia', 7)"
+                                id="fantasia">{$genresSelector[7].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[8].selected" ng-click="selectGenre('historia', 8)"
+                                id="historia">{$genresSelector[8].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="margin-right:2em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[9].selected" ng-click="selectGenre('terror', 9)"
+                                id="terror">{$genresSelector[9].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[10].selected" ng-click="selectGenre('musical', 10)"
+                                id="musical">{$genresSelector[10].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[11].selected" ng-click="selectGenre('misterio', 11)"
+                                id="misterio">{$genresSelector[11].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="margin-right:2em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[12].selected" ng-click="selectGenre('romance', 12)"
+                                id="romance">{$genresSelector[12].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[13].selected" ng-click="selectGenre('ficcao', 13)"
+                                id="ficcao">{$genresSelector[13].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[14].selected" ng-click="selectGenre('thriller', 14)"
+                                id="thriller">{$genresSelector[14].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="genresSelector[15].selected" ng-click="selectGenre('guerra', 15)"
+                                id="guerra">{$genresSelector[15].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[16].selected" ng-click="selectGenre('faroeste', 16)"
+                                id="faroeste">{$genresSelector[16].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="genresSelector[17].selected" ng-click="selectGenre('familia', 17)"
+                                id="familia">{$genresSelector[17].name$}</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="three columns">
+                <p class="slider-filter-label">LANÇAMENTO:</p>
+                <rzslider class="custom-slider" rz-slider-model="yearSlider.minValue" rz-slider-high="yearSlider.maxValue" rz-slider-options="yearSlider.options"></rzslider>
+
+                <p class="slider-filter-label" style="margin-top: 1em;">DURAÇÃO (minutos):</p>
+                <rzslider class="custom-slider" rz-slider-model="runtimeSlider.minValue" rz-slider-high="runtimeSlider.maxValue" rz-slider-options="runtimeSlider.options"></rzslider>
+
+            </div>
+
+            <div class="three columns">
+                <p class="genre-filter-label">IDIOMA FALADO</p>
+                <div style="margin-left:4.5em;margin-right:3em;float:left;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="languages[0].selected" ng-click="selectPT()" id="pt">{$languages[0].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="languages[1].selected" ng-click="selectEN()" id="en">{$languages[1].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="languages[2].selected" ng-click="selectDE()" id="de">{$languages[2].name$}</button></li>
+                    </ul>
+                </div>
+
+                <div style="float: right;margin-right: 3em;">
+                    <ul class="genre-filter-list">
+                        <li><button class="genre-btn" ng-model="languages[3].selected" ng-click="selectIT()" id="it">{$languages[3].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="languages[4].selected" ng-click="selectJA()" id="ja">{$languages[4].name$}</button></li>
+                        <li><button class="genre-btn" ng-model="languages[5].selected" ng-click="selectFR()" id="fr">{$languages[5].name$}</button></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="twelve columns">
+            <h6 class="filter-text" id="discover" ng-click="handleFilters(genresSelector, yearSlider.minValue, yearSlider.maxValue, runtimeSlider.minValue, runtimeSlider.maxValue, languages, false, true)">Filtrar Recomendações</button>
+        </div>
+        <div class="twelve columns">
+            <h6 class="filter-text" id="recommendation" ng-click="handleFilters(genresSelector, yearSlider.minValue, yearSlider.maxValue, runtimeSlider.minValue, runtimeSlider.maxValue, languages, true, false)">Filtrar Descoberta</button>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <div class="twelve columns">
+        <h4 class="u-pull-left" style="margin-left:1%">Recomendados Pra Mim</h4><a href="#/recommendation"><button class="see-all u-pull-left">Ver Todos</button></a>
+    </div>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
+        <div>
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="movie in recommendation">
+
+                <div>
+                    <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlist(movie.movie_id)"></i>
+                    <a ng-href="#/moviedetails/{$movie.tmdb_id$}" class="movie-title-link">
+                        <p class="movieTitleMaster">{$movie.title$}</p>
+                        <div style="position: relative">
+                            <img src="{$movie.poster$}" style="width: 100%;min-height: 100%;">
+                    </a>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <style>
+                        .ngrateit-star {
+                            background-size: 28px;
+                        }
+                    </style>
+                    <ng-rate-it ng-model="movie.rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie.rating, movie.movie_id)"></ng-rate-it>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="twelve columns">
+        <h4 class="u-pull-left" style="margin-left:1%">Estreias da Semana</h4>
+    </div>
+    <div class="twelve columns" style="padding: 0% 2% 1% 2%;">
+        <div>
+            <div class="two columns" style="background-color: #F6F6F6;" ng-repeat="l in commingSoon">
+                <i class="fa fa-thumb-tack watchlist_pin" ng-click="addWatchlistExternal(l.tmdb_id, l.img, l.title)"></i>
+                <a ng-href="#/moviedetails/{$l.tmdb_id$}" class="movie-title-link">
+                    <p class="movieTitleMaster">{$l.title$}</p>
+                    <img src="{$l.img$}" width="100%" height="100%">
+                </a>
+                <h6 style="text-align:center">Sem Classificação</h6>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="snackbar">{$ toastMessage $}</div>
