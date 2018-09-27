@@ -1,0 +1,28 @@
+<div class="twelve columns aboutBox">
+    <div class="six columns" style="margin: 2% 8% 0% 0%;">
+        <img width="40%" style="margin-left: 30%;margin-right: 30%;margin-top: 1.3em;" src="https://uploaddeimagens.com.br/images/000/898/850/original/MOVIMANCER-RED-BIG.png?1492995210"
+        />
+        <p class="siteDescription">Moviemancer é um site de recomendação de filmes com multiplos filtros para você que está cansado de passar dois Retorno
+            do Rei escolhendo um filme para assistir. Venha conferir!
+        </p>
+    </div>
+    <div class="five columns">
+        <h5 class="loginText">CADASTRAR</h5>
+        <form ng-submit="validateEntry(name, email, password, passwordConfirm)">
+            <div>
+                <!--<input class="facebookButton button-primary u-full-width" type="submit" value="Facebook" ng-click="facebookLogin()">
+                <h6 class="loginText" style="margin-bottom: 0;">ou</h6>-->
+                <span class="formSpan">Nome:</span>
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="text" placeholder="Nome" id="name" ng-model="name" ng-click="clearField('name')">
+                <span class="formSpan">Email:</span>
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="email" placeholder="Email" id="email" ng-model="email" ng-click="clearField('email')">
+                <span class="formSpan">Senha:</span>
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="password" placeholder="Senha" id="password" ng-model="password" ng-click="clearField('password')">
+                <span class="formSpan">Confirmar Senha:</span>
+                <input style="border-color: #7d7b7b" class="u-full-width loginFields" type="password" placeholder="Confrimar Senha" id="passwordConfirm" ng-model="passwordConfirm" ng-click="clearField('passwordConfirm')">
+                <button class="button-primary u-full-width loginButton" ng-click="validateEntry(name, email, password, passwordConfirm)">CADASTRAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="snackbar">{$ toastMessage $}</div>

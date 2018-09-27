@@ -1,0 +1,901 @@
+.aboutBox {
+    padding: 5%;
+    background-color: #eee;
+}
+
+.siteDescription {
+    color: #2B2B2B;
+    text-align: justify;
+    letter-spacing: .1rem;
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+
+.siteTitle {
+    color: #c68006;
+    text-align: center;
+}
+
+.loginText {
+    color: #2B2B2B;
+    text-align: center;
+    letter-spacing: .1rem;
+}
+
+.facebookButton {
+    background-color: #3b5998 !important;
+    border-color: #3b5998 !important;
+    border-radius: 2px !important;
+}
+
+.loginButton {
+    background-color: #9a2726 !important;
+    border-color: #9a2726 !important;
+    border-radius: 2px !important;
+}
+
+.singupButton {
+    background-color: #7cae7c !important;
+    border-color: #7cae7c !important;
+    border-radius: 2px !important;
+}
+
+.loginFields {
+    background-color: #eee !important;
+    color: #2B2B2B !important;
+    border-radius: 2px !important;
+    border-color: #7d7b7b;
+}
+
+.singInBackground {
+    background: url(../img/shining_bike.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.logInBackground {
+    background: url(../img/shining_bike.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.searchBar {
+    height: 45px !important;
+    width: 50%;
+    border: none !important;
+    margin-left: 25%;
+    margin-right: 25%;
+    color: #acacac;
+    font-style: italic;
+}
+
+.searchBarBackground {
+    height: 45px !important;
+    background-color: #ffffff;
+    border-bottom-color: #000000 !important;
+}
+
+.searchIcon {
+    position: absolute;
+    margin-left: 23%;
+    line-height: 35px;
+    color: #acacac;
+}
+
+#searchIcon:hover {
+    color: #081c24;
+}
+
+.headerMenu {
+    background-color: #2B2B2B;
+    padding: 7px 3% 0px 3%
+}
+
+
+/* Remove margins and padding from the list, and add a black background color */
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+/* Float the list items side by side */
+
+ul.topnav li {
+    float: left;
+}
+
+
+/* Style the links inside the list items */
+
+ul.topnav li a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 0px 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 15px;
+    vertical-align: sub;
+}
+
+
+/* Change background color of links on hover */
+
+ul.topnav li a:hover {
+    color: #DE1B1B;
+    font-weight: bold;
+}
+
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+
+ul.topnav li.icon {
+    display: none;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border-color: #c68006;
+}
+
+.main-add-wl-btn {
+    height: 30px;
+    line-height: 30px;
+    background-color: #4B8c61;
+    color: white;
+}
+
+.popover {
+    position: absolute;
+    left: -50%;
+    top: 100%;
+    z-index: 9999;
+    display: block;
+    color: black;
+}
+
+.filterTab {
+    background-color: #eee !important;
+    padding-top: 1%;
+    margin-bottom: 2%;
+}
+
+.filterText {
+    margin-bottom: 1rem !important;
+    text-align: center;
+    font-size: 2rem !important;
+    font-weight: 100;
+}
+
+.mainListsTitle {
+    margin: 2%;
+    color: #642e68;
+}
+
+.movieTitleMaster {
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: large;
+    margin: 2px 5px 2px 5px;
+}
+
+.RGposter {
+    width: 12em;
+    height: 17em;
+    margin-left: 25%;
+}
+
+.arrow {
+    cursor: pointer;
+    font-size: 2.5em;
+    color: #acacac;
+}
+
+.sendRGBtn {
+    margin-left: 10em;
+    margin-right: 10em;
+    border-radius: 2px;
+    background-color: #9a2726;
+    color: #eee;
+    border: none;
+}
+
+.sendRGBtn:hover {
+    background-color: #9a2726;
+    color: #eee;
+    border: none;
+}
+
+.sendRGBtnDisabled {
+    margin-left: 10em;
+    margin-right: 10em;
+    border-radius: 2px;
+    background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+
+.sendRGBtnDisabled:hover {
+    background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+.sendRGBtnDisabled::selection {
+     background-color: #e1e1e1;
+    cursor: default;
+    color: gray;
+    border: none;
+}
+
+.movieTitleRG {
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 0.4em;
+
+}
+
+.see-all {
+    margin-left: 1%;
+    padding: 0 7px;
+    font-size: 10px;
+    height: 32px;
+    line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer
+}
+
+.menuListItems {
+    margin: 0% 1% 0% 1%;
+}
+
+.footerBar {
+    background-color: #2B2B2B;
+    padding: 3% 15% 3% 15%;
+}
+
+.footerImg {
+    width: 15em;
+    margin-left: -5em;
+    margin-top: 1.4em;
+}
+
+a.movie-title-link:link {
+    /* Applies to unvisited links of class mainNav */
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+a.movie-title-link:visited {
+    /* Applies to visited links of class mainNav */
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+a.movie-title-link:hover {
+    /* Applies to links under the pointer of class mainNav */
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+a.movie-title-link:active {
+    /* Applies to activated links of class mainNav */
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+.detail-movie-poster {
+    margin: 14% 20% 3% 20%;
+    ;
+    height: 68%;
+    width: 68%;
+}
+
+.movie-title-detail {
+    text-align: center;
+    font-weight: bold;
+}
+
+.movie-overview {
+    font-size: large;
+    text-align: justify;
+}
+
+.embed-responsive {
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.embed-responsive.embed-responsive-16by9 {
+    padding-bottom: 56.25%;
+}
+
+.embed-responsive-item {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.more_details {
+    margin-top: 10%;
+    font-size: larger;
+}
+
+.keywors {
+    margin-top: 10%;
+    width: 50%;
+    float: right;
+}
+
+.keywors-btn {
+    float: left;
+    margin-right: 2%;
+    background-color: #9a2726;
+    color: #fff;
+}
+
+.watchlist_pin {
+    line-height: 1.5em;
+    float: right;
+    color: #636361;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.watchlist_pin:hover {
+    color: #006400;
+}
+
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+
+#snackbar {
+    visibility: hidden;
+    /* Hidden by default. Visible on click */
+    min-width: 250px;
+    /* Set a default minimum width */
+    margin-left: -125px;
+    /* Divide value of min-width by 2 */
+    background-color: #333;
+    /* Black background color */
+    color: #fff;
+    /* White text color */
+    text-align: center;
+    /* Centered text */
+    border-radius: 2px;
+    /* Rounded borders */
+    padding: 16px;
+    /* Padding */
+    position: fixed;
+    /* Sit on top of the screen */
+    z-index: 1;
+    /* Add a z-index if needed */
+    left: 50%;
+    /* Center the snackbar */
+    bottom: 30px;
+    /* 30px from the bottom */
+}
+
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+
+#snackbar.show {
+    visibility: visible;
+    /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+/* Animations to fade the snackbar in and out */
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+.pin {
+    position: relative;
+    /* width: 42%; */
+    /* margin-left: 29%; */
+    /* margin-right: 29%; */
+    text-align: center;
+}
+
+.pin:after {
+    content: '\f08d';
+    font-family: fontAwesome;
+    /* position: absolute; */
+    margin-left: 0.7em;
+    top: 0.1em;
+    /* float: left; */
+    /* right: 1.5em; */
+    cursor: pointer;
+    cursor: hand;
+    font: normal normal normal 29px/1 FontAwesome;
+}
+
+.pin:hover:after {
+    color: #006400;
+}
+
+.genre-filter-list {
+    list-style-type: none
+}
+
+.genre-btn {
+    width: 100%;
+    padding: 0 0.5em;
+    font-size: 0.7em;
+    line-height: 3em;
+    height: 3em;
+    background-color: #7d7b7b;
+    color: #fff;
+    border: none;
+}
+
+.genre-btn:hover {
+    background-color: #9a2726;
+    color: #fff;
+    border: none;
+}
+
+.genre-filter-label {
+    text-align: center;
+    margin-bottom: 1em;
+    margin-top: -0.5em;
+    font-weight: bold;
+    font-size: medium;
+    color: #2b2b2b;
+    letter-spacing: .1rem;
+}
+
+.custom-slider.rzslider .rz-bar {
+    background: #ffe4d1;
+    height: 2px;
+}
+
+.custom-slider.rzslider .rz-selection {
+    background: orange;
+}
+
+.custom-slider.rzslider .rz-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto;
+    /* to remove the default positioning */
+    bottom: 0;
+    background-color: #333;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+    display: none;
+}
+
+.custom-slider.rzslider .rz-bubble {
+    bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+    font-weight: bold;
+    color: orange;
+}
+
+.custom-slider.rzslider .rz-tick {
+    width: 1px;
+    height: 10px;
+    margin-left: 4px;
+    border-radius: 0;
+    background: #ffe4d1;
+    top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+    background: orange;
+}
+
+.slider-filter-label {
+    text-align: center;
+    margin-bottom: 0.5em;
+    margin-top: -0.5em;
+    font-weight: bold;
+    font-size: medium;
+    color: #2b2b2b;
+    letter-spacing: .1rem;
+    margin-left: 1.5em;
+}
+
+.filtrar-btn {
+    margin-top: 0em;
+    margin-bottom: 2em;
+    background-color: #2B2B2B;
+    font-size: small;
+    color: #fff;
+    border: none;
+}
+
+.filtrar-btn:hover {
+    background-color: #ffa500;
+    color: #2b2b2b;
+}
+
+.tileMe li {
+    display: inline;
+    float: left;
+}
+
+.filterNotFoundLabel {
+    letter-spacing: .1rem;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.filterNotFoundLabel:before {
+    content: '\f119';
+    font-family: fontAwesome;
+    margin-right: 1em;
+    top: 3px;
+    /* Adjust as needed */
+}
+
+.sandubaMenu {
+    float: right;
+    margin-top: -4em;
+    padding-top: 1.2em;
+    color: white;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.dropdownDiv {
+    background-color: #2b2b2b;
+    width: 20%;
+    float: right;
+    position: absolute;
+    margin-left: 80%;
+    margin-top: 3.4em;
+    height: 190px;
+}
+
+.dropdownItens {
+    padding: 8px;
+    letter-spacing: .1rem;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    text-decoration: none;
+    color: #eeeeee;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.dropdownItens:hover {
+    background-color: #eeeeee;
+    color: #2B2B2B !important;
+}
+
+.menuItems {
+    text-decoration: none;
+    color: inherit;
+}
+
+.menuItems:hover {
+    color: #2B2B2B;
+}
+
+.menuIcon {
+    float: left;
+    margin-left: 20px;
+    margin-right: -20px;
+    font-weight: normal;
+    margin-top: 3px;
+    color: #9a2726;
+}
+
+.back {
+    background-image: url(http://www.gablescinema.com/media/filmassets/slides/kill_bill_vol_2_4.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.genre {
+    float: left;
+    margin-right: 1.5em;
+}
+
+.genreLine {
+    background-color: #eeeeee;
+    text-align: center;
+    padding: 0.1em 1em 0.1em 1em;
+    letter-spacing: .1rem;
+    color: #2b2b2b;
+    font-size: 2em;
+    margin-bottom: 5rem
+}
+
+.genreLine:hover {
+    color: #eeeeee;
+    background-color: #9a2726;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.wrapper {
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin-bottom: 1.5em;
+}
+
+.pickGenresTitle {
+    text-align: center;
+    margin-bottom: 0em;
+    padding-top: 5.5em;
+}
+
+.genresBtn {
+    margin-top: 0;
+    font-size: 1.5em;
+    background-color: #9a2726;
+    color: #eeeeee;
+    height: 55px;
+}
+
+.genresBtn:hover {
+    background-color: #75ba89;
+    color: #eeeeee;
+}
+
+.updateProfile {
+    padding: 2em 10% 2em 10%;
+}
+
+.profileTitle {
+    letter-spacing: .1rem;
+}
+
+.genreSelect {
+    float: left;
+    width: 13em;
+    letter-spacing: .1rem;
+    height: 3em;
+}
+
+.updateFields {
+    background-color: #eee !important;
+    color: #9a2726 !important;
+    border-radius: 2px !important;
+    border: none !important;
+    height: 3em !important;
+    font-size: 1.1em;
+    letter-spacing: .1rem;
+    border-radius: 2px !important;
+}
+
+.updateBtn {
+    height: 3.5em;
+    font-size: 0.9em;
+    letter-spacing: .1rem;
+    background-color: #9a2726 !important;
+    border: none !important;
+}
+
+.currentPref {
+    font-size: 2rem;
+    letter-spacing: .1rem;
+    font-style: italic;
+    color: #c68006;
+    margin-top: -0.6em;
+}
+
+.commentsForm {
+    border-radius: 2px;
+    letter-spacing: .1rem;
+    border-color: #7d7b7b;
+    margin-top: 0.5em;
+    height: 160px;
+}
+
+.commentsForm:focus {
+    border-color: #2B2B2B
+}
+
+.sendCommentBtn {
+    float: right;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    margin-bottom: 2.5em;
+    background-color: #9a2726;
+    color: #eee;
+    border-color: #9a2726;
+}
+
+.single-comment {
+    padding: 0.2em 1em 0.1em 1em;
+    background-color: white;
+    border-width: 1px;
+    border-radius: 2px;
+    margin-bottom: 1em;
+}
+
+.comment-rating {
+    margin-bottom: 1%;
+    margin-top: 0.6em;
+}
+
+.delete-comment {
+    float: right;
+    cursor: pointer;
+    margin-top: 0.1em;
+    margin-right: -0.4em;
+}
+
+.delete-comment:hover {
+    color: #9a2726;
+}
+
+.display-all-comments {
+    height: 32px;
+    line-height: 0px;
+    margin-top: 1em;
+    cursor: pointer;
+    border-radius: 2px !important;
+    background-color: #2b2b2b !important;
+    color: #eee !important;
+}
+
+.loader {
+    border: 0.5em solid #ffffff;
+    border-top: 0.5em solid #2b2b2b;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    animation: spin 2s linear infinite;
+    display: block;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loadingText {
+    text-align: center;
+    letter-spacing: .1rem;
+    font-size: 1.2em;
+    margin-top: 1em;
+}
+
+.formSpan {
+    font-size: 0.96em;
+    letter-spacing: .1rem;
+}
+
+.menu-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+
+.menu-li {
+    float: left;
+}
+
+.menu-li-a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: .4em 1.5em 0 0 !important;
+    text-decoration: none;
+    font-variant: small-caps;
+    -webkit-animation: color 5s;
+}
+
+.menu-li-a:hover {
+        color: #a12b2a !important;
+}
+
+.filter-text {
+    text-align: center;
+    cursor: pointer;
+    /* background-color: blue; */
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #9a2726;
+    -webkit-animation: font-size 5s;
+}
+
+.filter-text:hover {
+    text-align: center;
+    cursor: pointer;
+    /* background-color: blue; */
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #2b2b2b;
+    font-size: 1.6rem;
+}

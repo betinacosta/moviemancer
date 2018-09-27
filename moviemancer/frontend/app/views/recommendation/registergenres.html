@@ -1,0 +1,98 @@
+<div>
+    <div style="padding-top: 5em;">
+        <h3 style="text-align: center">Nos Ajude a Conhecer você</h3>
+        <h6 style="text-align: center;margin-top: -0.8em;margin-bottom: 2em;font-size: large;">Classifique alguns filmes</h5>
+    </div>
+
+    <div>
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index].rating, movies[index].movie_id)"></ng-rate-it>
+                </div>
+        </div>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+1].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+1].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+1].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+1].rating, movies[index+1].movie_id)"></ng-rate-it>
+                </div>
+        </div>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+2].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+2].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+2].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+2].rating, movies[index+2].movie_id)"></ng-rate-it>
+                </div>
+        </div>
+
+        <div class="three columns">
+                <div>
+                    <p class="movieTitleMaster">{$movies[index+3].title$}</p>
+                </div>
+
+                <div>
+                    <img src="{$movies[index+3].poster$}" class= "RGposter">
+                </div>
+                <div style="text-align: center;">
+                        <style>
+                            .ngrateit-star {
+                                background-size: 28px;
+                            }
+                        </style>
+                        <ng-rate-it ng-model="movie[index+3].rating" step="1" resetable="false" min="0" max="5" star-width="28" star-height="28" ng-click="setUserRating(movie[index+3].rating, movies[index+3].movie_id)"></ng-rate-it>
+                </div>
+        </div>
+    </div>
+
+
+    <div style="margin-left: auto;margin-right: auto;width: 26em;margin-top: 27em;">
+        <div style="float: left;">
+            <i class="fa fa-chevron-left  arrow" aria-hidden="true" ng-click="back()" ng-show="backBtn"></i>
+        </div>
+
+        <div style="float: left" ng-if="!sendRGBtn">
+            <button class="sendRGBtn" ng-click="register()">Enviar</button>
+        </div>
+
+        <div style="float: left; " ng-show="sendRGBtn">
+            <button class="sendRGBtnDisabled" >Enviar</button>
+        </div>
+        <div>
+           <i class="fa fa-chevron-right arrow" aria-hidden="true" ng-click="forward()" ng-show="forwardBtn"></i>
+        </div>
+    </div>
+</div>
