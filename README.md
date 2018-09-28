@@ -1,19 +1,31 @@
-# python-getting-started
+# Moviemancer
 
-A barebones Python app, which can easily be deployed to Heroku.
+Moviemancer is a website for movie recommendation.
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+# Getting Started
+
+## Requirements
+
+- Python 2.7
+- pip
+- PostgreSQL
+
+## Instalation
+
+- Inside the project run `pip install -r requirements.txt`;
 
 ## Running Locally
 
-Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
+### Requirements
+
+- [Heroku Toolbelt](https://toolbelt.heroku.com/)
 
 $ heroku local
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
-## Deploying to Heroku
+# Deploying to Heroku
 
 ```sh
 $ heroku create
@@ -25,9 +37,3 @@ $ heroku open
 or
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Python on Heroku, see these Dev Center articles:
-
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)

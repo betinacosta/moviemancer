@@ -92,10 +92,10 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-        'NAME': 'dfpsrptoej9o2k',  
-        'USER': 'guunsejumvkmlx',
-        'PASSWORD': '',
-        'HOST': 'ec2-50-19-219-69.compute-1.amazonaws.com',  
+        'NAME': 'moviemancer',  
+        'USER': 'moviemancer',
+        'PASSWORD': 'moviemancer',
+        'HOST': 'localhost',  
         'PORT': 5432, 
     }
 }
