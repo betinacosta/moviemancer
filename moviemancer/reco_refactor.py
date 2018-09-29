@@ -106,6 +106,9 @@ def user_recommendations(person):
     recommendataions_list = [recommend_item for score,recommend_item in rankings]
     return recommendataions_list
 
+def convert_tmdb_rating(tmdb_rating):
+    return int(round(tmdb_rating/2))
+
 def get_tmdb_similar_movies(tmdb_movie_id):
     similar_movies = []
     movie = tmdb.Movies(tmdb_movie_id)
@@ -188,8 +191,7 @@ def is_movie_on_database(tmdb_movie_id):
 
     if not movie:
         return False
-    else:
-        return True
+    return True
 
 def remove_repeated_recommendations(user_id, reco_list, list_name):
     for item in movie_id_by_user_list(user_id, list_name):
@@ -226,8 +228,6 @@ def add_recommendation_to_database(reco_list, user_id):
 
         reco.save()
 
-
-
 def complete_recommendation(reco_list, user_id):
     list_id = get_list_by_user(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
@@ -245,15 +245,3 @@ def complete_recommendation(reco_list, user_id):
         reco_list = remove_repeated_recommendations(user_id, reco_list, 3)
 
     return reco_list
-            
-
-    
-    
-
-    
-
-
-        
-        
-
-
