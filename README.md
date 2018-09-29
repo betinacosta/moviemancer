@@ -1,3 +1,5 @@
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/betinacosta/moviemancer.svg?columns=all)](https://waffle.io/betinacosta/moviemancer)
+
 # Moviemancer
 
 Moviemancer is a website for movie recommendation.
@@ -61,6 +63,3 @@ $ git push heroku master
 $ heroku run python manage.py migrate
 $ heroku open
 ```
-
-or
-[![Deploy](https://www.herokucdn.com/deploy/but
