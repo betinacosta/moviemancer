@@ -1,9 +1,10 @@
 # Moviemancer
 
 Moviemancer is a website for movie recommendation.
+
 **Production:** http://moviemancer-api.herokuapp.com/
 
-![Moviemancer in action](https://im4.ezgif.com/tmp/ezgif-4-4ab46b2765.gif)
+![moviemancer on action](https://media.giphy.com/media/KYGfrhmxMBkq9D1oN8/giphy.gif)
 
 ## Getting Started
 
