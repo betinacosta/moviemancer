@@ -7,6 +7,7 @@ unit-test:
 # Database tasks
 setup_db:
 	psql -c "CREATE DATABASE moviemancer;" && \
+	psql -c "ALTER USER moviemancer CREATEDB;" && \ # Add this permission to be able to create the database to run test
 	psql -c "CREATE USER moviemancer WITH ENCRYPTED PASSWORD 'moviemancer';" && \
 	psql -c "grant all privileges on database moviemancer to moviemancer ;"
 
