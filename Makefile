@@ -16,4 +16,8 @@ drop_db:
 drop_db_user:
 	psql -c "DROP USER moviemancer"
 
-recreate_db: drop_db drop_db_user setup_db
+# This task expect that you have a db dump with the name 'lastest.dump'
+restore_db:
+	pg_restore --verbose --clean --no-acl --no-owner -h localhost -U moviemancer -d moviemancer latest.dump
+
+recreate_db: drop_db drop_db_user setup_db restore_db
