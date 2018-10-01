@@ -7,15 +7,15 @@ unit-test:
 # Database tasks
 setup_db:
 	psql -c "CREATE DATABASE moviemancer;" && \
-	psql -c "ALTER USER moviemancer CREATEDB;" && \ # Add this permission to be able to create the database to run test
 	psql -c "CREATE USER moviemancer WITH ENCRYPTED PASSWORD 'moviemancer';" && \
-	psql -c "grant all privileges on database moviemancer to moviemancer ;"
+	psql -c "ALTER USER moviemancer CREATEDB;" && \
+	psql -c "grant all privileges on database moviemancer to moviemancer;"
 
 drop_db:
-	psql -c "DROP DATABASE moviemancer"
+	psql -c "DROP DATABASE IF EXISTS moviemancer;"
 
 drop_db_user:
-	psql -c "DROP USER moviemancer"
+	psql -c "DROP USER IF EXISTS moviemancer;"
 
 # This task expect that you have a db dump with the name 'lastest.dump'
 restore_db:
