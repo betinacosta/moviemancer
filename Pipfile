@@ -10,9 +10,9 @@ gunicorn = "==19.6.0"
 whitenoise = "==3.2"
 djangorestframework = "==3.0.0"
 tmdbsimple = "==1.6.1"
-Django = "==1.7"
+Django = "==1.8"
 
 [dev-packages]
 
 [requires]
-python_version = "2.7"
+python_version = "3.5"

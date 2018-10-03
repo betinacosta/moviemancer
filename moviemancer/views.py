@@ -318,7 +318,7 @@ def get_watch_list(request):
 
 def get_rated(request):
     rated_movies = get_rated_movies()
-    print rated_movies
+    print(rated_movies)
     return HttpResponse(rated_movies)
 
 @csrf_exempt

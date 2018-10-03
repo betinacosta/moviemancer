@@ -272,7 +272,7 @@ def generate_update_querie():
         tmdb_id  = str(tmdb_id)
         year = str(year)
         query = 'UPDATE movie SET year = ' + year + ' WHERE tmdb_movie_id = ' + tmdb_id + ';'
-        print query
+        print(query)
 
 def filter_recommendation(genres, minYear, maxYear, minRuntime, maxRuntime, language, user_id):
     reco = movie_by_user_list(user_id, 'recommendation')

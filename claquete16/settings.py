@@ -55,15 +55,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'claquete16.urls'
 
 PROJECT_DIR = os.path.dirname(__file__) # this is not Django setting.
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "../moviemancer/frontend/app/views"),
-    # here you can add another templates directory if you wish.
-)
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_DIR, "../moviemancer/frontend/app/views")],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
