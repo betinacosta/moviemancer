@@ -4,6 +4,10 @@ run:
 unit-test:
 	./manage.py test
 
+coverage:
+	coverage run --source='.' manage.py test moviemancer
+	coverage report
+
 # Database tasks
 setup_db:
 	psql -c "CREATE DATABASE moviemancer;" && \
