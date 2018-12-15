@@ -3,3 +3,5 @@
 staticfiles
 .env
 myenv
+.coverage
+htmlcov
