@@ -1,0 +1,15 @@
+language: python
+python: 3.6.5
+
+install:
+  - rm -rf .coverage
+  - python -m pip install -e .
+  - python -m pip install coveralls coverage
+
+jobs:
+  include:
+    - stage: unit
+      script: coverage run --source='.' manage.py test moviemancer
+
+after_success:
+  - coveralls
