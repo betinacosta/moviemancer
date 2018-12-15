@@ -13,7 +13,7 @@ def get_list_id_by_user(user_id):
         lists.append(item.list_id)
     return lists
 
-def movie_by_user_list(user_id, list_name): 
+def movie_by_user_list(user_id, list_name):
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
         type_id = item.type_id
 
@@ -57,10 +57,10 @@ def get_list_by_user(user_id, list_type):
     print ('user: ', user_id, 'list_type: ', list_type)
     item = List.objects.filter(user_id = user_id, type_id = list_type)
     return item[0].list_id
-    
+
 def get_movie_by_user(user_id):
     movies =[]
-   
+
     for item in movie_id_by_user_list(user_id, 3):
         movies.append(item.movie_id)
     return movies
@@ -93,7 +93,7 @@ def get_tmdb_movies_id_by_user(user):
     for item in lists_id:
         for movie in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [item]):
             movies.append(movie.tmdb_movie_id)
-    
+
     return movies
 
 def is_movie_on_list (user_id, movie_id, list_type):
@@ -179,7 +179,7 @@ def jsonify_reco_list(user_id, type_id):
 
     for m in movies:
         reco_list.append({'movie_id': m.movie_id, 'tmdb_movie_id': m.tmdb_movie_id, 'tmdb_poster': m.tmdb_poster, 'tmdb_title': m.tmdb_title, 'tmdb_rating': m.tmdb_rating})
-    
+
     return json.dumps(reco_list)
 
 def user_exists(user_email):
@@ -285,7 +285,7 @@ def filter_recommendation(genres, minYear, maxYear, minRuntime, maxRuntime, lang
         d = compare_languages(language, r.language)
         if a and b and c and d:
             filtered_reco.append({'movie_id': r.movie_id, 'tmdb_movie_id': r.tmdb_movie_id, 'tmdb_poster': r.tmdb_poster, 'tmdb_title': r.tmdb_title, 'tmdb_rating': r.tmdb_rating})
-            
+
     print(filtered_reco)
     return json.dumps(filtered_reco)
 
@@ -296,7 +296,7 @@ def is_inside_rage(min, max, value):
         return False
 
 def compare_genres(g1, g2):
-    
+
     if g1 == 0 or g2 == 0:
         return True
 
@@ -321,7 +321,7 @@ def compare_languages(l1, l2):
         return True
     else:
         return False
-    
+
 
 
 #UPDATE, DELETE, INSERT
@@ -337,7 +337,7 @@ def add_movie_to_database(tmdb_id):
         tmdb_year = get_tmdb_movie_year(tmdb_id)
 
         movie_db = Movie(tmdb_movie_id=tmdb_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title, tmdb_rating = tmdb_rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-        
+
         try:
             movie_db.save()
         except:
@@ -379,7 +379,7 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
         tmdb_genres = get_tmdb_movie_genres(tmdb_movie_id)
         tmdb_year = get_tmdb_movie_year(tmdb_movie_id)
         rating = get_tmdb_movie_rating(tmdb_movie_id)
-        
+
         new_movie = Movie(tmdb_movie_id = tmdb_movie_id, tmdb_title = tmdb_title, tmdb_poster = tmdb_poster, tmdb_rating = rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
         new_movie.save()
         movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
@@ -396,7 +396,7 @@ def add_to_list (user_id, movie_id, list_type):
     #If in recommendation list, remove it
     if is_movie_on_list (user_id, movie_id, 1):
         remove_movie_from_list(user_id, movie_id, 1)
-    
+
     if not is_on_list:
         movie_list_entry = MovieList(movie_id = movie_id, list_id = list_id)
         movie_list_entry.save()
@@ -439,7 +439,7 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
 
 def register_user(name, email, password):
     user_id = create_user(name, email, password)
-   
+
     create_list_to_user(user_id, 1)
     create_list_to_user(user_id, 2)
     create_list_to_user(user_id, 3)
@@ -451,11 +451,11 @@ def create_user(name, email, password):
     user = Viwer.objects.filter(email = email)
 
     if not user:
-        hash_password = hashlib.sha224(password).hexdigest()
+        hash_password = hashlib.sha224(password.encode('utf-8')).hexdigest()
 
         user = Viwer(name = name, email = email, password = hash_password)
         user.save()
-        
+
     user_id = get_user_id(email)
 
     return user_id
@@ -481,7 +481,7 @@ def update_user_info(user_id, email, name, password):
     if not password or password == ' ':
         password = old_user[0].password
     else:
-        password = hashlib.sha224(password).hexdigest()
+        password = hashlib.sha224(password.encode('utf-8')).hexdigest()
 
     user = Viwer(user_id = user_id, name = name, email = email, password = password)
     user.save()
@@ -489,7 +489,7 @@ def update_user_info(user_id, email, name, password):
 #AUTHENTICATION HANDLERS
 
 def authenticate_user(email, password):
-    hash_password = hashlib.sha224(password).hexdigest()
+    hash_password = hashlib.sha224(password.encode('utf-8')).hexdigest()
     #hash_password = password
 
     user = Viwer.objects.filter(email = email, password = hash_password)
