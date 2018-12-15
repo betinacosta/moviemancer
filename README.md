@@ -25,14 +25,11 @@ Moviemancer is a website for movie recommendation.
 
 ### Setting the Database
 
-#### Restoring the backup
+Inside the project directory run: `$ make recreate_db`
 
-*`Attention:` The following steps require access to the aplication on Heroku*
+This will drop the moviemancer database and user in case you already have one and recreate those with the proper configuration.
 
-```
-$ heroku pg:backups:download
-$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
-```
+If you wish just setup a moviemancer db that you already created, just run `$ make setup_db`
 
 #### Configuring settings.py
 
@@ -40,16 +37,18 @@ $ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d myd
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-        'NAME': 'mydb',  
-        'USER': 'myuser',
-        'PASSWORD': ******,
+        'NAME': 'moviemancer',  
+        'USER': 'moviemancer',
+        'PASSWORD': moviemancer
         'HOST': 'localhost',  
-        'PORT': 5432, 
+        'PORT': 5432,
     }
 }
 ```
 
 ### Runing
+
+Inside the project directory run:
 
 - `$ make run`
 - open `http://127.0.0.1:8000`
