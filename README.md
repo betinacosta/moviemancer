@@ -1,5 +1,9 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/betinacosta/moviemancer.svg?columns=all)](https://waffle.io/betinacosta/moviemancer)
 
+[![Coverage Status](https://coveralls.io/repos/github/betinacosta/moviemancer/badge.svg)](https://coveralls.io/github/betinacosta/moviemancer)
+
+[![Build Status](https://travis-ci.com/betinacosta/moviemancer.svg?branch=master)](https://travis-ci.com/betinacosta/moviemancer)
+
 # Moviemancer
 
 Moviemancer is a website for movie recommendation.
@@ -36,11 +40,11 @@ If you wish just setup a moviemancer db that you already created, just run `$ ma
 ```python
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-        'NAME': 'moviemancer',  
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'moviemancer',
         'USER': 'moviemancer',
         'PASSWORD': moviemancer
-        'HOST': 'localhost',  
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
