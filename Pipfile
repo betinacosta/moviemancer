@@ -8,12 +8,12 @@ dj-database-url = "==0.4.1"
 gunicorn = "==19.6.0"
 "psycopg2" = "==2.7"
 whitenoise = "==3.2"
-djangorestframework = "==3.0.0"
+djangorestframework = "==3.8.2"
 tmdbsimple = "==1.6.1"
-Django = "==1.7"
+Django = "==1.11"
 coverage = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "2.7"
+python_version = "3.6.5"
