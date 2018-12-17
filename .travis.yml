@@ -1,16 +1,19 @@
 language: python
 python: 3.6.5
+cache:
+  directories:
+    - $HOME/virtualenv/python3.6/
 
 services:
   - postgres
 
 install:
-  - pip install pipenv
   - pipenv install
   - python -m pip install coveralls
 
 before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
+  - rm .coverage
 
 jobs:
   include:
