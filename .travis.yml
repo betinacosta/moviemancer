@@ -2,7 +2,9 @@ language: python
 python: 3.6.5
 
 install:
-  - python -m pip install coveralls coverage
+  - pip install pipenv
+  - pipenv install
+  - python -m pip install coveralls
 
 jobs:
   include:
