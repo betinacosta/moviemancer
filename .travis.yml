@@ -1,8 +1,6 @@
 language: python
 python: 3.6.5
-cache:
-  directories:
-    - $HOME/virtualenv/python3.6/
+cache: pip
 
 services:
   - postgres
