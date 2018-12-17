@@ -14,7 +14,7 @@ install:
 
 before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
-  - rm .coverage
+  - [ -e .coverage ] && rm .coverage
 
 jobs:
   include:
