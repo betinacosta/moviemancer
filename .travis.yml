@@ -1,10 +1,19 @@
 language: python
 python: 3.6.5
 
+services:
+  - mysql
+
+env:
+  -DJANGO=1.11 DB=mysql
+
 install:
   - pip install pipenv
   - pipenv install
   - python -m pip install coveralls
+
+before_script:
+  - mysql -e 'create database test;' -u root
 
 jobs:
   include:
