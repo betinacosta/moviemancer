@@ -2,8 +2,6 @@ language: python
 python: 3.6.5
 
 install:
-  - rm -rf .coverage
-  - python -m pip install -e .
   - python -m pip install coveralls coverage
 
 jobs:
