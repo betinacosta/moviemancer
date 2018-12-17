@@ -20,5 +20,8 @@ jobs:
     - stage: unit
       script: coverage run --source='.' manage.py test moviemancer
 
+after_script:
+  - rm .coverage
+
 after_success:
   - coveralls
