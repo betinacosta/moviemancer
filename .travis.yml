@@ -8,6 +8,7 @@ services:
   - postgres
 
 install:
+  - pip install pipenv
   - pipenv install
   - python -m pip install coveralls
 
