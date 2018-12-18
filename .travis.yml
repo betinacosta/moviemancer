@@ -4,9 +4,6 @@ cache: pip
   directories:
     - $HOME/.cache/pip
 
-services:
-  - postgres
-
 install:
   - pip install pipenv
   - pipenv lock -r --dev >> requirements.txt
