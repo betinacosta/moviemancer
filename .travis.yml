@@ -9,7 +9,6 @@ install:
   - pip install pipenv
   - pipenv lock -r --dev >> requirements.txt
   - pip install -r requirements.txt
-  - python -m pip install coveralls
 
 before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
