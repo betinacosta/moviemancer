@@ -1,13 +1,14 @@
 language: python
 python: 3.6.5
-cache: pipenv
+cache: pip
 
 services:
   - postgres
 
 install:
   - pip install pipenv
-  - pipenv install
+  - pipenv lock -r
+  - pip install -r requirements.txt
   - python -m pip install coveralls
 
 before_script:
