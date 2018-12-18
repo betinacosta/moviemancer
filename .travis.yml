@@ -1,8 +1,5 @@
 language: python
 python: 3.6.5
-cache:
-  directories:
-    - $HOME/.cache/pip
 
 install:
   - pip install pipenv
