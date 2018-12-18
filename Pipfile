@@ -18,6 +18,7 @@ coverage = "*"
 Django = "==1.11"
 coverage = "*"
 tmdbsimple = "==1.6.1"
+dj-database-url = "==0.4.1"
 
 [requires]
 python_version = "3.6.5"
