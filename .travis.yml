@@ -9,9 +9,6 @@ install:
   - pipenv lock -r --dev >> requirements.txt
   - pip install -r requirements.txt
 
-before_script:
-  - psql -c "CREATE DATABASE mydb;" -U postgres
-
 jobs:
   include:
     - stage: unit
