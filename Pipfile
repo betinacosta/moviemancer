@@ -14,6 +14,10 @@ Django = "==1.11"
 coverage = "*"
 
 [dev-packages]
+"psycopg2" = "==2.7"
+Django = "==1.11"
+coverage = "*"
+tmdbsimple = "==1.6.1"
 
 [requires]
 python_version = "3.6.5"

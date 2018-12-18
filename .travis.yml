@@ -7,7 +7,7 @@ services:
 
 install:
   - pip install pipenv
-  - pipenv lock -r
+  - pipenv lock -r --dev >> requirements.txt
   - pip install -r requirements.txt
   - python -m pip install coveralls
 
