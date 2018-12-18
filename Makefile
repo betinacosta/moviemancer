@@ -2,9 +2,6 @@ run:
 	python manage.py runserver
 
 unit-test:
-	./manage.py test
-
-coverage:
 	coverage run --source='.' manage.py test moviemancer
 	coverage report
 

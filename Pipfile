@@ -11,9 +11,16 @@ whitenoise = "==3.2"
 djangorestframework = "==3.8.2"
 tmdbsimple = "==1.6.1"
 Django = "==1.11"
-coverage = "*"
+coverage = "==4.5.2"
 
 [dev-packages]
+"psycopg2" = "==2.7"
+Django = "==1.11"
+coverage = "==4.5.2"
+coveralls = "==1.5.1"
+tmdbsimple = "==1.6.1"
+dj-database-url = "==0.4.1"
+djangorestframework = "==3.8.2"
 
 [requires]
 python_version = "3.6.5"

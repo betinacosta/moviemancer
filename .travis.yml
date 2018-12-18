@@ -1,0 +1,19 @@
+language: python
+python: 3.6
+cache: pip
+
+install:
+  - pip install pipenv
+  - pipenv lock -r --dev >> requirements.txt
+  - pip install -r requirements.txt
+
+jobs:
+  include:
+    - stage: unit
+      script: coverage run --source='.' manage.py test moviemancer
+
+after_script:
+  - rm .coverage
+
+after_success:
+  - coveralls
