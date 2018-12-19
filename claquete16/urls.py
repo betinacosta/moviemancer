@@ -6,19 +6,9 @@ admin.autodiscover()
 
 import moviemancer.views
 
-# Examples:
-# url(r'^$', 'gettingstarted.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
-
-# urlpatterns = [
-#     url(r'^$', hello.views.index, name='index'),
-#     url(r'^db', hello.views.db, name='db'),
-#     url(r'^admin/', include(admin.site.urls)),
-# ]
-
 urlpatterns = [
     url(r'^$', moviemancer.views.index, name='index'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^movies/$', moviemancer.views.MovieView.as_view(), name='movies'),
     url(r'^moviemancer/$', moviemancer.views.moviemancer, name='moviemancer'),
     url(r'^recommendation/$', moviemancer.views.recommendation, name='recommendation'),
