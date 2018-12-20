@@ -13,6 +13,7 @@ def get_list_id_by_user(user_id):
         lists.append(item.list_id)
     return lists
 
+#remove this or movie_id_by_user_list
 def movie_by_user_list(user_id, list_name):
     for item in Type.objects.raw("SELECT * FROM type WHERE type_name = %s", [list_name]):
         type_id = item.type_id
@@ -23,6 +24,7 @@ def movie_by_user_list(user_id, list_name):
     movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
     return movie_list
 
+#remove this or movie_by_user_list
 def movie_id_by_user_list(user_id, type_id):
     list_id = get_list_by_user(user_id, type_id)
     movie_list = MovieList.objects.filter(list_id = list_id)
