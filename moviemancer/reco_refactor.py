@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from math import sqrt
+from decimal import Decimal, ROUND_HALF_UP
 from moviemancer.models import Movie, Viwer, List, Rating, Rate, MovieList
 import collections
 from moviemancer.queries import *
@@ -83,7 +84,7 @@ def user_recommendations(person):
         #print ">>>>>>>",sim
 
         # ignore scores of zero or lower
-        if sim <=0: 
+        if sim <=0:
             continue
         for item in dataset[other]:
 
@@ -107,7 +108,7 @@ def user_recommendations(person):
     return recommendataions_list
 
 def convert_tmdb_rating(tmdb_rating):
-    return int(round(tmdb_rating/2))
+    return Decimal((tmdb_rating/2)).quantize(0, ROUND_HALF_UP)
 
 def get_tmdb_similar_movies(tmdb_movie_id):
     similar_movies = []
@@ -140,19 +141,19 @@ def get_tmdb_similar_movies(tmdb_movie_id):
         if r == 9 or r == 10:
             r = 5
 
-        similar_movies.append({ "tmdb_movie_id": item['id'], 
+        similar_movies.append({ "tmdb_movie_id": item['id'],
                                 "language": item['original_language'],
                                 "rating": r,
-                                "year": year, 
-                                "poster": poster, 
+                                "year": year,
+                                "poster": poster,
                                 "title": item['title'],
                                 "genres": genres
                                 })
-	
+
     return similar_movies
 
 def add_ready_movie_to_database(movie):
-    
+
     tmdb_id = movie['tmdb_movie_id']
     if not Movie.objects.filter(tmdb_movie_id = tmdb_id):
         tmdb_poster = movie['poster']
@@ -164,7 +165,7 @@ def add_ready_movie_to_database(movie):
         tmdb_year = movie['year']
 
         movie_db = Movie(tmdb_movie_id=tmdb_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title, tmdb_rating = tmdb_rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-        
+
         try:
             movie_db.save()
         except:
@@ -172,7 +173,7 @@ def add_ready_movie_to_database(movie):
 
 def get_similar_movies(movie_id):
     similar_movies = []
-    
+
     tmdb_movie_id = get_tmdb_movie_id_by_movie(movie_id)
 
     tmdb_similar_movies = get_tmdb_similar_movies(tmdb_movie_id)
@@ -236,7 +237,7 @@ def complete_recommendation(reco_list, user_id):
         reco_list = reco_list + get_similar_movies(higher_rated[0])
         time.sleep(1)
         reco_list = reco_list + get_similar_movies(higher_rated[1])
-        
+
         #remove repeated values
         reco_list = list(set(reco_list))
         #remove repeated entries
