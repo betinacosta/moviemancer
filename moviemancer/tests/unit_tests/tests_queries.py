@@ -74,3 +74,9 @@ class QueriesTestCase(TestCase):
             {'movie_id': 1, 'poster': '', 'title': 'Princess Bride', 'tmdb_movie_id': 533, 'tmdb_rating': 6}
         ]
         self.assertEqual(get_watchlist(1), movie_list)
+
+    def test_should_return_recommendation_list_for_a_user(self):
+        movie_list = [
+            {'movie_id': 1, 'tmdb_movie_id': 533, 'tmdb_poster': '', 'tmdb_rating': 6, 'tmdb_title': 'Princess Bride'}
+        ]
+        self.assertEqual(get_recommendation_list(1, 3), movie_list)
