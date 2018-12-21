@@ -86,3 +86,6 @@ class QueriesTestCase(TestCase):
 
     def test_should_return_false_for_registered_user(self):
         self.assertTrue(user_exists("nope@nope.com"))
+
+    def test_should_return_profile_id(self):
+        self.assertEqual(get_profile_id(1), 1)
