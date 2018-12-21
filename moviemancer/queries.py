@@ -78,16 +78,6 @@ def get_tmdb_id_by_movie_id(movie_id):
 def get_movie_id_by_tmdb_id(tmdb_movie_id):
     return Movie.objects.get(tmdb_movie_id=tmdb_movie_id).movie_id
 
-def get_tmdb_movies_id_by_user(user):
-    lists_id = get_all_user_lists_ids(user)
-    movies = []
-
-    for item in lists_id:
-        for movie in Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [item]):
-            movies.append(movie.tmdb_movie_id)
-
-    return movies
-
 def is_movie_on_list (user_id, movie_id, list_type):
     list_id = get_user_list_id_by_type(user_id, list_type)
 
