@@ -153,20 +153,17 @@ def get_watchlist(user):
 
 def get_recommendation_list(user_id, type_id):
     movies = movie_by_user_list(user_id, 'recommendation')
-    reco_list = []
+    recommendation_list = []
 
     for m in movies:
-        reco_list.append({'movie_id': m.movie_id, 'tmdb_movie_id': m.tmdb_movie_id, 'tmdb_poster': m.tmdb_poster, 'tmdb_title': m.tmdb_title, 'tmdb_rating': m.tmdb_rating})
+        recommendation_list.append({'movie_id': m.movie_id, 'tmdb_movie_id': m.tmdb_movie_id, 'tmdb_poster': m.tmdb_poster, 'tmdb_title': m.tmdb_title, 'tmdb_rating': m.tmdb_rating})
 
-    return reco_list
+    return recommendation_list
 
 def user_exists(user_email):
-    user = Viwer.objects.filter(email = user_email)
-
-    if not user:
-        return False
-    else:
+    if Viwer.objects.filter(email = user_email).exists():
         return True
+    return True
 
 def get_profile_id(user_id):
     profile = Profile.objects.filter(user_id = user_id)

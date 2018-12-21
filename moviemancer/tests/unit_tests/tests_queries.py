@@ -80,3 +80,9 @@ class QueriesTestCase(TestCase):
             {'movie_id': 1, 'tmdb_movie_id': 533, 'tmdb_poster': '', 'tmdb_rating': 6, 'tmdb_title': 'Princess Bride'}
         ]
         self.assertEqual(get_recommendation_list(1, 3), movie_list)
+
+    def test_should_return_true_for_registered_user(self):
+        self.assertTrue(user_exists("batata@batatinha.com"))
+
+    def test_should_return_false_for_registered_user(self):
+        self.assertTrue(user_exists("nope@nope.com"))
