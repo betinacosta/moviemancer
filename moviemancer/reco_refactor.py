@@ -221,7 +221,7 @@ def generate_recommendation(user_id):
     add_recommendation_to_database(reco_list, user_id)
 
 def add_recommendation_to_database(reco_list, user_id):
-    list_id = get_user_list_id_by_type(user_id, 1)
+    list_id = get_user_list_id_by_type_id(user_id, 1)
     reco_list = list(set(reco_list))
 
     for movie_id in reco_list:
@@ -230,7 +230,7 @@ def add_recommendation_to_database(reco_list, user_id):
         reco.save()
 
 def complete_recommendation(reco_list, user_id):
-    list_id = get_user_list_id_by_type(user_id, 1)
+    list_id = get_user_list_id_by_type_id(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
         higher_rated = get_higher_rated(user_id)
 

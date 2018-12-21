@@ -24,13 +24,13 @@ def movie_by_user_list(user_id, list_name):
     movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
     return movie_list
 
-def get_user_list_id_by_type(user_id, list_type):
-    user_list = List.objects.get(user_id = user_id, type_id = list_type)
+def get_user_list_id_by_type_id(user_id, type_id):
+    user_list = List.objects.get(user_id = user_id, type_id = type_id)
     return user_list.list_id
 
 #remove this or movie_by_user_list
 def movie_id_by_user_list(user_id, type_id):
-    list_id = get_user_list_id_by_type(user_id, type_id)
+    list_id = get_user_list_id_by_type_id(user_id, type_id)
     movie_list = MovieList.objects.filter(list_id = list_id)
 
     return movie_list
@@ -78,19 +78,18 @@ def get_tmdb_id_by_movie_id(movie_id):
 def get_movie_id_by_tmdb_id(tmdb_movie_id):
     return Movie.objects.get(tmdb_movie_id=tmdb_movie_id).movie_id
 
-def is_movie_on_list (user_id, movie_id, list_type):
-    list_id = get_user_list_id_by_type(user_id, list_type)
+def is_movie_on_list (user_id, movie_id, type_id):
+    list_id = get_user_list_id_by_type_id(user_id, type_id)
 
     movie_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
     if not movie_list:
         return False
-    else:
-        return True
+    return True
 
 def get_movie_title(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info(language = 'pt-BR')
 
     return tmdb_movie.title
 
@@ -119,7 +118,7 @@ def get_movie_tmdb_id(movie_id):
 
 def get_watchedlist (user):
     watched_list = []
-    list_id = get_user_list_id_by_type(user, 3)
+    list_id = get_user_list_id_by_type_id(user, 3)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -140,7 +139,7 @@ def get_tmdb_rating_internal(movie_id):
 
 def get_watchlist(user):
     watchlist = []
-    list_id = get_user_list_id_by_type(user, 2)
+    list_id = get_user_list_id_by_type_id(user, 2)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -338,7 +337,7 @@ def add_rating_to_movie(user_id, movie_id, local_rate_id):
             user_rating.save()
 
 def remove_movie_from_list(user_id, movie_id, list_type):
-    list_id = get_user_list_id_by_type(user_id, list_type)
+    list_id = get_user_list_id_by_type_id(user_id, list_type)
 
     MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
 
@@ -372,7 +371,7 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
             print('Errro while adding new movie to list')
 
 def add_to_list (user_id, movie_id, list_type):
-    list_id = get_user_list_id_by_type(user_id, list_type)
+    list_id = get_user_list_id_by_type_id(user_id, list_type)
     is_on_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
     #If in recommendation list, remove it

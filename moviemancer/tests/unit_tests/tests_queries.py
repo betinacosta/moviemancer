@@ -29,7 +29,7 @@ class QueriesTestCase(TestCase):
         self.assertEqual(get_user_rate_to_movie(3, 1), 4)
 
     def test_should_return_list_by_user(self):
-        self.assertEqual(get_user_list_id_by_type(1, 3), 3)
+        self.assertEqual(get_user_list_id_by_type_id(1, 3), 3)
 
     def test_should_return_user_id_by_email(self):
         self.assertEqual(get_user_id_by_email("batata@batatinha.com"), 1)
@@ -42,3 +42,12 @@ class QueriesTestCase(TestCase):
 
     def test_should_return_movie_id_by_tmdb_id(self):
         self.assertEqual(get_movie_id_by_tmdb_id(533), 1)
+
+    def test_should_return_true_if_movie_on_user_list(self):
+        self.assertTrue(is_movie_on_list(1, 1, 1))
+
+    def test_should_return_false_if_movie_not_on_user_list(self):
+        self.assertFalse(is_movie_on_list(1, 1, 2))
+
+    def test_should_return_movie_title_from_tmdb(self):
+        self.assertEqual(get_movie_title(55), "Amores Brutos")
