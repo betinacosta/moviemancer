@@ -7,7 +7,7 @@ import time
 
 tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
 
-def get_list_id_by_user(user_id):
+def get_all_user_lists_ids(user_id):
     lists = []
     for item in List.objects.raw("SELECT list_ID FROM list WHERE user_id = %s", [user_id]):
         lists.append(item.list_id)
@@ -24,9 +24,13 @@ def movie_by_user_list(user_id, list_name):
     movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
     return movie_list
 
+def get_user_list_id_by_type(user_id, list_type):
+    user_list = List.objects.get(user_id = user_id, type_id = list_type)
+    return user_list.list_id
+
 #remove this or movie_by_user_list
 def movie_id_by_user_list(user_id, type_id):
-    list_id = get_list_by_user(user_id, type_id)
+    list_id = get_user_list_id_by_type(user_id, type_id)
     movie_list = MovieList.objects.filter(list_id = list_id)
 
     return movie_list
@@ -39,12 +43,12 @@ def get_rated_movies_by_user(user_id):
         movies.append(item.movie_id)
 
     for movie in movies:
-        rate = get_rate_by_movie(movie, user_id)
+        rate = get_user_rate_to_movie(movie, user_id)
         rate_list.update({movie: rate})
 
     return rate_list
 
-def get_rate_by_movie(movie_id, user_id):
+def get_user_rate_to_movie(movie_id, user_id):
     rate_id = 0
     movie_rate = 0
     for item in Rating.objects.raw("SELECT * FROM rating WHERE rating.user_id = %s AND movie_id = %s", [user_id, movie_id]):
@@ -55,19 +59,7 @@ def get_rate_by_movie(movie_id, user_id):
 
     return movie_rate
 
-def get_list_by_user(user_id, list_type):
-    print ('user: ', user_id, 'list_type: ', list_type)
-    item = List.objects.filter(user_id = user_id, type_id = list_type)
-    return item[0].list_id
-
-def get_movie_by_user(user_id):
-    movies =[]
-
-    for item in movie_id_by_user_list(user_id, 3):
-        movies.append(item.movie_id)
-    return movies
-
-def get_user_by_email(email):
+def get_user_id_by_email(email):
     user = Viwer.objects.filter(email = email)
 
     return user[0].user_id
@@ -80,16 +72,14 @@ def get_tmdb_movies_id():
 
     return movies
 
-def get_tmdb_movie_id_by_movie(movie_id):
-    for item in Movie.objects.raw("SELECT * FROM movie WHERE movie_id = %s", [movie_id]):
-        return item.tmdb_movie_id
+def get_tmdb_id_by_movie_id(movie_id):
+   return Movie.objects.get(movie_id=movie_id).tmdb_movie_id
 
 def get_movie_id_by_tmdb_id(tmdb_movie_id):
-    for item in Movie.objects.raw("SELECT * FROM movie WHERE tmdb_movie_id = %s", [tmdb_movie_id]):
-        return item.movie_id
+    return Movie.objects.get(tmdb_movie_id=tmdb_movie_id).movie_id
 
 def get_tmdb_movies_id_by_user(user):
-    lists_id = get_list_id_by_user(user)
+    lists_id = get_all_user_lists_ids(user)
     movies = []
 
     for item in lists_id:
@@ -99,7 +89,7 @@ def get_tmdb_movies_id_by_user(user):
     return movies
 
 def is_movie_on_list (user_id, movie_id, list_type):
-    list_id = get_list_by_user(user_id, list_type)
+    list_id = get_user_list_id_by_type(user_id, list_type)
 
     movie_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
@@ -139,7 +129,7 @@ def get_movie_tmdb_id(movie_id):
 
 def get_watchedlist (user):
     watched_list = []
-    list_id = get_list_by_user(user, 3)
+    list_id = get_user_list_id_by_type(user, 3)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -148,7 +138,7 @@ def get_watchedlist (user):
             'tmdb_movie_id': get_movie_tmdb_id(m.movie_id),
             'title': get_movie_title_internal(m.movie_id),
             'poster': get_movie_poster_internal(m.movie_id),
-            'rating': get_rate_by_movie(m.movie_id, user)
+            'rating': get_user_rate_to_movie(m.movie_id, user)
         })
 
     return json.dumps(watched_list)
@@ -160,7 +150,7 @@ def get_tmdb_rating_internal(movie_id):
 
 def get_watchlist(user):
     watchlist = []
-    list_id = get_list_by_user(user, 2)
+    list_id = get_user_list_id_by_type(user, 2)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -358,7 +348,7 @@ def add_rating_to_movie(user_id, movie_id, local_rate_id):
             user_rating.save()
 
 def remove_movie_from_list(user_id, movie_id, list_type):
-    list_id = get_list_by_user(user_id, list_type)
+    list_id = get_user_list_id_by_type(user_id, list_type)
 
     MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
 
@@ -392,7 +382,7 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
             print('Errro while adding new movie to list')
 
 def add_to_list (user_id, movie_id, list_type):
-    list_id = get_list_by_user(user_id, list_type)
+    list_id = get_user_list_id_by_type(user_id, list_type)
     is_on_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
     #If in recommendation list, remove it
@@ -523,7 +513,7 @@ def get_comments(movie_tmdb_id):
     for comment in comments:
         user = Viwer.objects.filter(user_id = comment.user_id)
         name = user[0].name
-        rate = get_rate_by_movie(movie_id, comment.user_id)
+        rate = get_user_rate_to_movie(movie_id, comment.user_id)
         commnets_by_movie.append({"comment_id": comment.comment_id, "user_name": name,"comment": comment.comment, "rate": rate})
 
     return json.dumps(commnets_by_movie)

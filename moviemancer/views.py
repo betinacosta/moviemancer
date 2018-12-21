@@ -71,7 +71,7 @@ def get_recommendation(request):
         return HttpResponse(recommendation_list)
     else:
         return HttpResponse("You are on your own")
-        
+
 @csrf_exempt
 def get_profile(request):
     if request.body:
@@ -81,7 +81,7 @@ def get_profile(request):
         profile = get_user_details(request_user_id)
         return HttpResponse(profile)
     else:
-        return HttpResponse("You are on your own") 
+        return HttpResponse("You are on your own")
 
 @csrf_exempt
 def update_user(request):
@@ -120,7 +120,7 @@ def get_all_comments(request):
         all_comments = get_comments(request_movie_tmdb_id)
         return HttpResponse(all_comments)
     else:
-        return HttpResponse("Erroa o carregar comentarios")  
+        return HttpResponse("Erroa o carregar comentarios")
 
 @csrf_exempt
 def add_new_comment(request):
@@ -146,7 +146,7 @@ def delete_user_comment(request):
         else:
             return HttpResponseServerError("Erro ao deletar comentario")
     else:
-        return HttpResponseServerError("Erro ao deletar comentario")          
+        return HttpResponseServerError("Erro ao deletar comentario")
 
 @csrf_exempt
 def ratemovie(request):
@@ -183,8 +183,8 @@ def get_auth(request):
         request_password = request_auth[u'password']
 
         if authenticate_user(request_email, request_password):
-            
-            user_id = get_user_by_email(request_email)
+
+            user_id = get_user_id_by_email(request_email)
             user_data = get_user(request_email)
             generate_recommendation(user_id)
 
@@ -273,7 +273,7 @@ def get_watched_list(request):
     if request.body:
         request_user_rating = json.loads(request.body)
         request_user_id = request_user_rating[u'user_id']
-        
+
         user_watchedlist = get_watchedlist(request_user_id)
         return HttpResponse(user_watchedlist)
     else:
@@ -310,7 +310,7 @@ def get_watch_list(request):
     if request.body:
         request_user_rating = json.loads(request.body)
         request_user_id = request_user_rating[u'user_id']
-        
+
         user_watchlist = get_watchlist(request_user_id)
         return HttpResponse(user_watchlist)
     else:
@@ -332,7 +332,7 @@ def filter_reco(request):
         request_maxRuntime = request_filter[u'maxRuntime']
         request_language = request_filter[u'language']
         request_genres = request_filter[u'genres']
-        
+
         filtered = filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id)
         return HttpResponse(filtered)
     else:

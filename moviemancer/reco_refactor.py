@@ -27,7 +27,7 @@ def get_higher_rated(user_id):
         movies.append(item.movie_id)
 
     for movie in movies:
-        rate = get_rate_by_movie(movie, user_id)
+        rate = get_user_rate_to_movie(movie, user_id)
         if rate > 2:
             higher_rated_list.append(movie)
 
@@ -174,7 +174,7 @@ def add_ready_movie_to_database(movie):
 def get_similar_movies(movie_id):
     similar_movies = []
 
-    tmdb_movie_id = get_tmdb_movie_id_by_movie(movie_id)
+    tmdb_movie_id = get_tmdb_id_by_movie_id(movie_id)
 
     tmdb_similar_movies = get_tmdb_similar_movies(tmdb_movie_id)
 
@@ -221,7 +221,7 @@ def generate_recommendation(user_id):
     add_recommendation_to_database(reco_list, user_id)
 
 def add_recommendation_to_database(reco_list, user_id):
-    list_id = get_list_by_user(user_id, 1)
+    list_id = get_user_list_id_by_type(user_id, 1)
     reco_list = list(set(reco_list))
 
     for movie_id in reco_list:
@@ -230,7 +230,7 @@ def add_recommendation_to_database(reco_list, user_id):
         reco.save()
 
 def complete_recommendation(reco_list, user_id):
-    list_id = get_list_by_user(user_id, 1)
+    list_id = get_user_list_id_by_type(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
         higher_rated = get_higher_rated(user_id)
 
