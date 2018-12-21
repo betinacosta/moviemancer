@@ -47,7 +47,7 @@ class QueriesTestCase(TestCase):
         self.assertTrue(is_movie_on_list(1, 1, 1))
 
     def test_should_return_false_if_movie_not_on_user_list(self):
-        self.assertFalse(is_movie_on_list(1, 1, 2))
+        self.assertFalse(is_movie_on_list(2, 1, 2))
 
     #IMDb
     def test_should_return_movie_title_from_tmdb(self):
@@ -68,3 +68,9 @@ class QueriesTestCase(TestCase):
 
     def test_should_return_tmdb_rating_by_movie_id(self):
         self.assertEqual(get_tmdb_rating_internal(1), 6)
+
+    def test_should_return_watchlist_for_a_user(self):
+        movie_list = [
+            {'movie_id': 1, 'poster': '', 'title': 'Princess Bride', 'tmdb_movie_id': 533, 'tmdb_rating': 6}
+        ]
+        self.assertEqual(get_watchlist(1), movie_list)

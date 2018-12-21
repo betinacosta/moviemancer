@@ -36,3 +36,5 @@ class DatabaseStub():
 
         MovieList.objects.create(movie_list_id=2, movie_id=3, list_id=3)
         MovieList.objects.create(movie_list_id=3, movie_id=4, list_id=3)
+
+        MovieList.objects.create(movie_list_id=4, movie_id=1, list_id=2)
