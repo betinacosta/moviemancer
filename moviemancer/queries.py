@@ -131,9 +131,7 @@ def get_watchedlist (user):
     return watched_list
 
 def get_tmdb_rating_internal(movie_id):
-    movie = Movie.objects.filter(movie_id = movie_id)
-
-    return movie[0].tmdb_rating
+    return Movie.objects.get(movie_id = movie_id).tmdb_rating
 
 def get_watchlist(user):
     watchlist = []

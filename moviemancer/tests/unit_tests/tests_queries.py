@@ -65,3 +65,6 @@ class QueriesTestCase(TestCase):
             {'movie_id': 4, 'poster': '', 'rating': 3, 'title': 'Mean Girls', 'tmdb_movie_id': 77}
         ]
         self.assertEqual(get_watchedlist(1), movie_list)
+
+    def test_should_return_tmdb_rating_by_movie_id(self):
+        self.assertEqual(get_tmdb_rating_internal(1), 6)
