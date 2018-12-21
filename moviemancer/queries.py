@@ -128,7 +128,7 @@ def get_watchedlist (user):
             'rating': get_user_rate_to_movie(m.movie_id, user)
         })
 
-    return json.dumps(watched_list)
+    return watched_list
 
 def get_tmdb_rating_internal(movie_id):
     movie = Movie.objects.filter(movie_id = movie_id)
