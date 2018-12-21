@@ -35,7 +35,7 @@ class QueriesTestCase(TestCase):
         self.assertEqual(get_user_id_by_email("batata@batatinha.com"), 1)
 
     def test_should_return_list_with_tmdb_movie_ids(self):
-        self.assertEqual(get_tmdb_movies_id(), [533, 123, 344, 77])
+        self.assertEqual(get_tmdb_movies_id(), [533, 123, 344, 77, 55])
 
     def test_should_return_tmdb_id_by_movie_id(self):
         self.assertEqual(get_tmdb_id_by_movie_id(1), 533)
@@ -49,5 +49,12 @@ class QueriesTestCase(TestCase):
     def test_should_return_false_if_movie_not_on_user_list(self):
         self.assertFalse(is_movie_on_list(1, 1, 2))
 
+    #IMDb
     def test_should_return_movie_title_from_tmdb(self):
         self.assertEqual(get_movie_title(55), "Amores Brutos")
+
+    def test_should_return_link_to_movie_poster(self):
+        self.assertIn('http://image.tmdb.org/t/p/original', get_movie_poster(55))
+
+    def test_should_return_link_to_movie_poster_by_movie_id(self):
+        self.assertIn('http://image.tmdb.org/t/p/original', get_movie_poster_internal(5))

@@ -21,6 +21,7 @@ class DatabaseStub():
         Movie.objects.create(movie_id=2, tmdb_movie_id=123, tmdb_title="Monty Python", tmdb_rating=9, year=1974, runtime=120)
         Movie.objects.create(movie_id=3, tmdb_movie_id=344, tmdb_title="Blade Runner", tmdb_rating=7, year=1983, runtime=120)
         Movie.objects.create(movie_id=4, tmdb_movie_id=77, tmdb_title="Mean Girls", tmdb_rating=5, year=2004, runtime=120)
+        Movie.objects.create(movie_id=5, tmdb_movie_id=55, tmdb_title="Amores Brutos", tmdb_rating=3, year=1980, runtime=80, tmdb_poster='http://image.tmdb.org/t/p/original')
 
         MovieList.objects.create(movie_list_id=1, movie_id=1, list_id=1)
 

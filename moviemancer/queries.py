@@ -95,7 +95,7 @@ def get_movie_title(tmdb_id):
 
 def get_movie_poster(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info(language = 'pt-BR')
 
     return 'http://image.tmdb.org/t/p/original' + tmdb_movie.poster_path
 
@@ -112,9 +112,7 @@ def get_movie_poster_internal(movie_id):
     return 'http://image.tmdb.org/t/p/original' + tmdb_movie.poster_path
 
 def get_movie_tmdb_id(movie_id):
-    movie = Movie.objects.filter(movie_id = movie_id)
-
-    return movie[0].tmdb_movie_id
+    return Movie.objects.get(movie_id = movie_id).tmdb_movie_id
 
 def get_watchedlist (user):
     watched_list = []
