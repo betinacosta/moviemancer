@@ -58,3 +58,10 @@ class QueriesTestCase(TestCase):
 
     def test_should_return_link_to_movie_poster_by_movie_id(self):
         self.assertIn('http://image.tmdb.org/t/p/original', get_movie_poster_internal(5))
+
+    def test_should_return_watchedlist_for_a_user(self):
+        movie_list = [
+            {'movie_id': 3, 'poster': '', 'rating': 4, 'title': 'Blade Runner', 'tmdb_movie_id': 344},
+            {'movie_id': 4, 'poster': '', 'rating': 3, 'title': 'Mean Girls', 'tmdb_movie_id': 77}
+        ]
+        self.assertEqual(get_watchedlist(1), movie_list)
