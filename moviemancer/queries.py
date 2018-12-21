@@ -114,6 +114,7 @@ def get_movie_poster_internal(movie_id):
 def get_movie_tmdb_id(movie_id):
     return Movie.objects.get(movie_id = movie_id).tmdb_movie_id
 
+#refactor duplication with get_watched_list
 def get_watchedlist (user):
     watched_list = []
     list_id = get_user_list_id_by_type_id(user, 3)
@@ -148,7 +149,7 @@ def get_watchlist(user):
 
         })
 
-    return json.dumps(watchlist)
+    return watchlist
 
 def jsonify_reco_list(user_id, type_id):
     movies = movie_by_user_list(user_id, 'recommendation')

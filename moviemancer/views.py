@@ -311,7 +311,7 @@ def get_watch_list(request):
         request_user_rating = json.loads(request.body)
         request_user_id = request_user_rating[u'user_id']
 
-        user_watchlist = get_watchlist(request_user_id)
+        user_watchlist = json.dumps(get_watchlist(request_user_id))
         return HttpResponse(user_watchlist)
     else:
         return HttpResponse("You are on your own")
