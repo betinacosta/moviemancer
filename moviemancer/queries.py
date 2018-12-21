@@ -4,6 +4,7 @@ import json
 import hashlib
 import tmdbsimple as tmdb
 import time
+from decimal import Decimal, ROUND_HALF_UP
 
 tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
 
@@ -165,46 +166,20 @@ def user_exists(user_email):
         return True
     return True
 
-def get_profile_id(user_id):
-    profile = Profile.objects.filter(user_id = user_id)
-
-    return profile[0].profile_id
-
-def get_profile_genre_id(profile_id):
-    profile = ProfileGenre.objects.filter(profile_id = profile_id)
-
-    profile_genre = []
-    for p in profile:
-        profile_genre.append(p.profile_genre_id)
-
-    return profile_genre
+def convert_tmdb_rating(tmdb_rating):
+    return Decimal((tmdb_rating/2)).quantize(0, ROUND_HALF_UP)
 
 def get_tmdb_movie_rating(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info()
 
-    r = tmdb_movie.vote_average
-    r = int(r)
-
-    if r == 1 or r == 2:
-        r = 1
-    if r == 3 or r == 4:
-        r = 2
-    if r == 5 or r == 6:
-        r = 3
-    if r == 7 or r == 8:
-        r = 4
-    if r == 9 or r == 10:
-        r = 5
-
-    return r
+    return convert_tmdb_rating(tmdb_movie.vote_average)
 
 def get_tmdb_movie_language(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info()
 
-    language = tmdb_movie.original_language
-    return language
+    return tmdb_movie.original_language
 
 def get_tmdb_movie_runtime(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)

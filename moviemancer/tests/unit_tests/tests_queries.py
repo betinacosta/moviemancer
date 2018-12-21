@@ -87,5 +87,14 @@ class QueriesTestCase(TestCase):
     def test_should_return_false_for_registered_user(self):
         self.assertTrue(user_exists("nope@nope.com"))
 
-    def test_should_return_profile_id(self):
-        self.assertEqual(get_profile_id(1), 1)
+    def test_should_convert_tmdb_rating_to_five(self):
+        self.assertEqual(convert_tmdb_rating(9),5)
+
+    def test_should_convert_tmdb_rating_to_four(self):
+        self.assertEqual(convert_tmdb_rating(8.8),4)
+
+    def test_should_convert_tmdb_rating_to_four(self):
+        self.assertEqual(get_tmdb_movie_rating(55),4)
+
+    def test_should_return_movie_language(self):
+        self.assertEqual(get_tmdb_movie_language(55), "es")
