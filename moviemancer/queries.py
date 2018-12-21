@@ -114,7 +114,7 @@ def get_movie_poster_internal(movie_id):
 def get_movie_tmdb_id(movie_id):
     return Movie.objects.get(movie_id = movie_id).tmdb_movie_id
 
-#refactor duplication with get_watched_list
+#refactor duplication with get_watched_list and get_recommendation_list
 def get_watchedlist (user):
     watched_list = []
     list_id = get_user_list_id_by_type_id(user, 3)
@@ -151,14 +151,14 @@ def get_watchlist(user):
 
     return watchlist
 
-def jsonify_reco_list(user_id, type_id):
+def get_recommendation_list(user_id, type_id):
     movies = movie_by_user_list(user_id, 'recommendation')
     reco_list = []
 
     for m in movies:
         reco_list.append({'movie_id': m.movie_id, 'tmdb_movie_id': m.tmdb_movie_id, 'tmdb_poster': m.tmdb_poster, 'tmdb_title': m.tmdb_title, 'tmdb_rating': m.tmdb_rating})
 
-    return json.dumps(reco_list)
+    return reco_list
 
 def user_exists(user_email):
     user = Viwer.objects.filter(email = user_email)

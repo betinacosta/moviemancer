@@ -67,7 +67,7 @@ def get_recommendation(request):
         request_reco = json.loads(request.body)
         request_user_id = request_reco[u'user_id']
 
-        recommendation_list = jsonify_reco_list(request_user_id, 1)
+        recommendation_list = json.dumps(get_recommendation_list(request_user_id, 1))
         return HttpResponse(recommendation_list)
     else:
         return HttpResponse("You are on your own")
