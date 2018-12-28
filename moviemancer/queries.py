@@ -256,8 +256,6 @@ def compare_languages(l1, l2):
     else:
         return False
 
-
-
 #UPDATE, DELETE, INSERT
 
 def add_movie_to_database(tmdb_id):

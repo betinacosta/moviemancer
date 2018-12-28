@@ -121,3 +121,30 @@ class QueriesTestCase(TestCase):
         filter = filter_recommendation('18',2011,2012,50,300,'pt',2)
 
         self.assertEqual(filter, [])
+
+    def test_should_return_true_when_inside_range(self):
+        self.assertTrue(is_inside_rage(1920, 2017, 1980))
+
+    def test_should_return_false_when_outside_range(self):
+        self.assertFalse(is_inside_rage(1920, 2003, 2017))
+
+    def test_should_return_true_if_one_genre_match(self):
+        self.assertTrue(compare_genres('35,18', '55,18,13'))
+
+    def test_should_return_true_if_all_genres_match(self):
+        self.assertTrue(compare_genres('35,18', '35,18'))
+
+    def test_should_return_true_if_genres_is_zero(self):
+        self.assertTrue(compare_genres(0, '35,18'))
+
+    def test_should_return_false_if_genres_does_not_match(self):
+        self.assertFalse(compare_genres('55,30,40', '35,18'))
+
+    def test_should_return_true_if_languages_match(self):
+        self.assertTrue(compare_languages('pt', 'pt'))
+
+    def test_should_return_true_if_one_language_not_selected(self):
+        self.assertTrue(compare_languages(0, 'pt'))
+
+    def test_should_return_false_if_languages_does_not_match(self):
+        self.assertFalse(compare_languages('en', 'pt'))
