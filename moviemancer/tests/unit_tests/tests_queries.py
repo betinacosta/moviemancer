@@ -35,7 +35,7 @@ class QueriesTestCase(TestCase):
         self.assertEqual(get_user_id_by_email("batata@batatinha.com"), 1)
 
     def test_should_return_list_with_tmdb_movie_ids(self):
-        self.assertEqual(get_tmdb_movies_id(), [533, 123, 344, 77, 55])
+        self.assertEqual(get_tmdb_movies_id(), [533, 123, 344, 77, 55, 66, 12])
 
     def test_should_return_tmdb_id_by_movie_id(self):
         self.assertEqual(get_tmdb_id_by_movie_id(1), 533)
@@ -96,5 +96,28 @@ class QueriesTestCase(TestCase):
     def test_should_convert_tmdb_rating_to_four(self):
         self.assertEqual(get_tmdb_movie_rating(55),4)
 
-    def test_should_return_movie_language(self):
+    def test_should_return_tmdb_movie_language(self):
         self.assertEqual(get_tmdb_movie_language(55), "es")
+
+    def test_should_return_tmdb_movie_runtime_if_available_in_tmdb(self):
+        self.assertEqual(get_tmdb_movie_runtime(55), 154)
+
+    def test_should_format_date_to_year_only(self):
+        self.assertEqual(formate_date_to_year('2000-06-16'), '2000')
+
+    def test_should_return_tmdb_movie_year(self):
+        self.assertEqual(get_tmdb_movie_year(55), '2000')
+
+    def test_should_return_tmdb_movie_genres_id_separated_by_coma(self):
+        self.assertEquals(get_tmdb_movie_genres_id(55), '18,53')
+
+    def test_should_return_filtered_recommendation(self):
+        filter = filter_recommendation('35,18',1919,2017,50,300,0,2)
+        expected = [{"movie_id": 6, "tmdb_movie_id": 66, "tmdb_poster": "", "tmdb_title": "Best Movie", "tmdb_rating": 7}]
+
+        self.assertEqual(filter, expected)
+
+    def test_should_return_empty_for_filtered_recommendation(self):
+        filter = filter_recommendation('18',2011,2012,50,300,'pt',2)
+
+        self.assertEqual(filter, [])

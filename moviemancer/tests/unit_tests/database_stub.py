@@ -23,6 +23,9 @@ class DatabaseStub():
         Movie.objects.create(movie_id=4, tmdb_movie_id=77, tmdb_title="Mean Girls", tmdb_rating=5, year=2004, runtime=120)
         Movie.objects.create(movie_id=5, tmdb_movie_id=55, tmdb_title="Amores Brutos", tmdb_rating=3, year=1980, runtime=80, tmdb_poster='http://image.tmdb.org/t/p/original')
 
+        Movie.objects.create(movie_id=6, tmdb_movie_id=66, tmdb_title="Best Movie", tmdb_rating=7, year=1983, runtime=120, genres='35,18')
+        Movie.objects.create(movie_id=7, tmdb_movie_id=12, tmdb_title="Second Best Movie", tmdb_rating=5, year=2004, runtime=90, language='pt-br', genres='13,28')
+
         MovieList.objects.create(movie_list_id=1, movie_id=1, list_id=1)
 
         Rate.objects.create(rate_id=1, rate=1)
@@ -38,3 +41,6 @@ class DatabaseStub():
         MovieList.objects.create(movie_list_id=3, movie_id=4, list_id=3)
 
         MovieList.objects.create(movie_list_id=4, movie_id=1, list_id=2)
+
+        MovieList.objects.create(movie_list_id=5, movie_id=6, list_id=4)
+        MovieList.objects.create(movie_list_id=6, movie_id=7, list_id=4)

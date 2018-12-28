@@ -333,7 +333,7 @@ def filter_reco(request):
         request_language = request_filter[u'language']
         request_genres = request_filter[u'genres']
 
-        filtered = filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id)
+        filtered = json.dumps(filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id))
         return HttpResponse(filtered)
     else:
         return HttpResponseServerError("You are on your own")

@@ -183,46 +183,31 @@ def get_tmdb_movie_language(tmdb_id):
 
 def get_tmdb_movie_runtime(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info()
 
     if tmdb_movie.runtime == 0 or tmdb_movie.runtime == 'None':
-        runtime = 50
-    else:
-        runtime = tmdb_movie.runtime
-    return runtime
+        return 50
+
+    return tmdb_movie.runtime
+
+def formate_date_to_year(full_date):
+    return full_date.split('-')[0]
 
 def get_tmdb_movie_year(tmdb_id):
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info()
 
-    year = tmdb_movie.release_date
-    year = year.split('-')
-    year = year[0]
-    return year
+    return formate_date_to_year(tmdb_movie.release_date)
 
-def get_tmdb_movie_genres(tmdb_id):
+def get_tmdb_movie_genres_id(tmdb_id):
     genres = []
     tmdb_movie = tmdb.Movies(tmdb_id)
-    response = tmdb_movie.info(language = 'pt-BR')
+    tmdb_movie.info(language = 'pt-BR')
 
     for g in tmdb_movie.genres:
         genres.append(str(g['id']))
 
-    genres = ','.join(genres)
-
-    return genres
-
-def generate_update_querie():
-    movies = Movie.objects.all()
-    update_list = []
-
-    for m in movies:
-        tmdb_id  = m.tmdb_movie_id
-        year = get_tmdb_movie_year(tmdb_id)
-        tmdb_id  = str(tmdb_id)
-        year = str(year)
-        query = 'UPDATE movie SET year = ' + year + ' WHERE tmdb_movie_id = ' + tmdb_id + ';'
-        print(query)
+    return ','.join(genres)
 
 def filter_recommendation(genres, minYear, maxYear, minRuntime, maxRuntime, language, user_id):
     reco = movie_by_user_list(user_id, 'recommendation')
@@ -236,8 +221,7 @@ def filter_recommendation(genres, minYear, maxYear, minRuntime, maxRuntime, lang
         if a and b and c and d:
             filtered_reco.append({'movie_id': r.movie_id, 'tmdb_movie_id': r.tmdb_movie_id, 'tmdb_poster': r.tmdb_poster, 'tmdb_title': r.tmdb_title, 'tmdb_rating': r.tmdb_rating})
 
-    print(filtered_reco)
-    return json.dumps(filtered_reco)
+    return filtered_reco
 
 def is_inside_rage(min, max, value):
     if value >= min and value <= max:
@@ -283,7 +267,7 @@ def add_movie_to_database(tmdb_id):
         tmdb_rating = get_tmdb_movie_rating(tmdb_id)
         tmdb_language = get_tmdb_movie_language(tmdb_id)
         tmdb_runtime = get_tmdb_movie_runtime(tmdb_id)
-        tmdb_genres = get_tmdb_movie_genres(tmdb_id)
+        tmdb_genres = get_tmdb_movie_genres_id(tmdb_id)
         tmdb_year = get_tmdb_movie_year(tmdb_id)
 
         movie_db = Movie(tmdb_movie_id=tmdb_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title, tmdb_rating = tmdb_rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
@@ -326,7 +310,7 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
     else:
         tmdb_language = get_tmdb_movie_language(tmdb_movie_id)
         tmdb_runtime = get_tmdb_movie_runtime(tmdb_movie_id)
-        tmdb_genres = get_tmdb_movie_genres(tmdb_movie_id)
+        tmdb_genres = get_tmdb_movie_genres_id(tmdb_movie_id)
         tmdb_year = get_tmdb_movie_year(tmdb_movie_id)
         rating = get_tmdb_movie_rating(tmdb_movie_id)
 
@@ -373,7 +357,7 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
     else:
         tmdb_language = get_tmdb_movie_language(tmdb_movie_id)
         tmdb_runtime = get_tmdb_movie_runtime(tmdb_movie_id)
-        tmdb_genres = get_tmdb_movie_genres(tmdb_movie_id)
+        tmdb_genres = get_tmdb_movie_genres_id(tmdb_movie_id)
         tmdb_year = get_tmdb_movie_year(tmdb_movie_id)
         rating = get_tmdb_movie_rating(tmdb_movie_id)
 
