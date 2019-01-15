@@ -272,20 +272,19 @@ def add_movie_to_database(tmdb_id):
 
         try:
             movie_db.save()
+            return 'Success'
         except:
-             print('Deu ruim at: ', tmdb_id)
+             return('Save error')
+    return 'Error: movie already exists'
 
 def add_rating_to_movie(user_id, movie_id, local_rate_id):
-    rating_query = Rating.objects.filter(movie_id = movie_id, user_id = user_id)
+    try:
+        old_rating = Rating.objects.get(movie_id = movie_id, user_id = user_id)
+        new_rating = Rating(rating_id = old_rating.rating_id, user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
+    except Rating.DoesNotExist:
+        new_rating = Rating(user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
 
-    if not rating_query:
-        user_rating = Rating(user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
-        user_rating.save()
-        rating_query = Rating.objects.filter(movie_id = movie_id, user_id = user_id)
-    else:
-        for item in rating_query:
-            user_rating = Rating(rating_id = item.rating_id, user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
-            user_rating.save()
+    new_rating.save()
 
 def remove_movie_from_list(user_id, movie_id, list_type):
     list_id = get_user_list_id_by_type_id(user_id, list_type)
