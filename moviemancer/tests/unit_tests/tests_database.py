@@ -37,9 +37,19 @@ class DatabaseTestCase(TestCase):
 
         self.assertFalse(MovieList.objects.filter(movie_id=1, list_id=3))
 
-    def should_remove_user_rating_to_given_movie(self):
+    def test_should_remove_user_rating_to_given_movie(self):
         Rating.objects.create(user_id=1, movie_id=1, rate_id=4)
         remove_rating(user_id=1, movie_id=1)
 
         self.assertFalse(Rating.objects.filter(user_id=1, movie_id=1))
-        
+
+    def test_should_remove_movie_from_watched_list(self):
+        MovieList.objects.create(movie_id=2, list_id=3)
+        Rating.objects.create(user_id=1, movie_id=2, rate_id=4)
+        remove_watched(user_id=1, movie_id=2, list_type=3)
+
+        self.assertFalse(Rating.objects.filter(user_id=1, movie_id=2))
+        self.assertFalse(MovieList.objects.filter(movie_id=2, list_id=3))
+
+
+
