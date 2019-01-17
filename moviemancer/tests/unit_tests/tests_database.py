@@ -51,5 +51,17 @@ class DatabaseTestCase(TestCase):
         self.assertFalse(Rating.objects.filter(user_id=1, movie_id=2))
         self.assertFalse(MovieList.objects.filter(movie_id=2, list_id=3))
 
+    def test_should_create_movie_and_add_to_list(self):
+        add_to_list_external(user_id=1, tmdb_movie_id=22, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
 
+        movie_queryset = Movie.objects.filter(tmdb_movie_id=22)
+        self.assertTrue(movie_queryset)
 
+        self.assertTrue(MovieList.objects.filter(movie_id=movie_queryset[0].movie_id, list_id=3))
+
+    def test_should_add_existent_movie_to_list(self):
+        Movie.objects.create(movie_id=99, tmdb_movie_id=533, tmdb_title="Batatas Furiosas", tmdb_rating=6, year=1998, runtime=93)
+        add_to_list_external(user_id=1, tmdb_movie_id=533, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
+
+        self.assertTrue(MovieList.objects.filter(movie_id=99, list_id=3))
+        self.assertTrue(len(Movie.objects.filter(tmdb_movie_id=533)) == 1)
