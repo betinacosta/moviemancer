@@ -14,7 +14,7 @@ Moviemancer is a website for movie recommendation.
 
 ### Requirements
 
-- [Python 2.7](https://www.python.org/downloads/release/python-2715/)
+- [Python 3.6.5](https://www.python.org/downloads/release/python-2715/)
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [PostgreSQL](https://www.postgresql.org/download/)
 - [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
