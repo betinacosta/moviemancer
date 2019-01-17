@@ -13,6 +13,7 @@ class DatabaseTestCase(TestCase):
         Type.objects.create(type_id=3, type_name="watchedlist")
 
         List.objects.create(list_id=1, user_id=1, type_id=1)
+        List.objects.create(list_id=2, user_id=1, type_id=2)
         List.objects.create(list_id=3, user_id=1, type_id=3)
 
     def test_should_add_new_movie_to_database(self):
@@ -65,3 +66,24 @@ class DatabaseTestCase(TestCase):
 
         self.assertTrue(MovieList.objects.filter(movie_id=99, list_id=3))
         self.assertTrue(len(Movie.objects.filter(tmdb_movie_id=533)) == 1)
+
+    def test_should_add_movie_to_list(self):
+        Movie.objects.create(movie_id=66, tmdb_movie_id=7, tmdb_title="Furiosas Batatas", tmdb_rating=6, year=1998, runtime=93)
+        add_to_list(user_id=1, movie_id=66, list_type=1)
+
+        self.assertTrue(MovieList.objects.filter(movie_id=66, list_id=1))
+
+    def test_should_remove_from_recomendation_if_added_to_other_list(self):
+        add_to_list(user_id=1, movie_id=99, list_type=1)
+
+        self.assertFalse(MovieList.objects.filter(movie_id=99, list_id=3))
+
+    def test_should_add_movie_to_watchedlist_when_rated(self):
+        rate_movie(user_id=1, movie_id=33, local_rate_id=5)
+
+        self.assertTrue(MovieList.objects.filter(movie_id=33, list_id=3))
+
+    def test_should_remove_movie_from_watchlist_when_rated(self):
+        rate_movie(user_id=1, movie_id=66, local_rate_id=5)
+
+        self.assertFalse(MovieList.objects.filter(movie_id=66, list_id=1))
