@@ -391,20 +391,16 @@ def create_user(name, email, password):
 
     return None
 
-def get_genre_id(genre_tmdb_id):
-    genre = Genre.objects.filter(tmdb_genre_id = genre_tmdb_id)
-    genre_id = genre[0].genre_id
-
-    return genre_id
-
 def create_list_to_user(user_id, type_id):
-    the_list = List.objects.filter(user_id = user_id, type_id = type_id)
-    if not the_list:
+    user_list = List.objects.filter(user_id = user_id, type_id = type_id)
+
+    if not user_list:
         user_list = List(user_id = user_id, type_id = type_id)
         user_list.save()
 
-def update_user_info(user_id, email, name, password):
-    old_user = Viwer.objects.filter(user_id = user_id)
+def handle_user_update_info(user_id, email, name, password):
+    old_user = Viwer.objects.filter(user_id=user_id)
+
     if not email or email == ' ':
         email = old_user[0].email
     if not name or name == ' ':
@@ -414,7 +410,10 @@ def update_user_info(user_id, email, name, password):
     else:
         password = hashlib.sha224(password.encode('utf-8')).hexdigest()
 
-    user = Viwer(user_id = user_id, name = name, email = email, password = password)
+    return Viwer(user_id = user_id, name = name, email = email, password = password)
+
+def update_user_info(user_id, email, name, password):
+    user = handle_user_update_info(user_id, email, name, password)
     user.save()
 
 #AUTHENTICATION HANDLERS
@@ -485,13 +484,4 @@ def get_rated_movies():
         movies.append({'movie_id': movie_id, 'title': movie_info[0].tmdb_title, 'poster': movie_info[0].tmdb_poster})
 
     return json.dumps(movies)
-
-def get_test():
-    types = Type.objects.all()
-    all_comments = []
-
-    for t in types:
-        all_comments.append({'type':t.type_name})
-
-    return json.dumps(all_comments)
 

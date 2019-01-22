@@ -9,6 +9,7 @@ class DatabaseTestCase(TestCase):
         Movie.objects.create(tmdb_movie_id=3, tmdb_title="Princess Bride", tmdb_rating=6, year=1998, runtime=93)
 
         Viwer.objects.create(name="luna")
+        Viwer.objects.create(user_id=88, name='test', email='bla@test', password='secure')
 
         Type.objects.create(type_id=1, type_name="recommendation")
         Type.objects.create(type_id=3, type_name="watchedlist")
@@ -117,3 +118,21 @@ class DatabaseTestCase(TestCase):
     def test_should_return_none_if_user_already_exists(self):
         Viwer.objects.create(name='test', email='test@test', password='secure')
         self.assertIsNone(create_user(name='test', email='test@test', password='secure'))
+
+    @mock.patch('moviemancer.models.List.save')
+    def test_should_create_list_to_user(self, mock_create_list_to_user):
+        create_list_to_user(user_id=5, type_id=3)
+        mock_create_list_to_user.assert_called()
+
+    def test_should_handle_user_update_info(self):
+
+        user = handle_user_update_info(user_id=88, email=' ', name='new', password=None)
+        self.assertEqual(user.user_id, 88)
+        self.assertEqual(user.email, 'bla@test')
+        self.assertEqual(user.name, 'new')
+
+    @mock.patch('moviemancer.models.Viwer.save')
+    def test_should_update_user(self, mock_update_user_info):
+        update_user_info(user_id=88, email='new@new', name='new', password='')
+        mock_update_user_info.assert_called()
+
