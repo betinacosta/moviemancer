@@ -349,7 +349,7 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
 
     if movie:
         movie_id = movie[0].movie_id
-        rate_movie (user_id, movie_id, user_rating)
+        rate_movie(user_id, movie_id, user_rating)
         return True
     else:
         tmdb_language = get_tmdb_movie_language(tmdb_movie_id)
@@ -366,7 +366,7 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
             rate_movie (user_id, movie_id, user_rating)
             return True
         else:
-            return false
+            return False
 
 def register_user(name, email, password):
     user_id = create_user(name, email, password)
