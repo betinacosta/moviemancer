@@ -369,7 +369,9 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
             return False
 
 def register_user(name, email, password):
-    user_id = create_user(name, email, password)
+    create_user(name, email, password)
+
+    user_id = get_user_id(email=email)
 
     create_list_to_user(user_id, 1)
     create_list_to_user(user_id, 2)
@@ -384,12 +386,10 @@ def create_user(name, email, password):
     if not user:
         hash_password = hashlib.sha224(password.encode('utf-8')).hexdigest()
 
-        user = Viwer(name = name, email = email, password = hash_password)
+        user = Viwer(name=name, email=email, password=hash_password)
         user.save()
 
-    user_id = get_user_id(email)
-
-    return user_id
+    return None
 
 def get_genre_id(genre_tmdb_id):
     genre = Genre.objects.filter(tmdb_genre_id = genre_tmdb_id)

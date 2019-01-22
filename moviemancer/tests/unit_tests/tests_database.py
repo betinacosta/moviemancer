@@ -98,12 +98,22 @@ class DatabaseTestCase(TestCase):
 
     @mock.patch('moviemancer.queries.create_list_to_user')
     @mock.patch('moviemancer.queries.create_user')
-    def test_should_create_user_and_its_lists(self, mock_create_list_to_user, mock_create_user):
-        register_user('ana', 'ana@ana', '123')
+    @mock.patch('moviemancer.queries.get_user_id')
+    def test_should_create_user_and_its_lists(self, mock_create_list_to_user, mock_create_user, mock_get_user_id):
+        register_user(name='ana', email='ana@ana', password='123')
+
         mock_create_list_to_user.assert_called()
         mock_create_user.assert_called()
+        mock_get_user_id.assert_called()
 
     def test_should_return_user_id_when_registered(self):
-        self.assertIsNotNone(register_user('batata', 'batata@batata', '456'))
+        self.assertIsNotNone(register_user(name='batata', email='batata@batata', password='456'))
 
+    @mock.patch('moviemancer.models.Viwer.save')
+    def test_should_create_user_if_doesent_exists(self, mock_save_viewer):
+        create_user(name='mila', email='mila@mila', password='mileumanoites')
+        mock_save_viewer.assert_called()
 
+    def test_should_return_none_if_user_already_exists(self):
+        Viwer.objects.create(name='test', email='test@test', password='secure')
+        self.assertIsNone(create_user(name='test', email='test@test', password='secure'))
