@@ -20,18 +20,18 @@ def get_dataset():
 
     return dataset
 
-def get_higher_rated(user_id):
-    higher_rated_list = []
-    movies = []
+def get_better_ratted_movies_by_user(user_id, trashold):
+    better_ratted = []
+    movie_ids = []
     for item in movie_id_by_user_list(user_id, 3):
-        movies.append(item.movie_id)
+        movie_ids.append(item.movie_id)
 
-    for movie in movies:
-        rate = get_user_rate_to_movie(movie, user_id)
-        if rate > 2:
-            higher_rated_list.append(movie)
+    for movie_id in movie_ids:
+        rate = get_user_rate_to_movie(movie_id=movie_id, user_id=user_id)
+        if rate >= trashold:
+            better_ratted.append(movie_id)
 
-    return higher_rated_list
+    return better_ratted
 
 def person_correlation(person1, person2, dataset):
 
@@ -232,7 +232,7 @@ def add_recommendation_to_database(reco_list, user_id):
 def complete_recommendation(reco_list, user_id):
     list_id = get_user_list_id_by_type_id(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
-        higher_rated = get_higher_rated(user_id)
+        higher_rated = get_better_ratted_movies_by_user(user_id=user_id, trashold=3)
 
         reco_list = reco_list + get_similar_movies(higher_rated[0])
         time.sleep(1)

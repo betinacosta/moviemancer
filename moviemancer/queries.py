@@ -420,26 +420,23 @@ def update_user_info(user_id, email, name, password):
 
 def authenticate_user(email, password):
     hash_password = hashlib.sha224(password.encode('utf-8')).hexdigest()
-    #hash_password = password
-
-    user = Viwer.objects.filter(email = email, password = hash_password)
+    user = Viwer.objects.filter(email=email, password=hash_password)
 
     if user:
         return True
-    else:
-        return False
+    return False
 
 def get_user(email):
-    user = Viwer.objects.filter(email = email)
+    user = Viwer.objects.get(email = email)
 
-    user_info = {'user_id': user[0].user_id, 'name': user[0].name, 'email': user[0].email,}
+    user_info = {'user_id': user.user_id, 'name': user.name, 'email': user.email,}
 
-    return json.dumps(user_info)
+    return user_info
 
 def get_user_id(email):
-    user = Viwer.objects.filter(email = email)
+    user = Viwer.objects.get(email = email)
 
-    return user[0].user_id
+    return user.user_id
 
 #COMMENTS HANDLERS
 
@@ -453,8 +450,7 @@ def get_comments(movie_tmdb_id):
         name = user[0].name
         rate = get_user_rate_to_movie(movie_id, comment.user_id)
         commnets_by_movie.append({"comment_id": comment.comment_id, "user_name": name,"comment": comment.comment, "rate": rate})
-
-    return json.dumps(commnets_by_movie)
+    return commnets_by_movie
 
 def add_comment(movie_tmdb_id, user_id, comment):
     movie_id = get_movie_id_by_tmdb_id(movie_tmdb_id)
@@ -463,7 +459,7 @@ def add_comment(movie_tmdb_id, user_id, comment):
     comment.save()
 
 def delete_comment(comment_id):
-    Comments.objects.filter(comment_id = comment_id).delete()
+    Comments.objects.get(comment_id = comment_id).delete()
 
     if not Comments.objects.filter(comment_id = comment_id):
         return True
@@ -471,17 +467,14 @@ def delete_comment(comment_id):
         return False
 
 def get_rated_movies():
-    ratings = Rating.objects.all()
+    ratings = []
     rated_movies = []
-    movies = []
 
-    for m in ratings:
-        rated_movies.append(m.movie_id)
-    rated_movies = list(set(rated_movies))
+    for m in Rating.objects.all():
+        ratings.append(m.movie_id)
+    ratings = list(set(ratings))
 
-    for movie_id in rated_movies:
-        movie_info = Movie.objects.filter(movie_id = movie_id)
-        movies.append({'movie_id': movie_id, 'title': movie_info[0].tmdb_title, 'poster': movie_info[0].tmdb_poster})
-
-    return json.dumps(movies)
-
+    for movie_id in ratings:
+        movie_info = Movie.objects.get(movie_id = movie_id)
+        rated_movies.append({'movie_id': movie_id, 'title': movie_info.tmdb_title, 'poster': movie_info.tmdb_poster})
+    return rated_movies

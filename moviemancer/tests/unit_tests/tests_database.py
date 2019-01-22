@@ -18,6 +18,8 @@ class DatabaseTestCase(TestCase):
         List.objects.create(list_id=22, user_id=1, type_id=2)
         List.objects.create(list_id=33, user_id=1, type_id=3)
 
+        Comments.objects.create(comment_id=99, user_id=77, movie_id=99, comment='muito bom, 2 estrelas')
+
     def test_should_add_new_movie_to_database(self):
         self.assertEqual(add_movie_to_database(543), 'Success')
 
@@ -136,3 +138,47 @@ class DatabaseTestCase(TestCase):
         update_user_info(user_id=88, email='new@new', name='new', password='')
         mock_update_user_info.assert_called()
 
+    def test_should_return_true_if_user_exists(self):
+        create_user(name='I exist', email='iexist@test', password='123')
+
+        self.assertTrue(authenticate_user(email='iexist@test', password='123'))
+
+    def test_should_return_false_if_user_doesnt_exist(self):
+        self.assertFalse(authenticate_user(email='xuxa@test', password='**'))
+
+    def test_should_return_user_information(self):
+        Viwer.objects.create(user_id=99, name="A User", email='auser@user')
+
+        user = {'email': 'auser@user', 'name': 'A User', 'user_id': 99}
+        self.assertEqual(get_user(email='auser@user'), user)
+
+    def test_should_return_user_id(self):
+        self.assertEqual(get_user_id(email='bla@test'), 88)
+
+    def test_should_return_comments_based_on_tmdb_movie_id(self):
+        Movie.objects.create(movie_id=99, tmdb_movie_id=8, tmdb_title="test", tmdb_rating=6, year=1998, runtime=93)
+        Viwer.objects.create(user_id=77, name='pria', email='pria@mail')
+        Comments.objects.create(user_id=77, movie_id=99, comment='muito bom, 2 estrelas')
+
+        comment = [
+                {'comment_id': 99, 'user_name': 'pria', 'comment': 'muito bom, 2 estrelas', 'rate': 0},
+                {'comment_id': 1, 'user_name': 'pria', 'comment': 'muito bom, 2 estrelas', 'rate': 0}
+            ]
+        self.assertEqual(get_comments(movie_tmdb_id=8), comment)
+
+    @mock.patch('moviemancer.models.Comments.save')
+    def test_should_add_comment_to_movie(self, mock_save_comment):
+        add_comment(movie_tmdb_id=3, user_id=1, comment='bom!')
+        mock_save_comment.assert_called()
+
+    @mock.patch('moviemancer.models.Comments.delete')
+    def test_should_delete_comment(self, mock_delete_comment):
+        print(delete_comment(comment_id=99))
+        mock_delete_comment.assert_called()
+
+    def test_should_return_all_rated_movies(self):
+        Movie.objects.create(movie_id=42, tmdb_movie_id=42, tmdb_title="bla", tmdb_rating=6, year=1998, runtime=93)
+        Rating.objects.create(rating_id=3, user_id=1, movie_id=42, rate_id=3)
+
+        rated_movies=[{'movie_id': 42, 'poster': '', 'title': 'bla'}]
+        self.assertEqual(get_rated_movies(), rated_movies)

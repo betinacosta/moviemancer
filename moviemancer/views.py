@@ -117,7 +117,7 @@ def get_all_comments(request):
         request_comments = json.loads(request.body)
         request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
 
-        all_comments = get_comments(request_movie_tmdb_id)
+        all_comments = json.dumps(get_comments(request_movie_tmdb_id))
         return HttpResponse(all_comments)
     else:
         return HttpResponse("Erroa o carregar comentarios")
@@ -185,7 +185,7 @@ def get_auth(request):
         if authenticate_user(request_email, request_password):
 
             user_id = get_user_id_by_email(request_email)
-            user_data = get_user(request_email)
+            user_data = json.dumps(get_user(request_email))
             generate_recommendation(user_id)
 
             return HttpResponse(user_data)
@@ -317,7 +317,7 @@ def get_watch_list(request):
         return HttpResponse("You are on your own")
 
 def get_rated(request):
-    rated_movies = get_rated_movies()
+    rated_movies = json.dumps(get_rated_movies())
     print(rated_movies)
     return HttpResponse(rated_movies)
 
