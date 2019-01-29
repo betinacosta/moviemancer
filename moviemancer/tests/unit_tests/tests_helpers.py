@@ -1,18 +1,10 @@
 from django.test import TestCase
 from moviemancer.helpers import Helpers
-from moviemancer.models import Viwer, Type, List
+from moviemancer.tests.unit_tests.database_stub import DatabaseStub
 
 class HelpersTestCase(TestCase):
     def setUp(self):
-        Viwer.objects.create(user_id=1, name="hermoione", email="batata@batatinha.com")
-
-        Type.objects.create(type_id=1, type_name="recommendation")
-        Type.objects.create(type_id=2, type_name="watchlist")
-        Type.objects.create(type_id=3, type_name="watchedlist")
-
-        List.objects.create(list_id=1, user_id=1, type_id=1)
-        List.objects.create(list_id=2, user_id=1, type_id=2)
-        List.objects.create(list_id=3, user_id=1, type_id=3)
+        DatabaseStub.create_database_stub()
 
     def test_should_return_list_by_user(self):
         self.assertEqual(Helpers.get_user_list_id_by_type_id(user_id=1, type_id=3), 3)
@@ -30,3 +22,9 @@ class HelpersTestCase(TestCase):
         genres='18,53'
         entry = [{'id': 18, 'name': 'Drama'}, {'id': 53, 'name': 'Thriller'}]
         self.assertEqual(Helpers.get_comma_separeted_genres(genre_list = entry), genres)
+
+    def test_should_return_true_if_movie_on_user_list(self):
+        self.assertTrue(Helpers.is_movie_on_list(user_id=1, movie_id=1, type_id=1))
+
+    def test_should_return_false_if_movie_not_on_user_list(self):
+        self.assertFalse(Helpers.is_movie_on_list(user_id=2, movie_id=1, type_id=2))

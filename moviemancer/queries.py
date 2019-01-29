@@ -71,15 +71,6 @@ def get_tmdb_id_by_movie_id(movie_id):
 def get_movie_id_by_tmdb_id(tmdb_movie_id):
     return Movie.objects.get(tmdb_movie_id=tmdb_movie_id).movie_id
 
-def is_movie_on_list (user_id, movie_id, type_id):
-    list_id = Helpers.get_user_list_id_by_type_id(user_id, type_id)
-
-    movie_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
-
-    if not movie_list:
-        return False
-    return True
-
 def get_movie_title_internal(movie_id):
     movie = Movie.objects.filter(movie_id = movie_id)
 
@@ -192,32 +183,6 @@ def compare_languages(l1, l2):
         return False
 
 #UPDATE, DELETE, INSERT
-def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_type):
-    movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
-    if movie:
-        movie_id = movie[0].movie_id
-        add_to_list (user_id, movie_id, list_type)
-    else:
-        DataBaseHandler.add_movie_to_database(tmdb_id=tmdb_movie_id)
-        movie = Movie.objects.filter(tmdb_movie_id=tmdb_movie_id)
-        if movie:
-            movie_id = movie[0].movie_id
-            add_to_list (user_id, movie_id, list_type)
-        else:
-            print('Errro while adding new movie to list')
-
-#melhorar test, testar para ambos ifs
-def add_to_list (user_id, movie_id, list_type):
-    list_id = Helpers.get_user_list_id_by_type_id(user_id, list_type)
-    is_on_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
-
-    #If in recommendation list, remove it
-    if is_movie_on_list (user_id, movie_id, 1):
-        DataBaseHandler.remove_movie_from_list(user_id, movie_id, 1)
-
-    if not is_on_list:
-        movie_list_entry = MovieList(movie_id = movie_id, list_id = list_id)
-        movie_list_entry.save()
 
 def rate_movie (user_id, movie_id, local_rate_id):
 
@@ -225,11 +190,11 @@ def rate_movie (user_id, movie_id, local_rate_id):
     DataBaseHandler.add_rating_to_movie(user_id, movie_id, local_rate_id)
 
     #check if it is on watchlist and remove it
-    if is_movie_on_list(user_id, movie_id, 2):
+    if Helpers.is_movie_on_list(user_id, movie_id, 2):
         DataBaseHandler.remove_movie_from_list(user_id, movie_id, 2)
 
     #add to watched list
-    add_to_list (user_id, movie_id, 3)
+    DataBaseHandler.add_to_list (user_id, movie_id, 3)
 
 def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_title):
     movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)

@@ -39,12 +39,6 @@ class QueriesTestCase(TestCase):
     def test_should_return_movie_id_by_tmdb_id(self):
         self.assertEqual(get_movie_id_by_tmdb_id(533), 1)
 
-    def test_should_return_true_if_movie_on_user_list(self):
-        self.assertTrue(is_movie_on_list(1, 1, 1))
-
-    def test_should_return_false_if_movie_not_on_user_list(self):
-        self.assertFalse(is_movie_on_list(2, 1, 2))
-
     #IMDb
     def test_should_return_link_to_movie_poster_by_movie_id(self):
         self.assertIn('http://image.tmdb.org/t/p/original', get_movie_poster_internal(5))

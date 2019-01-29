@@ -19,6 +19,8 @@ class DatabaseTestCase(TestCase):
         List.objects.create(list_id=22, user_id=1, type_id=2)
         List.objects.create(list_id=33, user_id=1, type_id=3)
 
+        MovieList.objects.create(movie_list_id=13, movie_id=1, list_id=11)
+
         Comments.objects.create(comment_id=99, user_id=77, movie_id=99, comment='muito bom, 2 estrelas')
 
     @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_movie_poster')
@@ -76,7 +78,7 @@ class DatabaseTestCase(TestCase):
         mock_remove_rating.assert_called_with(user_id=1, movie_id=2)
 
     def test_should_create_movie_and_add_to_list(self):
-        add_to_list_external(user_id=1, tmdb_movie_id=22, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
+        DataBaseHandler.add_to_list_external(user_id=1, tmdb_movie_id=22, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
 
         movie_queryset = Movie.objects.filter(tmdb_movie_id=22)
         self.assertTrue(movie_queryset)
@@ -85,21 +87,22 @@ class DatabaseTestCase(TestCase):
 
     def test_should_add_existent_movie_to_list(self):
         Movie.objects.create(movie_id=99, tmdb_movie_id=533, tmdb_title="Batatas Furiosas", tmdb_rating=6, year=1998, runtime=93)
-        add_to_list_external(user_id=1, tmdb_movie_id=533, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
+        DataBaseHandler.add_to_list_external(user_id=1, tmdb_movie_id=533, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
 
         self.assertTrue(MovieList.objects.filter(movie_id=99, list_id=33))
         self.assertTrue(len(Movie.objects.filter(tmdb_movie_id=533)) == 1)
 
-    def test_should_add_movie_to_list(self):
-        Movie.objects.create(movie_id=66, tmdb_movie_id=7, tmdb_title="Furiosas Batatas", tmdb_rating=6, year=1998, runtime=93)
-        add_to_list(user_id=1, movie_id=66, list_type=1)
+    @mock.patch('moviemancer.models.MovieList.save')
+    def test_should_add_movie_to_list(self, mock_save):
+        DataBaseHandler.add_to_list(user_id=1, movie_id=66, list_type=1)
 
-        self.assertTrue(MovieList.objects.filter(movie_id=66, list_id=11))
+        mock_save.assert_called()
 
-    def test_should_remove_from_recomendation_if_added_to_other_list(self):
-        add_to_list(user_id=1, movie_id=99, list_type=1)
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
+    def test_should_remove_from_recomendation_if_added_to_other_list(self, mock_remove_from_list):
+        DataBaseHandler.add_to_list(user_id=1, movie_id=1, list_type=2)
 
-        self.assertFalse(MovieList.objects.filter(movie_id=99, list_id=33))
+        mock_remove_from_list.assert_called()
 
     def test_should_add_movie_to_watchedlist_when_rated(self):
         rate_movie(user_id=1, movie_id=33, local_rate_id=5)

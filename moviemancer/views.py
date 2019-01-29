@@ -248,7 +248,7 @@ def add_watchlist(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        add_to_list(request_user_id, request_movie_id, 2)
+        DataBaseHandler.add_to_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -264,7 +264,7 @@ def add_watchlist_external(request):
         request_movie_poster = request_data[u'movie_poster']
         request_movie_title = request_data[u'movie_title']
 
-        add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
+        DataBaseHandler.add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
