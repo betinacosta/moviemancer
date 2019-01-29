@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseServerError
 import json
 from django.template import RequestContext
+from moviemancer.database_handlers import DataBaseHandler
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -300,7 +301,7 @@ def remove_from_watchlist(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        remove_movie_from_list(request_user_id, request_movie_id, 2)
+        DataBaseHandler.remove_movie_from_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")

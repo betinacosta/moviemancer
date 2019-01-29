@@ -2,6 +2,7 @@ from django.test import TestCase
 from moviemancer.queries import *
 from moviemancer.models import *
 from unittest import mock
+from moviemancer.database_handlers import DataBaseHandler
 
 class DatabaseTestCase(TestCase):
 
@@ -20,33 +21,51 @@ class DatabaseTestCase(TestCase):
 
         Comments.objects.create(comment_id=99, user_id=77, movie_id=99, comment='muito bom, 2 estrelas')
 
-    def test_should_add_new_movie_to_database(self):
-        self.assertEqual(add_movie_to_database(543), 'Success')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_movie_poster')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_movie_title')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_tmdb_movie_rating')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_tmdb_movie_language')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_tmdb_movie_runtime')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_tmdb_movie_genres_id')
+    @mock.patch('moviemancer.tmdb_handler.TMDbHandler.get_tmdb_movie_year')
+    @mock.patch('moviemancer.models.Movie.save')
+    def test_should_add_new_movie_to_database(self, mock_poster, mock_save, mock_title, mock_rating, mock_language, mock_runtime, mock_genres, mock_year):
+        DataBaseHandler.add_movie_to_database(543)
+        mock_poster.assert_called()
+        mock_title.assert_called()
+        mock_rating.assert_called()
+        mock_language.assert_called()
+        mock_runtime.assert_called()
+        mock_genres.assert_called()
+        mock_year.assert_called()
+        mock_save.assert_called()
 
     def test_should_return_error_if_movie_exists_in_db(self):
-        self.assertEqual(add_movie_to_database(3), 'Error: movie already exists')
+        self.assertEqual(DataBaseHandler.add_movie_to_database(3), 'Error: movie already exists')
 
     def test_should_add_new_rate_to_movie(self):
-        add_rating_to_movie(user_id=5, movie_id=44, local_rate_id=3)
+        DataBaseHandler.add_rating_to_movie(user_id=5, movie_id=44, local_rate_id=3)
         self.assertTrue(Rating.objects.filter(user_id=5, movie_id=44))
 
     def test_should_update_existing_movie_rate(self):
-        add_rating_to_movie(user_id=5, movie_id=55, local_rate_id=3)
-        add_rating_to_movie(user_id=5, movie_id=55, local_rate_id=5)
+        DataBaseHandler.add_rating_to_movie(user_id=5, movie_id=55, local_rate_id=3)
+        DataBaseHandler.add_rating_to_movie(user_id=5, movie_id=55, local_rate_id=5)
 
         self.assertTrue(Rating.objects.filter(user_id=5, movie_id=55, rate_id=5))
 
-    def test_should_remove_movie_from_list(self):
+    @mock.patch('moviemancer.models.MovieList.delete')
+    def test_should_remove_movie_from_list(self, mock_delete):
         MovieList.objects.create(movie_id=1, list_id=33)
-        remove_movie_from_list(user_id=1, movie_id=1, list_type=3)
+        DataBaseHandler.remove_movie_from_list(user_id=1, movie_id=1, list_type=3)
 
-        self.assertFalse(MovieList.objects.filter(movie_id=1, list_id=33))
+        mock_delete.assert_called()
 
-    def test_should_remove_user_rating_to_given_movie(self):
+    @mock.patch('moviemancer.models.Rating.delete')
+    def test_should_remove_user_rating_to_given_movie(self, mock_delete):
         Rating.objects.create(user_id=1, movie_id=1, rate_id=4)
-        remove_rating(user_id=1, movie_id=1)
+        DataBaseHandler.remove_rating(user_id=1, movie_id=1)
 
-        self.assertFalse(Rating.objects.filter(user_id=1, movie_id=1))
+        mock_delete.assert_called()
 
     def test_should_remove_movie_from_watched_list(self):
         MovieList.objects.create(movie_id=2, list_id=33)

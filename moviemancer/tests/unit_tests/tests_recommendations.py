@@ -1,6 +1,7 @@
 from django.test import TestCase
 from moviemancer.reco_refactor import *
 from moviemancer.models import *
+from unittest import mock
 
 class RecommendationTestCase(TestCase):
 
@@ -30,13 +31,5 @@ class RecommendationTestCase(TestCase):
         MovieList.objects.create(movie_list_id=1, movie_id=1, list_id=3)
         MovieList.objects.create(movie_list_id=2, movie_id=2, list_id=3)
 
-    def test_should_return_better_rated_movies_according_to_trashold(self):
-        better_rated = [2]
-
-        self.assertEqual(get_better_ratted_movies_by_user(user_id=1, trashold=3), better_rated)
-
-    def test_should_convert_tmdb_rating_to_five(self):
-        self.assertEquals(convert_tmdb_rating(9),5)
-
-    def test_should_convert_tmdb_rating_to_four(self):
-        self.assertEquals(convert_tmdb_rating(8.8),4)
+    # def test_should_return_user_movies_dataset(self):
+    #     self.assertEqual(get_dataset(), {1: {1: 2, 2: 4}})

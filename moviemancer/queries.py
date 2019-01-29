@@ -5,6 +5,9 @@ import hashlib
 import tmdbsimple as tmdb
 import time
 from decimal import Decimal, ROUND_HALF_UP
+from moviemancer.tmdb_handler import TMDbHandler
+from moviemancer.database_handlers import DataBaseHandler
+from moviemancer.helpers import Helpers
 
 tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
 
@@ -25,13 +28,9 @@ def movie_by_user_list(user_id, list_name):
     movie_list = Movie.objects.raw("SELECT * from movie INNER JOIN movie_list ON list_id = %s AND movie_list.movie_id = movie.movie_id", [list_id])
     return movie_list
 
-def get_user_list_id_by_type_id(user_id, type_id):
-    user_list = List.objects.get(user_id = user_id, type_id = type_id)
-    return user_list.list_id
-
 #remove this or movie_by_user_list
 def movie_id_by_user_list(user_id, type_id):
-    list_id = get_user_list_id_by_type_id(user_id, type_id)
+    list_id = Helpers.get_user_list_id_by_type_id(user_id, type_id)
     movie_list = MovieList.objects.filter(list_id = list_id)
 
     return movie_list
@@ -65,14 +64,7 @@ def get_user_id_by_email(email):
 
     return user[0].user_id
 
-def get_tmdb_movies_id():
-    movies = []
-
-    for item in Movie.objects.all():
-        movies.append(item.tmdb_movie_id)
-
-    return movies
-
+#in other class
 def get_tmdb_id_by_movie_id(movie_id):
    return Movie.objects.get(movie_id=movie_id).tmdb_movie_id
 
@@ -80,25 +72,13 @@ def get_movie_id_by_tmdb_id(tmdb_movie_id):
     return Movie.objects.get(tmdb_movie_id=tmdb_movie_id).movie_id
 
 def is_movie_on_list (user_id, movie_id, type_id):
-    list_id = get_user_list_id_by_type_id(user_id, type_id)
+    list_id = Helpers.get_user_list_id_by_type_id(user_id, type_id)
 
     movie_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
     if not movie_list:
         return False
     return True
-
-def get_movie_title(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info(language = 'pt-BR')
-
-    return tmdb_movie.title
-
-def get_movie_poster(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info(language = 'pt-BR')
-
-    return 'http://image.tmdb.org/t/p/original' + tmdb_movie.poster_path
 
 def get_movie_title_internal(movie_id):
     movie = Movie.objects.filter(movie_id = movie_id)
@@ -110,15 +90,13 @@ def get_movie_poster_internal(movie_id):
 
     return movie[0].tmdb_poster
 
-    return 'http://image.tmdb.org/t/p/original' + tmdb_movie.poster_path
-
 def get_movie_tmdb_id(movie_id):
     return Movie.objects.get(movie_id = movie_id).tmdb_movie_id
 
 #refactor duplication with get_watched_list and get_recommendation_list
 def get_watchedlist (user):
     watched_list = []
-    list_id = get_user_list_id_by_type_id(user, 3)
+    list_id = Helpers.get_user_list_id_by_type_id(user, 3)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -137,7 +115,7 @@ def get_tmdb_rating_internal(movie_id):
 
 def get_watchlist(user):
     watchlist = []
-    list_id = get_user_list_id_by_type_id(user, 2)
+    list_id = Helpers.get_user_list_id_by_type_id(user, 2)
     movies = MovieList.objects.filter(list_id = list_id)
 
     for m in movies:
@@ -165,49 +143,6 @@ def user_exists(user_email):
     if Viwer.objects.filter(email = user_email).exists():
         return True
     return True
-
-def convert_tmdb_rating(tmdb_rating):
-    return Decimal((tmdb_rating/2)).quantize(0, ROUND_HALF_UP)
-
-def get_tmdb_movie_rating(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info()
-
-    return convert_tmdb_rating(tmdb_movie.vote_average)
-
-def get_tmdb_movie_language(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info()
-
-    return tmdb_movie.original_language
-
-def get_tmdb_movie_runtime(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info()
-
-    if tmdb_movie.runtime == 0 or tmdb_movie.runtime == 'None':
-        return 50
-
-    return tmdb_movie.runtime
-
-def formate_date_to_year(full_date):
-    return full_date.split('-')[0]
-
-def get_tmdb_movie_year(tmdb_id):
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info()
-
-    return formate_date_to_year(tmdb_movie.release_date)
-
-def get_tmdb_movie_genres_id(tmdb_id):
-    genres = []
-    tmdb_movie = tmdb.Movies(tmdb_id)
-    tmdb_movie.info(language = 'pt-BR')
-
-    for g in tmdb_movie.genres:
-        genres.append(str(g['id']))
-
-    return ','.join(genres)
 
 def filter_recommendation(genres, minYear, maxYear, minRuntime, maxRuntime, language, user_id):
     reco = movie_by_user_list(user_id, 'recommendation')
@@ -257,47 +192,9 @@ def compare_languages(l1, l2):
         return False
 
 #UPDATE, DELETE, INSERT
-
-def add_movie_to_database(tmdb_id):
-    if not Movie.objects.filter(tmdb_movie_id = tmdb_id):
-        tmdb_poster = get_movie_poster(tmdb_id)
-        tmdb_title = get_movie_title(tmdb_id)
-        tmdb_rating = get_tmdb_movie_rating(tmdb_id)
-        tmdb_language = get_tmdb_movie_language(tmdb_id)
-        tmdb_runtime = get_tmdb_movie_runtime(tmdb_id)
-        tmdb_genres = get_tmdb_movie_genres_id(tmdb_id)
-        tmdb_year = get_tmdb_movie_year(tmdb_id)
-
-        movie_db = Movie(tmdb_movie_id=tmdb_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title, tmdb_rating = tmdb_rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-
-        try:
-            movie_db.save()
-            return 'Success'
-        except:
-             return('Save error')
-    return 'Error: movie already exists'
-
-def add_rating_to_movie(user_id, movie_id, local_rate_id):
-    try:
-        old_rating = Rating.objects.get(movie_id = movie_id, user_id = user_id)
-        new_rating = Rating(rating_id = old_rating.rating_id, user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
-    except Rating.DoesNotExist:
-        new_rating = Rating(user_id = user_id, movie_id = movie_id, rate_id = local_rate_id)
-
-    new_rating.save()
-
-def remove_movie_from_list(user_id, movie_id, list_type):
-    list_id = get_user_list_id_by_type_id(user_id, list_type)
-
-    MovieList.objects.filter(movie_id = movie_id, list_id = list_id).delete()
-
-def remove_rating(user_id, movie_id):
-    Rating.objects.filter(movie_id = movie_id, user_id = user_id).delete()
-
 def remove_watched(user_id, movie_id, list_type):
-    remove_movie_from_list(user_id, movie_id, list_type)
-
-    remove_rating(user_id, movie_id)
+    DataBaseHandler.remove_movie_from_list(user_id, movie_id, list_type)
+    DataBaseHandler.remove_rating(user_id, movie_id)
 
 def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_type):
     movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
@@ -305,28 +202,22 @@ def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_t
         movie_id = movie[0].movie_id
         add_to_list (user_id, movie_id, list_type)
     else:
-        tmdb_language = get_tmdb_movie_language(tmdb_movie_id)
-        tmdb_runtime = get_tmdb_movie_runtime(tmdb_movie_id)
-        tmdb_genres = get_tmdb_movie_genres_id(tmdb_movie_id)
-        tmdb_year = get_tmdb_movie_year(tmdb_movie_id)
-        rating = get_tmdb_movie_rating(tmdb_movie_id)
-
-        new_movie = Movie(tmdb_movie_id = tmdb_movie_id, tmdb_title = tmdb_title, tmdb_poster = tmdb_poster, tmdb_rating = rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-        new_movie.save()
-        movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
+        DataBaseHandler.add_movie_to_database(tmdb_id=tmdb_movie_id)
+        movie = Movie.objects.filter(tmdb_movie_id=tmdb_movie_id)
         if movie:
             movie_id = movie[0].movie_id
             add_to_list (user_id, movie_id, list_type)
         else:
             print('Errro while adding new movie to list')
 
+#melhorar test, testar para ambos ifs
 def add_to_list (user_id, movie_id, list_type):
-    list_id = get_user_list_id_by_type_id(user_id, list_type)
+    list_id = Helpers.get_user_list_id_by_type_id(user_id, list_type)
     is_on_list = MovieList.objects.filter(movie_id = movie_id, list_id = list_id)
 
     #If in recommendation list, remove it
     if is_movie_on_list (user_id, movie_id, 1):
-        remove_movie_from_list(user_id, movie_id, 1)
+        DataBaseHandler.remove_movie_from_list(user_id, movie_id, 1)
 
     if not is_on_list:
         movie_list_entry = MovieList(movie_id = movie_id, list_id = list_id)
@@ -335,11 +226,11 @@ def add_to_list (user_id, movie_id, list_type):
 def rate_movie (user_id, movie_id, local_rate_id):
 
     #add rating
-    add_rating_to_movie(user_id, movie_id, local_rate_id)
+    DataBaseHandler.add_rating_to_movie(user_id, movie_id, local_rate_id)
 
     #check if it is on watchlist and remove it
     if is_movie_on_list(user_id, movie_id, 2):
-        remove_movie_from_list(user_id, movie_id, 2)
+        DataBaseHandler.remove_movie_from_list(user_id, movie_id, 2)
 
     #add to watched list
     add_to_list (user_id, movie_id, 3)
@@ -352,14 +243,7 @@ def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_
         rate_movie(user_id, movie_id, user_rating)
         return True
     else:
-        tmdb_language = get_tmdb_movie_language(tmdb_movie_id)
-        tmdb_runtime = get_tmdb_movie_runtime(tmdb_movie_id)
-        tmdb_genres = get_tmdb_movie_genres_id(tmdb_movie_id)
-        tmdb_year = get_tmdb_movie_year(tmdb_movie_id)
-        rating = get_tmdb_movie_rating(tmdb_movie_id)
-
-        new_movie = Movie(tmdb_movie_id = tmdb_movie_id, tmdb_title = tmdb_title, tmdb_poster = tmdb_poster, tmdb_rating = rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-        new_movie.save()
+        DataBaseHandler.add_movie_to_database(tmdb_id=tmdb_movie_id)
         movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
         if movie:
             movie_id = movie[0].movie_id
@@ -478,3 +362,42 @@ def get_rated_movies():
         movie_info = Movie.objects.get(movie_id = movie_id)
         rated_movies.append({'movie_id': movie_id, 'title': movie_info.tmdb_title, 'poster': movie_info.tmdb_poster})
     return rated_movies
+
+def get_better_ratted_movies_by_user(user_id, trashold):
+    better_ratted = []
+    movie_ids = []
+    for item in movie_id_by_user_list(user_id, 3):
+        movie_ids.append(item.movie_id)
+
+    for movie_id in movie_ids:
+        rate = get_user_rate_to_movie(movie_id=movie_id, user_id=user_id)
+        if rate >= trashold:
+            better_ratted.append(movie_id)
+
+    return better_ratted
+
+def get_poster_link(poster_path):
+    return 'http://image.tmdb.org/t/p/original' + poster_path
+
+def get_formatted_year(year):
+    return year.split('-')[0]
+
+def is_movie_on_database(tmdb_movie_id):
+    movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
+
+    if not movie:
+        return False
+    return True
+
+def get_similar_movies(movie_id):
+    similar_movies = []
+
+    tmdb_movie_id = get_tmdb_id_by_movie_id(movie_id)
+    tmdb_similar_movies = TMDbHandler.get_tmdb_similar_movies(tmdb_movie_id)
+
+    for tmdb_id in tmdb_similar_movies:
+        if not is_movie_on_database(tmdb_id):
+            DataBaseHandler.add_movie_to_database(tmdb_id)
+
+        similar_movies.append(get_movie_id_by_tmdb_id(tmdb_id))
+    return similar_movies

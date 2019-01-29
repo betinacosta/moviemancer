@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from math import sqrt
-from decimal import Decimal, ROUND_HALF_UP
 from moviemancer.models import Movie, Viwer, List, Rating, Rate, MovieList
 import collections
 from moviemancer.queries import *
@@ -19,19 +18,6 @@ def get_dataset():
         dataset.update({user.user_id: movies})
 
     return dataset
-
-def get_better_ratted_movies_by_user(user_id, trashold):
-    better_ratted = []
-    movie_ids = []
-    for item in movie_id_by_user_list(user_id, 3):
-        movie_ids.append(item.movie_id)
-
-    for movie_id in movie_ids:
-        rate = get_user_rate_to_movie(movie_id=movie_id, user_id=user_id)
-        if rate >= trashold:
-            better_ratted.append(movie_id)
-
-    return better_ratted
 
 def person_correlation(person1, person2, dataset):
 
@@ -81,7 +67,6 @@ def user_recommendations(person):
         if other == person:
             continue
         sim = person_correlation(person,other,dataset)
-        #print ">>>>>>>",sim
 
         # ignore scores of zero or lower
         if sim <=0:
@@ -104,95 +89,8 @@ def user_recommendations(person):
     rankings.sort()
     rankings.reverse()
     # returns the recommended items
-    recommendataions_list = [recommend_item for score,recommend_item in rankings]
-    return recommendataions_list
-
-def convert_tmdb_rating(tmdb_rating):
-    return Decimal((tmdb_rating/2)).quantize(0, ROUND_HALF_UP)
-
-def get_tmdb_similar_movies(tmdb_movie_id):
-    similar_movies = []
-    movie = tmdb.Movies(tmdb_movie_id)
-    response = movie.similar_movies(language = 'pt-BR', page=1)
-
-    for item in response['results']:
-        year = item['release_date'].split('-')
-        year = year[0]
-
-        poster = 'http://image.tmdb.org/t/p/original' + item['poster_path']
-
-        genres = []
-        for g in item['genre_ids']:
-            genres.append(str(g))
-
-        genres = ','.join(genres)
-
-        r = item['vote_average']
-        r = int(r)
-
-        if r == 1 or r == 2:
-            r = 1
-        if r == 3 or r == 4:
-            r = 2
-        if r == 5 or r == 6:
-            r = 3
-        if r == 7 or r == 8:
-            r = 4
-        if r == 9 or r == 10:
-            r = 5
-
-        similar_movies.append({ "tmdb_movie_id": item['id'],
-                                "language": item['original_language'],
-                                "rating": r,
-                                "year": year,
-                                "poster": poster,
-                                "title": item['title'],
-                                "genres": genres
-                                })
-
-    return similar_movies
-
-def add_ready_movie_to_database(movie):
-
-    tmdb_id = movie['tmdb_movie_id']
-    if not Movie.objects.filter(tmdb_movie_id = tmdb_id):
-        tmdb_poster = movie['poster']
-        tmdb_title = movie['title']
-        tmdb_rating = movie['rating']
-        tmdb_language = movie['language']
-        tmdb_runtime = get_tmdb_movie_runtime(tmdb_id)
-        tmdb_genres = movie['genres']
-        tmdb_year = movie['year']
-
-        movie_db = Movie(tmdb_movie_id=tmdb_id, tmdb_poster = tmdb_poster, tmdb_title = tmdb_title, tmdb_rating = tmdb_rating, language = tmdb_language, year = tmdb_year, genres = tmdb_genres, runtime = tmdb_runtime)
-
-        try:
-            movie_db.save()
-        except:
-            print('Deu ruim at: ', tmdb_id)
-
-def get_similar_movies(movie_id):
-    similar_movies = []
-
-    tmdb_movie_id = get_tmdb_id_by_movie_id(movie_id)
-
-    tmdb_similar_movies = get_tmdb_similar_movies(tmdb_movie_id)
-
-    for movie in tmdb_similar_movies:
-        if is_movie_on_database(movie['tmdb_movie_id']):
-            similar_movies.append(get_movie_id_by_tmdb_id(movie['tmdb_movie_id']))
-        else:
-            add_ready_movie_to_database(movie)
-            similar_movies.append(get_movie_id_by_tmdb_id(movie['tmdb_movie_id']))
-
-    return similar_movies
-
-def is_movie_on_database(tmdb_movie_id):
-    movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
-
-    if not movie:
-        return False
-    return True
+    recommendation = [recommend_item for score,recommend_item in rankings]
+    return recommendation
 
 def remove_repeated_recommendations(user_id, reco_list, list_name):
     for item in movie_id_by_user_list(user_id, list_name):
@@ -221,7 +119,7 @@ def generate_recommendation(user_id):
     add_recommendation_to_database(reco_list, user_id)
 
 def add_recommendation_to_database(reco_list, user_id):
-    list_id = get_user_list_id_by_type_id(user_id, 1)
+    list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
     reco_list = list(set(reco_list))
 
     for movie_id in reco_list:
@@ -230,7 +128,7 @@ def add_recommendation_to_database(reco_list, user_id):
         reco.save()
 
 def complete_recommendation(reco_list, user_id):
-    list_id = get_user_list_id_by_type_id(user_id, 1)
+    list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
         higher_rated = get_better_ratted_movies_by_user(user_id=user_id, trashold=3)
 
