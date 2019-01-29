@@ -7,19 +7,22 @@ from moviemancer.database_handlers import DataBaseHandler
 class DatabaseTestCase(TestCase):
 
     def setUp(self):
-        Movie.objects.create(tmdb_movie_id=3, tmdb_title="Princess Bride", tmdb_rating=6, year=1998, runtime=93)
+        Movie.objects.create(movie_id=35, tmdb_movie_id=3, tmdb_title="Princess Bride", tmdb_rating=6, year=1998, runtime=93)
+        Movie.objects.create(movie_id=36, tmdb_movie_id=9, tmdb_title="Princess", tmdb_rating=4, year=1944, runtime=93)
 
         Viwer.objects.create(name="luna")
         Viwer.objects.create(user_id=88, name='test', email='bla@test', password='secure')
 
         Type.objects.create(type_id=1, type_name="recommendation")
+        Type.objects.create(type_id=2, type_name="watchlist")
         Type.objects.create(type_id=3, type_name="watchedlist")
 
         List.objects.create(list_id=11, user_id=1, type_id=1)
         List.objects.create(list_id=22, user_id=1, type_id=2)
         List.objects.create(list_id=33, user_id=1, type_id=3)
 
-        MovieList.objects.create(movie_list_id=13, movie_id=1, list_id=11)
+        MovieList.objects.create(movie_list_id=13, movie_id=35, list_id=11)
+        MovieList.objects.create(movie_list_id=14, movie_id=36, list_id=22)
 
         Comments.objects.create(comment_id=99, user_id=77, movie_id=99, comment='muito bom, 2 estrelas')
 
@@ -57,33 +60,32 @@ class DatabaseTestCase(TestCase):
 
     @mock.patch('moviemancer.models.MovieList.delete')
     def test_should_remove_movie_from_list(self, mock_delete):
-        MovieList.objects.create(movie_id=1, list_id=33)
-        DataBaseHandler.remove_movie_from_list(user_id=1, movie_id=1, list_type=3)
+        MovieList.objects.create(movie_id=35, list_id=33)
+        DataBaseHandler.remove_movie_from_list(user_id=1, movie_id=35, list_type=3)
 
         mock_delete.assert_called()
 
     @mock.patch('moviemancer.models.Rating.delete')
     def test_should_remove_user_rating_to_given_movie(self, mock_delete):
-        Rating.objects.create(user_id=1, movie_id=1, rate_id=4)
-        DataBaseHandler.remove_rating(user_id=1, movie_id=1)
+        Rating.objects.create(user_id=1, movie_id=35, rate_id=4)
+        DataBaseHandler.remove_rating(user_id=1, movie_id=35)
 
         mock_delete.assert_called()
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_rating')
     def test_should_remove_movie_from_watched_list(self, mock_remove_rating, mock_remove_from_list):
-        DataBaseHandler.remove_watched(user_id=1, movie_id=2, list_type=3)
+        DataBaseHandler.remove_watched(user_id=1, movie_id=36, list_type=3)
 
-        mock_remove_from_list.assert_called_with(user_id=1, movie_id=2, list_type=3)
-        mock_remove_rating.assert_called_with(user_id=1, movie_id=2)
+        mock_remove_from_list.assert_called_with(user_id=1, movie_id=36, list_type=3)
+        mock_remove_rating.assert_called_with(user_id=1, movie_id=36)
 
-    def test_should_create_movie_and_add_to_list(self):
-        DataBaseHandler.add_to_list_external(user_id=1, tmdb_movie_id=22, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list')
+    def test_should_create_movie_and_add_to_list(self, mock_add_to_list):
+        DataBaseHandler.add_to_list_external(user_id=1, tmdb_movie_id=76203, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)
+        movie = Movie.objects.get(tmdb_movie_id=76203)
 
-        movie_queryset = Movie.objects.filter(tmdb_movie_id=22)
-        self.assertTrue(movie_queryset)
-
-        self.assertTrue(MovieList.objects.filter(movie_id=movie_queryset[0].movie_id, list_id=33))
+        mock_add_to_list.assert_called_with(user_id=1, movie_id=movie.movie_id, list_type=3)
 
     def test_should_add_existent_movie_to_list(self):
         Movie.objects.create(movie_id=99, tmdb_movie_id=533, tmdb_title="Batatas Furiosas", tmdb_rating=6, year=1998, runtime=93)
@@ -100,19 +102,27 @@ class DatabaseTestCase(TestCase):
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
     def test_should_remove_from_recomendation_if_added_to_other_list(self, mock_remove_from_list):
-        DataBaseHandler.add_to_list(user_id=1, movie_id=1, list_type=2)
+        DataBaseHandler.add_to_list(user_id=1, movie_id=35, list_type=2)
 
         mock_remove_from_list.assert_called()
 
-    def test_should_add_movie_to_watchedlist_when_rated(self):
-        rate_movie(user_id=1, movie_id=33, local_rate_id=5)
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_rating_to_movie')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list')
+    def test_should_add_movie_to_watchedlist_when_rated(self, mock_add_rating, mock_add_to_list):
+        DataBaseHandler.rate_movie(user_id=1, movie_id=33, local_rate_id=5)
 
-        self.assertTrue(MovieList.objects.filter(movie_id=33, list_id=33))
+        mock_add_rating.assert_called()
+        mock_add_to_list.assert_called()
 
-    def test_should_remove_movie_from_watchlist_when_rated(self):
-        rate_movie(user_id=1, movie_id=66, local_rate_id=5)
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_rating_to_movie')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list')
+    def test_should_remove_movie_from_watchlist_when_rated(self, mock_add_rating, mock_remove_from_list, mock_add_to_list):
+        DataBaseHandler.rate_movie(user_id=1, movie_id=36, local_rate_id=5)
 
-        self.assertFalse(MovieList.objects.filter(movie_id=66, list_id=11))
+        mock_add_rating.assert_called()
+        mock_remove_from_list.assert_called()
+        mock_add_rating.assert_called()
 
     def test_should_add_new_movie_to_watchedlist_when_rated(self):
         rate_external_movie(user_id=1, user_rating=3, tmdb_movie_id=99, tmdb_poster='bla.jpg', tmdb_title="The Amazing Papas")

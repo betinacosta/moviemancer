@@ -66,14 +66,17 @@ class DataBaseHandler:
 
     def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_type):
         movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
-        if movie:
-            movie_id = movie[0].movie_id
-            DataBaseHandler.add_to_list (user_id, movie_id, list_type)
-        else:
+        if not movie:
             DataBaseHandler.add_movie_to_database(tmdb_id=tmdb_movie_id)
             movie = Movie.objects.filter(tmdb_movie_id=tmdb_movie_id)
-            if movie:
-                movie_id = movie[0].movie_id
-                DataBaseHandler.add_to_list(user_id, movie_id, list_type)
-            else:
-                print('Errro while adding new movie to list')
+            print('>>>>>>>>>>', movie[0].movie_id)
+
+        DataBaseHandler.add_to_list(user_id=user_id, movie_id=movie[0].movie_id, list_type=list_type)
+
+    def rate_movie (user_id, movie_id, local_rate_id):
+        DataBaseHandler.add_rating_to_movie(user_id, movie_id, local_rate_id)
+
+        if Helpers.is_movie_on_list(user_id, movie_id, 2):
+            DataBaseHandler.remove_movie_from_list(user_id, movie_id, 2)
+
+        DataBaseHandler.add_to_list(user_id, movie_id, 3)

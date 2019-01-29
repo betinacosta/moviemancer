@@ -184,31 +184,19 @@ def compare_languages(l1, l2):
 
 #UPDATE, DELETE, INSERT
 
-def rate_movie (user_id, movie_id, local_rate_id):
-
-    #add rating
-    DataBaseHandler.add_rating_to_movie(user_id, movie_id, local_rate_id)
-
-    #check if it is on watchlist and remove it
-    if Helpers.is_movie_on_list(user_id, movie_id, 2):
-        DataBaseHandler.remove_movie_from_list(user_id, movie_id, 2)
-
-    #add to watched list
-    DataBaseHandler.add_to_list (user_id, movie_id, 3)
-
 def rate_external_movie (user_id, user_rating, tmdb_movie_id, tmdb_poster, tmdb_title):
     movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
 
     if movie:
         movie_id = movie[0].movie_id
-        rate_movie(user_id, movie_id, user_rating)
+        DataBaseHandler.rate_movie(user_id, movie_id, user_rating)
         return True
     else:
         DataBaseHandler.add_movie_to_database(tmdb_id=tmdb_movie_id)
         movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
         if movie:
             movie_id = movie[0].movie_id
-            rate_movie (user_id, movie_id, user_rating)
+            DataBaseHandler.rate_movie (user_id, movie_id, user_rating)
             return True
         else:
             return False

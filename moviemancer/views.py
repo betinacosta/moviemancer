@@ -157,7 +157,7 @@ def ratemovie(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        rate_movie (request_user_id, request_movie_id, request_rate_id)
+        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
         update_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
@@ -171,7 +171,7 @@ def rate_first_movies_request(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        rate_movie (request_user_id, request_movie_id, request_rate_id)
+        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
