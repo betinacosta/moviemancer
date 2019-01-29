@@ -287,7 +287,7 @@ def remove_from_watched_list(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        remove_watched(request_user_id, request_movie_id, 3)
+        DataBaseHandler.remove_watched(request_user_id, request_movie_id, 3)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")

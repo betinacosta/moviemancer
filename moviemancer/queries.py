@@ -192,10 +192,6 @@ def compare_languages(l1, l2):
         return False
 
 #UPDATE, DELETE, INSERT
-def remove_watched(user_id, movie_id, list_type):
-    DataBaseHandler.remove_movie_from_list(user_id, movie_id, list_type)
-    DataBaseHandler.remove_rating(user_id, movie_id)
-
 def add_to_list_external(user_id, tmdb_movie_id, tmdb_poster, tmdb_title, list_type):
     movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
     if movie:

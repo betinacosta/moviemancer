@@ -67,13 +67,13 @@ class DatabaseTestCase(TestCase):
 
         mock_delete.assert_called()
 
-    def test_should_remove_movie_from_watched_list(self):
-        MovieList.objects.create(movie_id=2, list_id=33)
-        Rating.objects.create(user_id=1, movie_id=2, rate_id=4)
-        remove_watched(user_id=1, movie_id=2, list_type=3)
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_rating')
+    def test_should_remove_movie_from_watched_list(self, mock_remove_rating, mock_remove_from_list):
+        DataBaseHandler.remove_watched(user_id=1, movie_id=2, list_type=3)
 
-        self.assertFalse(Rating.objects.filter(user_id=1, movie_id=2))
-        self.assertFalse(MovieList.objects.filter(movie_id=2, list_id=33))
+        mock_remove_from_list.assert_called_with(user_id=1, movie_id=2, list_type=3)
+        mock_remove_rating.assert_called_with(user_id=1, movie_id=2)
 
     def test_should_create_movie_and_add_to_list(self):
         add_to_list_external(user_id=1, tmdb_movie_id=22, tmdb_poster="htttp://bla.jpg", tmdb_title="Batatas Furiosas", list_type=3)

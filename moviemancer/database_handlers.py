@@ -46,4 +46,6 @@ class DataBaseHandler:
     def remove_rating(user_id, movie_id):
         Rating.objects.get(movie_id = movie_id, user_id = user_id).delete()
 
-
+    def remove_watched(user_id, movie_id, list_type):
+        DataBaseHandler.remove_movie_from_list(user_id=user_id, movie_id=movie_id, list_type=list_type)
+        DataBaseHandler.remove_rating(user_id=user_id, movie_id=movie_id)
