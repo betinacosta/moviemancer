@@ -1,5 +1,4 @@
 from django.test import TestCase
-from moviemancer.reco_refactor import *
 from moviemancer.models import *
 from unittest import mock
 from moviemancer.recommendation import Recommendation

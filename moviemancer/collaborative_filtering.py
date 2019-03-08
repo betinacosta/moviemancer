@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
-
-from math import sqrt
 from moviemancer.models import *
-import collections
 from moviemancer.helpers import Helpers
 from moviemancer.recommendation import Recommendation
 from math import sqrt
-import tmdbsimple as tmdb
-
-tmdb.API_KEY = '5880f597a9fab4f284178ffe0e1f0dba'
 
 def get_dataset():
     users = Viwer.objects.all()

@@ -7,7 +7,7 @@ from moviemancer.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from moviemancer.helpers import Helpers
-from moviemancer.reco_refactor import generate_recommendation, update_recommendation
+from moviemancer.collaborative_filtering import generate_recommendation, update_recommendation
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseServerError
 import json
