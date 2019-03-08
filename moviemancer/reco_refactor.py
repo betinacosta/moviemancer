@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from math import sqrt
-from moviemancer.models import Movie, Viwer, List, Rating, Rate, MovieList
+from moviemancer.models import *
 import collections
-from moviemancer.queries import *
+from moviemancer.helpers import Helpers
+from moviemancer.recommendation import Recommendation
 from math import sqrt
 import tmdbsimple as tmdb
 
@@ -14,7 +15,7 @@ def get_dataset():
     dataset = {}
 
     for user in users:
-        movies = get_rated_movies_by_user(user.user_id)
+        movies = Helpers.get_rated_movies_by_user(user.user_id)
         dataset.update({user.user_id: movies})
 
     return dataset
@@ -93,7 +94,7 @@ def user_recommendations(person):
     return recommendation
 
 def remove_repeated_recommendations(user_id, reco_list, list_name):
-    for item in movie_id_by_user_list(user_id, list_name):
+    for item in Helpers.movie_id_by_user_list(user_id, list_name):
         if item.movie_id in reco_list:
             reco_list.remove(item.movie_id)
     return reco_list
@@ -130,11 +131,10 @@ def add_recommendation_to_database(reco_list, user_id):
 def complete_recommendation(reco_list, user_id):
     list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
     if len(MovieList.objects.filter(list_id = list_id)) < 54:
-        higher_rated = get_better_ratted_movies_by_user(user_id=user_id, trashold=3)
+        higher_rated = Helpers.get_best_ratted_movies_by_user(user_id=user_id, trashold=3)
 
-        reco_list = reco_list + get_similar_movies(higher_rated[0])
-        time.sleep(1)
-        reco_list = reco_list + get_similar_movies(higher_rated[1])
+        reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[0])
+        reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[1])
 
         #remove repeated values
         reco_list = list(set(reco_list))

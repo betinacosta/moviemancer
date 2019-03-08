@@ -1,5 +1,4 @@
 from django.test import TestCase
-from moviemancer.queries import *
 from moviemancer.models import *
 from moviemancer.tmdb_handler import TMDbHandler
 from moviemancer.tests.unit_tests.database_stub import DatabaseStub
