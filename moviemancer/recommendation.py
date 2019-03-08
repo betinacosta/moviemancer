@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from moviemancer.models import *
-import tmdbsimple as tmdb
 from moviemancer.tmdb_handler import TMDbHandler
 from moviemancer.database_handlers import DataBaseHandler
 from moviemancer.helpers import Helpers
