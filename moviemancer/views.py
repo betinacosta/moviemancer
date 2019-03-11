@@ -7,7 +7,7 @@ from moviemancer.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from moviemancer.helpers import Helpers
-from moviemancer.collaborative_filtering import generate_recommendation, update_recommendation
+from moviemancer.collaborative_filtering import CollaborativeFiltering
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseServerError
 import json
@@ -158,7 +158,7 @@ def ratemovie(request):
         request_rate_id = request_user_rating[u'rate_id']
 
         DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
-        update_recommendation(request_user_id)
+        CollaborativeFiltering.update_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -187,7 +187,7 @@ def get_auth(request):
 
             user_id = Helpers.get_user_id_by_email(request_email)
             user_data = json.dumps(Helpers.get_user(request_email))
-            generate_recommendation(user_id)
+            CollaborativeFiltering.generate_recommendation(user_id)
 
             return HttpResponse(user_data)
         else:
@@ -234,7 +234,7 @@ def rate_external(request):
         request_movie_title = request_user_rating[u'movie_title']
 
         if DataBaseHandler.rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
-            update_recommendation(request_user_id)
+            CollaborativeFiltering.update_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
             return HttpResponseServerError('Error')
@@ -253,7 +253,7 @@ def add_watchlist(request):
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    update_recommendation(request_user_id)
+    CollaborativeFiltering.update_recommendation(request_user_id)
 
 @csrf_exempt
 def add_watchlist_external(request):
@@ -292,7 +292,7 @@ def remove_from_watched_list(request):
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    update_recommendation(request_user_id)
+    CollaborativeFiltering.update_recommendation(request_user_id)
 
 @csrf_exempt
 def remove_from_watchlist(request):

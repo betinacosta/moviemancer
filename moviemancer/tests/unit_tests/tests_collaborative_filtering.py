@@ -34,4 +34,4 @@ class CollaborativeFilteringTestCase(TestCase):
         MovieList.objects.create(movie_list_id=4, movie_id=4, list_id=6)
 
     def test_should_return_formated_dataset(self):
-        self.assertEqual(get_dataset(), {1: {3: 4, 2: 3}, 2: {1: 1, 4: 4}})
+        self.assertEqual(CollaborativeFiltering.get_dataset(), {1: {3: 4, 2: 3}, 2: {1: 1, 4: 4}})
