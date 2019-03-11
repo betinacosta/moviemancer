@@ -2,6 +2,7 @@ from django.test import TestCase
 from moviemancer.models import *
 from unittest import mock
 from moviemancer.recommendation import Recommendation
+from moviemancer.collaborative_filtering import CollaborativeFiltering
 
 class RecommendationTestCase(TestCase):
 
@@ -9,8 +10,12 @@ class RecommendationTestCase(TestCase):
         Viwer.objects.create(user_id=77, name="hermoione", email="batata@batatinha.com")
 
         Type.objects.create(type_id=90, type_name="recommendation")
+        Type.objects.create(type_id=91, type_name="watchlist")
+        Type.objects.create(type_id=92, type_name="watchedlist")
 
         List.objects.create(list_id=33, user_id=77, type_id=90)
+        List.objects.create(list_id=34, user_id=77, type_id=91)
+        List.objects.create(list_id=35, user_id=77, type_id=92)
 
         Movie.objects.create(movie_id=67, tmdb_movie_id=66, tmdb_title="Best Movie", tmdb_rating=7, year=1983, runtime=120, genres='35,18')
 
@@ -61,3 +66,15 @@ class RecommendationTestCase(TestCase):
 
         mock_get_tmdb_id_by_movie_id.assert_called()
         mock_get_tmdb_similar_movies.assert_called()
+
+    def test_should_remove_repeated_movies_from_list(self):
+        input_list = [67,3,4]
+        new_list = Recommendation.remove_repeated_recommendations(user_id=77, reco_list=input_list, list_name=90)
+
+        self.assertEqual(new_list, [3,4])
+
+    @mock.patch('moviemancer.recommendation.Recommendation.remove_repeated_recommendations')
+    def test_should_remove_repeated_movies_from_all_user_lists(self, mock_remove_repeated_recommendations):
+        Recommendation.remove_repeated_movies_from_user_lists(user_id=77, input_list=[3,4])
+
+        self.assertEqual(mock_remove_repeated_recommendations.call_count, 3)

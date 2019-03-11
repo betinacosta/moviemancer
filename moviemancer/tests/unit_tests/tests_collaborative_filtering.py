@@ -1,6 +1,7 @@
 from django.test import TestCase
-from moviemancer.collaborative_filtering import *
+from moviemancer.collaborative_filtering import CollaborativeFiltering
 from moviemancer.tests.unit_tests.database_stub import DatabaseStub
+from moviemancer.models import *
 
 class CollaborativeFilteringTestCase(TestCase):
     def setUp(self):

@@ -61,3 +61,15 @@ class Recommendation:
             similar_movies.append(Helpers.get_movie_id_by_tmdb_id(tmdb_id))
         return similar_movies
 
+    def remove_repeated_recommendations(user_id, reco_list, list_name):
+        for item in Helpers.movie_id_by_user_list(user_id, list_name):
+            if item.movie_id in reco_list:
+                reco_list.remove(item.movie_id)
+        return reco_list
+
+    def remove_repeated_movies_from_user_lists(user_id, input_list):
+        input_list = Recommendation.remove_repeated_recommendations(user_id, input_list, 1)
+        input_list = Recommendation.remove_repeated_recommendations(user_id, input_list, 2)
+        input_list = Recommendation.remove_repeated_recommendations(user_id, input_list, 3)
+
+        return input_list

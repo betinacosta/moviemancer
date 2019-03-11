@@ -89,31 +89,21 @@ class CollaborativeFiltering:
         recommendation = [recommend_item for score,recommend_item in rankings]
         return recommendation
 
-    def remove_repeated_recommendations(user_id, reco_list, list_name):
-        for item in Helpers.movie_id_by_user_list(user_id, list_name):
-            if item.movie_id in reco_list:
-                reco_list.remove(item.movie_id)
-        return reco_list
-
     def update_recommendation(user_id):
         #get recommendation by CF
-        reco_list = CollaborativeFiltering.generate_prediction(user_id)
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 1)
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 2)
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 3)
+        input_list = CollaborativeFiltering.generate_prediction(user_id)
+        input_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=input_list)
 
-        CollaborativeFiltering.add_recommendation_to_database(reco_list, user_id)
+        CollaborativeFiltering.add_recommendation_to_database(input_list, user_id)
 
     def generate_recommendation(user_id):
         #get recommendation by CF
-        reco_list = CollaborativeFiltering.generate_prediction(user_id)
-        #"compare" with database to see if there are any changes
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 1)
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 2)
-        reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 3)
+        input_list = CollaborativeFiltering.generate_prediction(user_id)
 
-        reco_list = CollaborativeFiltering.complete_recommendation(reco_list, user_id)
-        CollaborativeFiltering.add_recommendation_to_database(reco_list, user_id)
+        input_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=input_list)
+
+        input_list = CollaborativeFiltering.complete_recommendation(input_list, user_id)
+        CollaborativeFiltering.add_recommendation_to_database(input_list, user_id)
 
     def add_recommendation_to_database(reco_list, user_id):
         list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
@@ -135,8 +125,6 @@ class CollaborativeFiltering:
             #remove repeated values
             reco_list = list(set(reco_list))
             #remove repeated entries
-            reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 1)
-            reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 2)
-            reco_list = CollaborativeFiltering.remove_repeated_recommendations(user_id, reco_list, 3)
+            reco_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=reco_list)
 
         return reco_list
