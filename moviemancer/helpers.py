@@ -22,6 +22,10 @@ class Helpers:
         user_list = List.objects.get(user_id = user_id, type_id = type_id)
         return user_list.list_id
 
+    def get_user_list_id_by_type_name(user_id, list_type):
+        type_id = Type.objects.get(type_name=list_type).type_id
+        return Helpers.get_user_list_id_by_type_id(user_id=user_id, type_id=type_id)
+
     def is_movie_on_list (user_id, movie_id, type_id):
         list_id = Helpers.get_user_list_id_by_type_id(user_id, type_id)
 

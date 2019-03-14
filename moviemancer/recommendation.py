@@ -2,7 +2,9 @@
 from moviemancer.tmdb_handler import TMDbHandler
 from moviemancer.database_handlers import DataBaseHandler
 from moviemancer.helpers import Helpers
-
+from moviemancer.collaborative_filtering import CollaborativeFiltering
+from moviemancer.models import MovieList
+import time
 class Recommendation:
 
     def is_inside_rage(min, max, value):
@@ -73,3 +75,27 @@ class Recommendation:
         input_list = Recommendation.remove_repeated_recommendations(user_id, input_list, 3)
 
         return input_list
+
+    def create_user_recommendation(user_id):
+        prediction_list = CollaborativeFiltering.generate_prediction(user_id)
+
+        recommendation_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=prediction_list)
+        recommendation_list = Recommendation.complete_recommendation(reco_list=recommendation_list, user_id=user_id)
+
+        DataBaseHandler.add_recommendation_to_database(reco_list=recommendation_list, user_id=user_id)
+
+    def complete_recommendation(reco_list, user_id):
+        list_id = Helpers.get_user_list_id_by_type_name(user_id, "recommendation")
+        if len(MovieList.objects.filter(list_id = list_id)) < 54:
+            higher_rated = Helpers.get_best_ratted_movies_by_user(user_id=user_id, trashold=3)
+
+            reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[0])
+            time.sleep(1)
+            reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[1])
+
+            #remove repeated values
+            reco_list = list(set(reco_list))
+            #remove repeated entries
+            reco_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=reco_list)
+
+        return reco_list

@@ -180,3 +180,8 @@ class DatabaseTestCase(TestCase):
     def test_should_delete_comment(self, mock_delete_comment):
         DataBaseHandler.delete_comment(comment_id=99)
         mock_delete_comment.assert_called()
+
+    @mock.patch('moviemancer.models.MovieList.save')
+    def test_should_add_recommendation_list_to_database(self, mock_save):
+        DataBaseHandler.add_recommendation_to_database(reco_list=[2,4,6], user_id=1)
+        self.assertEqual(mock_save.call_count, 3)

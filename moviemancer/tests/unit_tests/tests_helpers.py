@@ -10,6 +10,9 @@ class HelpersTestCase(TestCase):
     def test_should_return_list_by_user(self):
         self.assertEqual(Helpers.get_user_list_id_by_type_id(user_id=1, type_id=3), 3)
 
+    def test_should_return_list_by_user_based_on_list_name(self):
+        self.assertEqual(Helpers.get_user_list_id_by_type_name(user_id=1, list_type="recommendation"), 1)
+
     def test_should_convert_tmdb_rating_to_five(self):
         self.assertEqual(Helpers.convert_tmdb_rating(9),5)
 

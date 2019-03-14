@@ -148,3 +148,11 @@ class DataBaseHandler:
         if not Comments.objects.filter(comment_id = comment_id):
             return True
         return False
+
+    def add_recommendation_to_database(reco_list, user_id):
+        list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
+        reco_list = list(set(reco_list))
+
+        for movie_id in reco_list:
+            reco = MovieList(movie_id=movie_id, list_id=list_id)
+            reco.save()

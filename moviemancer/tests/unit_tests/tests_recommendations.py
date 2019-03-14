@@ -78,3 +78,26 @@ class RecommendationTestCase(TestCase):
         Recommendation.remove_repeated_movies_from_user_lists(user_id=77, input_list=[3,4])
 
         self.assertEqual(mock_remove_repeated_recommendations.call_count, 3)
+
+    @mock.patch('moviemancer.collaborative_filtering.CollaborativeFiltering.generate_prediction')
+    @mock.patch('moviemancer.recommendation.Recommendation.remove_repeated_movies_from_user_lists')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_recommendation_to_database')
+    @mock.patch('moviemancer.recommendation.Recommendation.complete_recommendation')
+    def test_should_create_user_recommendation(self, mock_generate_prediction, mock_remove_repeated_movies_from_user_lists, mock_add_recommendation_to_database, mock_complete_recommendation):
+        Recommendation.create_user_recommendation(user_id=77)
+
+        mock_generate_prediction.assert_called()
+        mock_remove_repeated_movies_from_user_lists.assert_called()
+        mock_add_recommendation_to_database.assert_called()
+        mock_complete_recommendation.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.get_best_ratted_movies_by_user')
+    @mock.patch('moviemancer.recommendation.Recommendation.get_similar_movies')
+    @mock.patch('moviemancer.recommendation.Recommendation.remove_repeated_movies_from_user_lists')
+    def test_should_complete_user_recommendation(self, mock_get_best_ratted_movies_by_user, mock_get_similar_movies, mock_remove_repeated_movies_from_user_lists):
+        Recommendation.complete_recommendation(reco_list=[], user_id=77)
+
+        mock_get_best_ratted_movies_by_user.assert_called()
+        mock_remove_repeated_movies_from_user_lists.assert_called()
+
+        self.assertEqual(mock_get_similar_movies.call_count, 2)

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from moviemancer.models import *
 from moviemancer.helpers import Helpers
-from moviemancer.recommendation import Recommendation
 from math import sqrt
 
 class CollaborativeFiltering:
@@ -88,43 +87,3 @@ class CollaborativeFiltering:
         # returns the recommended items
         recommendation = [recommend_item for score,recommend_item in rankings]
         return recommendation
-
-    def update_recommendation(user_id):
-        #get recommendation by CF
-        input_list = CollaborativeFiltering.generate_prediction(user_id)
-        input_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=input_list)
-
-        CollaborativeFiltering.add_recommendation_to_database(input_list, user_id)
-
-    def generate_recommendation(user_id):
-        #get recommendation by CF
-        input_list = CollaborativeFiltering.generate_prediction(user_id)
-
-        input_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=input_list)
-
-        input_list = CollaborativeFiltering.complete_recommendation(input_list, user_id)
-        CollaborativeFiltering.add_recommendation_to_database(input_list, user_id)
-
-    def add_recommendation_to_database(reco_list, user_id):
-        list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
-        reco_list = list(set(reco_list))
-
-        for movie_id in reco_list:
-            reco = MovieList(movie_id=movie_id, list_id=list_id)
-
-            reco.save()
-
-    def complete_recommendation(reco_list, user_id):
-        list_id = Helpers.get_user_list_id_by_type_id(user_id, 1)
-        if len(MovieList.objects.filter(list_id = list_id)) < 54:
-            higher_rated = Helpers.get_best_ratted_movies_by_user(user_id=user_id, trashold=3)
-
-            reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[0])
-            reco_list = reco_list + Recommendation.get_similar_movies(higher_rated[1])
-
-            #remove repeated values
-            reco_list = list(set(reco_list))
-            #remove repeated entries
-            reco_list = Recommendation.remove_repeated_movies_from_user_lists(user_id=user_id, input_list=reco_list)
-
-        return reco_list
