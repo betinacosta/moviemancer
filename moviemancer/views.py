@@ -6,12 +6,13 @@ from moviemancer.models import Movie, Viwer
 from moviemancer.serializers import MovieSerializer, UserSerializer
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from moviemancer.queries import *
-from moviemancer.reco_refactor import generate_recommendation, update_recommendation
+from moviemancer.helpers import Helpers
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseServerError
 import json
 from django.template import RequestContext
+from moviemancer.database_handlers import DataBaseHandler
+from moviemancer.recommendation import Recommendation
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -67,11 +68,11 @@ def get_recommendation(request):
         request_reco = json.loads(request.body)
         request_user_id = request_reco[u'user_id']
 
-        recommendation_list = jsonify_reco_list(request_user_id, 1)
+        recommendation_list = json.dumps(Helpers.get_recommendation_list(request_user_id, 1))
         return HttpResponse(recommendation_list)
     else:
         return HttpResponse("You are on your own")
-        
+
 @csrf_exempt
 def get_profile(request):
     if request.body:
@@ -81,7 +82,7 @@ def get_profile(request):
         profile = get_user_details(request_user_id)
         return HttpResponse(profile)
     else:
-        return HttpResponse("You are on your own") 
+        return HttpResponse("You are on your own")
 
 @csrf_exempt
 def update_user(request):
@@ -92,7 +93,7 @@ def update_user(request):
         request_name = request_profile[u'name']
         request_password = request_profile[u'password']
 
-        update_user_info(request_user_id, request_email, request_name, request_password)
+        DataBaseHandler.update_user_info(request_user_id, request_email, request_name, request_password)
         return HttpResponse('Success')
     else:
         return HttpResponse("You are on your own")
@@ -117,10 +118,10 @@ def get_all_comments(request):
         request_comments = json.loads(request.body)
         request_movie_tmdb_id = request_comments[u'tmdb_movie_id']
 
-        all_comments = get_comments(request_movie_tmdb_id)
+        all_comments = json.dumps(Helpers.get_comments(request_movie_tmdb_id))
         return HttpResponse(all_comments)
     else:
-        return HttpResponse("Erroa o carregar comentarios")  
+        return HttpResponse("Erroa o carregar comentarios")
 
 @csrf_exempt
 def add_new_comment(request):
@@ -130,7 +131,7 @@ def add_new_comment(request):
         request_user_id = request_comments[u'user_id']
         request_comment = request_comments[u'comment']
 
-        add_comment(request_movie_tmdb_id, request_user_id, request_comment)
+        DataBaseHandler.add_comment(request_movie_tmdb_id, request_user_id, request_comment)
         return HttpResponse('Success')
     else:
         return HttpResponse("Erro ao criar comentario")
@@ -141,12 +142,12 @@ def delete_user_comment(request):
         request_comments = json.loads(request.body)
         request_comment_id = request_comments[u'comment_id']
 
-        if delete_comment(request_comment_id):
+        if DataBaseHandler.delete_comment(request_comment_id):
             return HttpResponse("Success")
         else:
             return HttpResponseServerError("Erro ao deletar comentario")
     else:
-        return HttpResponseServerError("Erro ao deletar comentario")          
+        return HttpResponseServerError("Erro ao deletar comentario")
 
 @csrf_exempt
 def ratemovie(request):
@@ -156,8 +157,8 @@ def ratemovie(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        rate_movie (request_user_id, request_movie_id, request_rate_id)
-        update_recommendation(request_user_id)
+        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
+        Recommendation.create_user_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -170,7 +171,7 @@ def rate_first_movies_request(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        rate_movie (request_user_id, request_movie_id, request_rate_id)
+        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -182,11 +183,11 @@ def get_auth(request):
         request_email = request_auth[u'email']
         request_password = request_auth[u'password']
 
-        if authenticate_user(request_email, request_password):
-            
-            user_id = get_user_by_email(request_email)
-            user_data = get_user(request_email)
-            generate_recommendation(user_id)
+        if DataBaseHandler.authenticate_user(request_email, request_password):
+
+            user_id = Helpers.get_user_id_by_email(request_email)
+            user_data = json.dumps(Helpers.get_user(request_email))
+            Recommendation.create_user_recommendation(user_id)
 
             return HttpResponse(user_data)
         else:
@@ -202,8 +203,8 @@ def registration(request):
         request_email = request_register[u'email']
         request_password = request_register[u'password']
 
-        if not user_exists(request_email):
-            user_id = register_user(request_name, request_email, request_password)
+        if not Helpers.user_exists(request_email):
+            user_id = DataBaseHandler.register_user(request_name, request_email, request_password)
             if user_id:
                 return HttpResponse(user_id)
             else:
@@ -217,7 +218,7 @@ def validate_user(request):
         request_validation = json.loads(request.body)
         request_email = request_validation[u'email']
 
-        if not user_exists(request_email):
+        if not Helpers.user_exists(request_email):
             return HttpResponse('Success')
         else:
             return HttpResponseServerError('User already registered')
@@ -232,8 +233,8 @@ def rate_external(request):
         request_movie_poster = request_user_rating[u'movie_poster']
         request_movie_title = request_user_rating[u'movie_title']
 
-        if rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
-            update_recommendation(request_user_id)
+        if DataBaseHandler.rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
+            Recommendation.create_user_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
             return HttpResponseServerError('Error')
@@ -247,12 +248,12 @@ def add_watchlist(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        add_to_list(request_user_id, request_movie_id, 2)
+        DataBaseHandler.add_to_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    update_recommendation(request_user_id)
+    Recommendation.create_user_recommendation(request_user_id)
 
 @csrf_exempt
 def add_watchlist_external(request):
@@ -263,7 +264,7 @@ def add_watchlist_external(request):
         request_movie_poster = request_data[u'movie_poster']
         request_movie_title = request_data[u'movie_title']
 
-        add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
+        DataBaseHandler.add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -273,8 +274,8 @@ def get_watched_list(request):
     if request.body:
         request_user_rating = json.loads(request.body)
         request_user_id = request_user_rating[u'user_id']
-        
-        user_watchedlist = get_watchedlist(request_user_id)
+
+        user_watchedlist = json.dumps(Helpers.get_watchedlist(request_user_id))
         return HttpResponse(user_watchedlist)
     else:
         return HttpResponse("You are on your own")
@@ -286,12 +287,12 @@ def remove_from_watched_list(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        remove_watched(request_user_id, request_movie_id, 3)
+        DataBaseHandler.remove_watched(request_user_id, request_movie_id, 3)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
     #update recommendation
-    update_recommendation(request_user_id)
+    Recommendation.create_user_recommendation(request_user_id)
 
 @csrf_exempt
 def remove_from_watchlist(request):
@@ -300,7 +301,7 @@ def remove_from_watchlist(request):
         request_user_id = request_data[u'user_id']
         request_movie_id = request_data[u'movie_id']
 
-        remove_movie_from_list(request_user_id, request_movie_id, 2)
+        DataBaseHandler.remove_movie_from_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
@@ -310,14 +311,14 @@ def get_watch_list(request):
     if request.body:
         request_user_rating = json.loads(request.body)
         request_user_id = request_user_rating[u'user_id']
-        
-        user_watchlist = get_watchlist(request_user_id)
+
+        user_watchlist = json.dumps(Helpers.get_watchlist(request_user_id))
         return HttpResponse(user_watchlist)
     else:
         return HttpResponse("You are on your own")
 
 def get_rated(request):
-    rated_movies = get_rated_movies()
+    rated_movies = json.dumps(Helpers.get_rated_movies())
     print(rated_movies)
     return HttpResponse(rated_movies)
 
@@ -332,8 +333,8 @@ def filter_reco(request):
         request_maxRuntime = request_filter[u'maxRuntime']
         request_language = request_filter[u'language']
         request_genres = request_filter[u'genres']
-        
-        filtered = filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id)
+
+        filtered = json.dumps(Recommendation.filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id))
         return HttpResponse(filtered)
     else:
         return HttpResponseServerError("You are on your own")
