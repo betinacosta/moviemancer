@@ -64,6 +64,7 @@ def handler404(request):
 
 @csrf_exempt
 def get_recommendation(request):
+
     if request.body:
         request_reco = json.loads(request.body)
         request_user_id = request_reco[u'user_id']
