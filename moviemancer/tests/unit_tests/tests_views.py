@@ -154,3 +154,127 @@ class ViewsTest(TestCase):
         mock_get_user_id_by_email.assert_called()
         mock_get_user.assert_called()
         mock_create_user_recommendation.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.register_user')
+    @mock.patch('moviemancer.helpers.Helpers.user_exists')
+    def test_should_register_user(self, mock_user_exists, mock_register_user):
+        data = {
+            'name': 1,
+            'email': 'batata@brava.com',
+            'password': '*****'
+        }
+
+        mock_user_exists.return_value = False
+        response = self.client.post(path='/registration/', content_type='application/json', data=data)
+        mock_register_user.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.user_exists')
+    def test_should_validate_user(self, mock_user_exists):
+        data = {
+            'email': 'batata@brava.com'
+        }
+
+        mock_user_exists.return_value = False
+        response = self.client.post(path='/validateuser/', content_type='application/json', data=data)
+        mock_user_exists.assert_called()
+
+    @mock.patch('moviemancer.recommendation.Recommendation.create_user_recommendation')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_external_movie')
+    def test_should_rate_external_movie(self, mock_rate_external_movie, mock_create_user_recommendation):
+        data = {
+            'user_id': 1,
+            'rate_id': 3,
+            'tmdb_movie_id': 4,
+            'movie_poster': 'bla.png',
+            'movie_title': 'Bla Returns',
+        }
+
+        mock_rate_external_movie.return_value = True
+        response = self.client.post(path='/rateexternalmovie/', content_type='application/json', data=data)
+        mock_rate_external_movie.assert_called()
+        mock_create_user_recommendation.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list')
+    def test_should_add_movie_to_watchlist(self, mock_add_to_list):
+        data = {
+            'user_id': 1,
+            'movie_id': 2
+        }
+
+        response = self.client.post(path='/addwatchlist/', content_type='application/json', data=data)
+        mock_add_to_list.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list_external')
+    def test_should_add_movie_to_watchlist_external(self, mock_add_to_list_external):
+        data = {
+            'user_id': 1,
+            'tmdb_movie_id': 3,
+            'tmdb_movie_id': 4,
+            'movie_poster': 'bla.png',
+            'movie_title': 'Bla Returns',
+        }
+        response = self.client.post(path='/addwatchlistexternal/', content_type='application/json', data=data)
+        mock_add_to_list_external.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.get_watchedlist')
+    def test_should_return_watchedlist(self, mock_get_watchedlist):
+        data = {
+            'user_id': 1
+        }
+
+        mock_get_watchedlist.return_value = '[{1,2,3}]'
+        response = self.client.post(path='/getwatchedlist/', content_type='application/json', data=data)
+        mock_get_watchedlist.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_watched')
+    def test_should_remove_movie_from_watched_list(self, mock_remove_watched):
+        data = {
+            'user_id': 1,
+            'movie_id': 1
+        }
+
+        response = self.client.post(path='/removefromwatchedlist/', content_type='application/json', data=data)
+        mock_remove_watched.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
+    def test_should_remove_movie_from_watchlist(self, mock_remove_movie_from_list):
+        data = {
+            'user_id': 1,
+            'movie_id': 1
+        }
+
+        response = self.client.post(path='/removefromwatchlist/', content_type='application/json', data=data)
+        mock_remove_movie_from_list.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.get_watchlist')
+    def test_should_return_watchlist(self, mock_get_watchlist):
+        data = {
+            'user_id': 1
+        }
+
+        mock_get_watchlist.return_value = "[{'1': 2}]"
+        response = self.client.post(path='/getwatchlist/', content_type='application/json', data=data)
+        mock_get_watchlist.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.get_rated_movies')
+    def test_should_return_rated_movies(self, mock_get_rated_movies):
+
+        mock_get_rated_movies.return_value = "[{'1': 2}]"
+        response = self.client.get(path='/getratedmovies/')
+        mock_get_rated_movies.assert_called()
+
+    @mock.patch('moviemancer.recommendation.Recommendation.filter_recommendation')
+    def test_should_filter_recommendation(self, mock_filter_recommendation):
+        data = {
+            'user_id': 1,
+            'minYear': 2016,
+            'maxYear': 2019,
+            'minRuntime': 90,
+            'maxRuntime': 180,
+            'language': 'pt_br',
+            'genres': '1,3,4'
+        }
+
+        mock_filter_recommendation.return_value = '[1,2,3]'
+        response = self.client.post(path='/filterreco/', content_type='application/json', data=data)
+        mock_filter_recommendation.assert_called()

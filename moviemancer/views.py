@@ -211,7 +211,7 @@ def rate_external(request):
         request_movie_poster = request_user_rating[u'movie_poster']
         request_movie_title = request_user_rating[u'movie_title']
 
-        if DataBaseHandler.rate_external_movie (request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
+        if DataBaseHandler.rate_external_movie(request_user_id, request_rate_id, request_tmdb_movie_id, request_movie_poster, request_movie_title):
             Recommendation.create_user_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
@@ -297,7 +297,6 @@ def get_watch_list(request):
 
 def get_rated(request):
     rated_movies = json.dumps(Helpers.get_rated_movies())
-    print(rated_movies)
     return HttpResponse(rated_movies)
 
 @csrf_exempt
