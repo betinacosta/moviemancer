@@ -1,4 +1,3 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/betinacosta/moviemancer.svg?columns=all)](https://waffle.io/betinacosta/moviemancer)
 [![Coverage Status](https://coveralls.io/repos/github/betinacosta/moviemancer/badge.svg?branch=master)](https://coveralls.io/github/betinacosta/moviemancer?branch=master)
 [![Build Status](https://travis-ci.com/betinacosta/moviemancer.svg?branch=master)](https://travis-ci.com/betinacosta/moviemancer)
 
