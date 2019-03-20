@@ -72,18 +72,7 @@ def get_recommendation(request):
         recommendation_list = json.dumps(Helpers.get_recommendation_list(request_user_id, 1))
         return HttpResponse(recommendation_list)
     else:
-        return HttpResponse("You are on your own")
-
-@csrf_exempt
-def get_profile(request):
-    if request.body:
-        request_profile = json.loads(request.body)
-        request_user_id = request_profile[u'user_id']
-
-        profile = get_user_details(request_user_id)
-        return HttpResponse(profile)
-    else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while loading recommendations")
 
 @csrf_exempt
 def update_user(request):

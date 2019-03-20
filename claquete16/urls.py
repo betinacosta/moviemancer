@@ -32,7 +32,6 @@ urlpatterns = [
     url(r'^registergenres/$', moviemancer.views.register_genres, name='registergenres'),
     url(r'^validateuser/$', moviemancer.views.validate_user, name='validateuser'),
     url(r'^profile/$', moviemancer.views.profile, name='profile'),
-    url(r'^getprofile/$', moviemancer.views.get_profile, name='getprofile'),
     url(r'^updateuser/$', moviemancer.views.update_user, name='updateuser'),
     url(r'^updategenres/$', moviemancer.views.update_genres, name='updategenres'),
     url(r'^getcomments/$', moviemancer.views.get_all_comments, name='getcomments'),
