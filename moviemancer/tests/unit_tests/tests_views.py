@@ -2,6 +2,7 @@ from django.test import TestCase
 from moviemancer.views import *
 from unittest import mock
 import json
+from moviemancer.database_handlers import DataBaseHandler
 
 class ViewsTest(TestCase):
 
@@ -71,5 +72,44 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/getrecommendation/', content_type='application/json', data={'user_id': 32})
         mock_get_recommendation_list.assert_called()
 
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.update_user_info')
+    def test_should_return_user_profile(self, mock_update_user_info):
+        data = {
+            'user_id': 1,
+            'email': 'batata@brava.com',
+            'name': 'Batata',
+            'password': 'potato'
+        }
 
+        response = self.client.post(path='/updateuser/', content_type='application/json', data=data)
+        mock_update_user_info.assert_called()
 
+    @mock.patch('moviemancer.helpers.Helpers.get_comments')
+    def test_should_return_all_comments(self, mock_get_comments):
+        data = {
+            'tmdb_movie_id': 1
+        }
+
+        mock_get_comments.return_value = "{'tmdb_movie_id': 1, 'user_id': 1,'comment': 'bla'}"
+        response = self.client.post(path='/getcomments/', content_type='application/json', data=data)
+        mock_get_comments.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_comment')
+    def test_should_add_new_comment(self, mock_add_comment):
+        data = {
+            'tmdb_movie_id': 1,
+            'user_id': 1,
+            'comment': "mediocre"
+        }
+
+        response = self.client.post(path='/addcomment/', content_type='application/json', data=data)
+        mock_add_comment.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.delete_comment')
+    def test_should_add_new_comment(self, mock_delete_comment):
+        data = {
+            'comment_id': 1,
+        }
+
+        response = self.client.post(path='/deletecomment/', content_type='application/json', data=data)
+        mock_delete_comment.assert_called()
