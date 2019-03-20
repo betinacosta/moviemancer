@@ -89,20 +89,6 @@ def update_user(request):
         return HttpResponse("You are on your own")
 
 @csrf_exempt
-def update_genres(request):
-    if request.body:
-        request_profile = json.loads(request.body)
-        request_user_id = request_profile[u'user_id']
-        request_firstG = request_profile[u'firstG']
-        request_secondG = request_profile[u'secondG']
-        request_thirdG = request_profile[u'thirdG']
-
-        update_user_genres(request_user_id, request_firstG, request_secondG, request_thirdG)
-        return HttpResponse('Success')
-    else:
-        return HttpResponse("You are on your own")
-
-@csrf_exempt
 def get_all_comments(request):
     if request.body:
         request_comments = json.loads(request.body)

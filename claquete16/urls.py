@@ -33,7 +33,6 @@ urlpatterns = [
     url(r'^validateuser/$', moviemancer.views.validate_user, name='validateuser'),
     url(r'^profile/$', moviemancer.views.profile, name='profile'),
     url(r'^updateuser/$', moviemancer.views.update_user, name='updateuser'),
-    url(r'^updategenres/$', moviemancer.views.update_genres, name='updategenres'),
     url(r'^getcomments/$', moviemancer.views.get_all_comments, name='getcomments'),
     url(r'^addcomment/$', moviemancer.views.add_new_comment, name='addcomment'),
     url(r'^deletecomment/$', moviemancer.views.delete_user_comment, name='deletecomment'),
