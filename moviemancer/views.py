@@ -125,6 +125,7 @@ def delete_user_comment(request):
     else:
         return HttpResponseServerError("Erro ao deletar comentario")
 
+#Repetição em rate_first_movies_request
 @csrf_exempt
 def ratemovie(request):
     if request.body:
@@ -133,12 +134,13 @@ def ratemovie(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
+        DataBaseHandler.rate_movie(request_user_id, request_movie_id, request_rate_id)
         Recommendation.create_user_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")
 
+#Repetição em ratemovie
 @csrf_exempt
 def rate_first_movies_request(request):
     if request.body:
@@ -147,7 +149,7 @@ def rate_first_movies_request(request):
         request_movie_id = request_user_rating[u'movie_id']
         request_rate_id = request_user_rating[u'rate_id']
 
-        DataBaseHandler.rate_movie (request_user_id, request_movie_id, request_rate_id)
+        DataBaseHandler.rate_movie(request_user_id, request_movie_id, request_rate_id)
         return HttpResponse(request.body)
     else:
         return HttpResponse("You are on your own")

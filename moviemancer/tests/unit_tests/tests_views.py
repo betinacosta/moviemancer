@@ -2,7 +2,6 @@ from django.test import TestCase
 from moviemancer.views import *
 from unittest import mock
 import json
-from moviemancer.database_handlers import DataBaseHandler
 
 class ViewsTest(TestCase):
 
@@ -113,3 +112,45 @@ class ViewsTest(TestCase):
 
         response = self.client.post(path='/deletecomment/', content_type='application/json', data=data)
         mock_delete_comment.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_movie')
+    @mock.patch('moviemancer.recommendation.Recommendation.create_user_recommendation')
+    def test_should_rate_movie(self, mock_rate_movie, mock_create_user_recommendation):
+        data = {
+            'user_id': 1,
+            'movie_id': 1,
+            'rate_id': 5
+        }
+
+        response = self.client.post(path='/ratemovie/', content_type='application/json', data=data)
+        mock_rate_movie.assert_called()
+        mock_create_user_recommendation.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_movie')
+    def test_should_rate_first_movie(self, mock_rate_movie):
+        data = {
+            'user_id': 1,
+            'movie_id': 1,
+            'rate_id': 5
+        }
+
+        response = self.client.post(path='/ratefirstmovies/', content_type='application/json', data=data)
+        mock_rate_movie.assert_called()
+
+    @mock.patch('moviemancer.helpers.Helpers.get_user_id_by_email')
+    @mock.patch('moviemancer.helpers.Helpers.get_user')
+    @mock.patch('moviemancer.recommendation.Recommendation.create_user_recommendation')
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.authenticate_user')
+    def test_should_return_authentication(self, mock_authenticate_user, mock_get_user_id_by_email, mock_get_user, mock_create_user_recommendation):
+        data = {
+            'email': 'batata@brava.com',
+            'password': '*****'
+        }
+
+        mock_authenticate_user.return_value = True
+        mock_get_user.return_value = "{'user':'bla'}"
+
+        response = self.client.post(path='/authentication/', content_type='application/json', data=data)
+        mock_get_user_id_by_email.assert_called()
+        mock_get_user.assert_called()
+        mock_create_user_recommendation.assert_called()
