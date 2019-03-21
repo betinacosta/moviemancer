@@ -209,9 +209,9 @@ def rate_external(request):
             Recommendation.create_user_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
-            return HttpResponseServerError('Error')
+            return HttpResponseServerError('Error while rating movie')
     else:
-        return HttpResponseServerError("You are on your own")
+        return HttpResponseServerError("Rating Failure: No Response Body")
 
 @csrf_exempt
 def add_watchlist(request):

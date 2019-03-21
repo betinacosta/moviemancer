@@ -235,15 +235,14 @@ class ViewsTest(TestCase):
 
         mock_user_exists.return_value = True
         response = self.client.post(path='/registration/', content_type='application/json', data=data)
-        print('>>>>>>>>>', response)
         self.assertEqual(response.content, b'Registration Failure: User already exists')
 
-    def test_should_return_error_for_empty_body_on_authentication(self):
+    def test_should_return_error_for_empty_body_on_registration(self):
         response = self.client.get(path='/registration/')
         self.assertEqual(response.content, b'Registration Failure: No Response Body')
 
     @mock.patch('moviemancer.helpers.Helpers.user_exists')
-    def test_should_validate_user(self, mock_user_exists):
+    def test_should_return_error_when_user_exists_on_validate_user(self, mock_user_exists):
         data = {
             'email': 'batata@brava.com'
         }
@@ -281,6 +280,24 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/rateexternalmovie/', content_type='application/json', data=data)
         mock_rate_external_movie.assert_called()
         mock_create_user_recommendation.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_external_movie')
+    def test_should_return_error_for_rate_external_movie(self, mock_rate_external_movie):
+        data = {
+            'user_id': 1,
+            'rate_id': 3,
+            'tmdb_movie_id': 4,
+            'movie_poster': 'bla.png',
+            'movie_title': 'Bla Returns',
+        }
+
+        mock_rate_external_movie.return_value = False
+        response = self.client.post(path='/rateexternalmovie/', content_type='application/json', data=data)
+        self.assertEqual(response.content, b'Error while rating movie')
+
+    def test_should_return_error_for_empty_body_on_rate_external(self):
+        response = self.client.get(path='/rateexternalmovie/')
+        self.assertEqual(response.content, b'Rating Failure: No Response Body')
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list')
     def test_should_add_movie_to_watchlist(self, mock_add_to_list):
