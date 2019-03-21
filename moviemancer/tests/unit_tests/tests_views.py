@@ -226,6 +226,33 @@ class ViewsTest(TestCase):
         mock_register_user.assert_called()
 
     @mock.patch('moviemancer.helpers.Helpers.user_exists')
+    def test_should_show_error_when_user_exists_on_registration(self, mock_user_exists):
+        data = {
+            'name': 1,
+            'email': 'batata@brava.com',
+            'password': '*****'
+        }
+
+        mock_user_exists.return_value = True
+        response = self.client.post(path='/registration/', content_type='application/json', data=data)
+        print('>>>>>>>>>', response)
+        self.assertEqual(response.content, b'Registration Failure: User already exists')
+
+    def test_should_return_error_for_empty_body_on_authentication(self):
+        response = self.client.get(path='/registration/')
+        self.assertEqual(response.content, b'Registration Failure: No Response Body')
+
+    @mock.patch('moviemancer.helpers.Helpers.user_exists')
+    def test_should_validate_user(self, mock_user_exists):
+        data = {
+            'email': 'batata@brava.com'
+        }
+
+        mock_user_exists.return_value = True
+        response = self.client.post(path='/validateuser/', content_type='application/json', data=data)
+        self.assertEqual(response.content, b'Validation Failure: User already registered')
+
+    @mock.patch('moviemancer.helpers.Helpers.user_exists')
     def test_should_validate_user(self, mock_user_exists):
         data = {
             'email': 'batata@brava.com'
@@ -234,6 +261,10 @@ class ViewsTest(TestCase):
         mock_user_exists.return_value = False
         response = self.client.post(path='/validateuser/', content_type='application/json', data=data)
         mock_user_exists.assert_called()
+
+    def test_should_return_error_for_empty_body_on_validate_user(self):
+        response = self.client.get(path='/validateuser/')
+        self.assertEqual(response.content, b'Validation Failure: No Response Body')
 
     @mock.patch('moviemancer.recommendation.Recommendation.create_user_recommendation')
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_external_movie')

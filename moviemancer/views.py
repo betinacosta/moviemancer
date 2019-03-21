@@ -176,12 +176,11 @@ def registration(request):
 
         if not Helpers.user_exists(request_email):
             user_id = DataBaseHandler.register_user(request_name, request_email, request_password)
-            if user_id:
-                return HttpResponse(user_id)
-            else:
-                return HttpResponseServerError('Erro no cadastro')
+            return HttpResponse(user_id)
+        else:
+            return HttpResponse('Registration Failure: User already exists')
     else:
-        return HttpResponseServerError('Erro no cadastro')
+        return HttpResponse('Registration Failure: No Response Body')
 
 @csrf_exempt
 def validate_user(request):
@@ -192,7 +191,9 @@ def validate_user(request):
         if not Helpers.user_exists(request_email):
             return HttpResponse('Success')
         else:
-            return HttpResponseServerError('User already registered')
+            return HttpResponse('Validation Failure: User already registered')
+    else:
+        return HttpResponse('Validation Failure: No Response Body')
 
 @csrf_exempt
 def rate_external(request):
