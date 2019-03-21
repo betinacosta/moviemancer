@@ -79,7 +79,7 @@ def update_user(request):
         DataBaseHandler.update_user_info(request_user_id, request_email, request_name, request_password)
         return HttpResponse('Success')
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while updating user")
 
 @csrf_exempt
 def get_all_comments(request):
@@ -90,7 +90,7 @@ def get_all_comments(request):
         all_comments = json.dumps(Helpers.get_comments(request_movie_tmdb_id))
         return HttpResponse(all_comments)
     else:
-        return HttpResponse("Erroa o carregar comentarios")
+        return HttpResponse("Error while retrieving comments")
 
 @csrf_exempt
 def add_new_comment(request):
@@ -103,7 +103,7 @@ def add_new_comment(request):
         DataBaseHandler.add_comment(request_movie_tmdb_id, request_user_id, request_comment)
         return HttpResponse('Success')
     else:
-        return HttpResponse("Erro ao criar comentario")
+        return HttpResponse("Error while adding comment")
 
 @csrf_exempt
 def delete_user_comment(request):
@@ -114,9 +114,9 @@ def delete_user_comment(request):
         if DataBaseHandler.delete_comment(request_comment_id):
             return HttpResponse("Success")
         else:
-            return HttpResponseServerError("Erro ao deletar comentario")
+            return HttpResponseServerError("Error while deleting comment")
     else:
-        return HttpResponseServerError("Erro ao deletar comentario")
+        return HttpResponseServerError("Error while deleting comment")
 
 #Repetição em rate_first_movies_request
 @csrf_exempt
@@ -131,7 +131,7 @@ def ratemovie(request):
         Recommendation.create_user_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while rating movie")
 
 #Repetição em ratemovie
 @csrf_exempt
@@ -145,7 +145,7 @@ def rate_first_movies_request(request):
         DataBaseHandler.rate_movie(request_user_id, request_movie_id, request_rate_id)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while rating movie")
 
 @csrf_exempt
 def get_auth(request):
@@ -162,7 +162,7 @@ def get_auth(request):
 
             return HttpResponse(user_data)
         else:
-            return HttpResponseServerError('Usuário e Senha não combinam')
+            return HttpResponseServerError('Wrong user or password')
     else:
         return HttpResponseServerError('Authentication Failure: No Response Body')
 

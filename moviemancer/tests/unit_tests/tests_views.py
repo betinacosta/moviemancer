@@ -10,7 +10,7 @@ class ViewsTest(TestCase):
         self.assertRedirects(response, '/moviemancer/', status_code=301)
         self.assertTrue(response)
 
-    def test_should_redirects_to_moviemancer(self):
+    def test_should_redirects_to_filters(self):
         response = self.client.get('/filters')
         self.assertRedirects(response, '/filters/', status_code=301)
         self.assertTrue(response)
@@ -76,15 +76,12 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/getrecommendation/', content_type='application/json', data={'user_id': 32})
         mock_get_recommendation_list.assert_called()
 
-
     def test_should_return_error_for_empty_body_on_get_recommendations(self):
-
         response = self.client.get(path='/getrecommendation/')
         self.assertEqual(response.content, b'Error while loading recommendations')
-        print(">>>>>>>>", str(response.content))
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.update_user_info')
-    def test_should_return_user_profile(self, mock_update_user_info):
+    def test_should_update_profile(self, mock_update_user_info):
         data = {
             'user_id': 1,
             'email': 'batata@brava.com',
@@ -95,6 +92,10 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/updateuser/', content_type='application/json', data=data)
         mock_update_user_info.assert_called()
 
+    def test_should_return_error_for_empty_body_on_update_user(self):
+        response = self.client.get(path='/updateuser/')
+        self.assertEqual(response.content, b'Error while updating user')
+
     @mock.patch('moviemancer.helpers.Helpers.get_comments')
     def test_should_return_all_comments(self, mock_get_comments):
         data = {
@@ -104,6 +105,10 @@ class ViewsTest(TestCase):
         mock_get_comments.return_value = "{'tmdb_movie_id': 1, 'user_id': 1,'comment': 'bla'}"
         response = self.client.post(path='/getcomments/', content_type='application/json', data=data)
         mock_get_comments.assert_called()
+
+    def test_should_return_error_for_empty_body_on_get_all_comments(self):
+        response = self.client.get(path='/getcomments/')
+        self.assertEqual(response.content, b'Error while retrieving comments')
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_comment')
     def test_should_add_new_comment(self, mock_add_comment):
@@ -116,14 +121,31 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/addcomment/', content_type='application/json', data=data)
         mock_add_comment.assert_called()
 
+    def test_should_return_error_for_empty_body_on_add_comments(self):
+        response = self.client.get(path='/addcomment/')
+        self.assertEqual(response.content, b'Error while adding comment')
+
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.delete_comment')
-    def test_should_add_new_comment(self, mock_delete_comment):
+    def test_should_delete_comment(self, mock_delete_comment):
         data = {
             'comment_id': 1,
         }
 
         response = self.client.post(path='/deletecomment/', content_type='application/json', data=data)
         mock_delete_comment.assert_called()
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.delete_comment')
+    def test_should_return_error_for_delete_fail(self, mock_delete_comment):
+        data = {
+            'comment_id': 1,
+        }
+        mock_delete_comment.return_value = False
+        response = self.client.post(path='/deletecomment/', content_type='application/json', data=data)
+        self.assertEqual(response.content, b'Error while deleting comment')
+
+    def test_should_return_error_for_empty_body_on_delete_comment(self):
+        response = self.client.get(path='/deletecomment/')
+        self.assertEqual(response.content, b'Error while deleting comment')
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_movie')
     @mock.patch('moviemancer.recommendation.Recommendation.create_user_recommendation')
@@ -138,6 +160,10 @@ class ViewsTest(TestCase):
         mock_rate_movie.assert_called()
         mock_create_user_recommendation.assert_called()
 
+    def test_should_return_error_for_empty_body_on_rate_movie(self):
+        response = self.client.get(path='/ratemovie/')
+        self.assertEqual(response.content, b'Error while rating movie')
+
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.rate_movie')
     def test_should_rate_first_movie(self, mock_rate_movie):
         data = {
@@ -148,6 +174,25 @@ class ViewsTest(TestCase):
 
         response = self.client.post(path='/ratefirstmovies/', content_type='application/json', data=data)
         mock_rate_movie.assert_called()
+
+    def test_should_return_error_for_empty_body_on_rate_movie(self):
+        response = self.client.get(path='/ratefirstmovies/')
+        self.assertEqual(response.content, b'Error while rating movie')
+
+    @mock.patch('moviemancer.database_handlers.DataBaseHandler.authenticate_user')
+    def test_should_return_error_for_invalid_authentication(self, mock_authenticate_user):
+        data = {
+            'email': 'batata@brava.com',
+            'password': '*****'
+        }
+
+        mock_authenticate_user.return_value = False
+        response = self.client.post(path='/authentication/', content_type='application/json', data=data)
+        self.assertEqual(response.content, b'Wrong user or password')
+
+    def test_should_return_error_for_empty_body_on_authentication(self):
+        response = self.client.get(path='/authentication/')
+        self.assertEqual(response.content, b'Authentication Failure: No Response Body')
 
     @mock.patch('moviemancer.helpers.Helpers.get_user_id_by_email')
     @mock.patch('moviemancer.helpers.Helpers.get_user')
