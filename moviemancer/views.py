@@ -223,7 +223,7 @@ def add_watchlist(request):
         DataBaseHandler.add_to_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Add to list Failure: No Response Body")
     #update recommendation
     Recommendation.create_user_recommendation(request_user_id)
 
@@ -239,7 +239,7 @@ def add_watchlist_external(request):
         DataBaseHandler.add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Add to list Failure: No Response Body")
 
 @csrf_exempt
 def get_watched_list(request):

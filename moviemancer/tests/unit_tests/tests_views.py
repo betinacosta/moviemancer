@@ -309,6 +309,10 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/addwatchlist/', content_type='application/json', data=data)
         mock_add_to_list.assert_called()
 
+    def test_should_return_error_for_empty_body_on_add_watchlist(self):
+        response = self.client.get(path='/addwatchlist/')
+        self.assertEqual(response.content, b'Add to list Failure: No Response Body')
+
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.add_to_list_external')
     def test_should_add_movie_to_watchlist_external(self, mock_add_to_list_external):
         data = {
@@ -320,6 +324,10 @@ class ViewsTest(TestCase):
         }
         response = self.client.post(path='/addwatchlistexternal/', content_type='application/json', data=data)
         mock_add_to_list_external.assert_called()
+
+    def test_should_return_error_for_empty_body_on_add_watchlist_external(self):
+        response = self.client.get(path='/addwatchlistexternal/')
+        self.assertEqual(response.content, b'Add to list Failure: No Response Body')
 
     @mock.patch('moviemancer.helpers.Helpers.get_watchedlist')
     def test_should_return_watchedlist(self, mock_get_watchedlist):
