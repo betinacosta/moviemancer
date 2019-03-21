@@ -250,7 +250,7 @@ def get_watched_list(request):
         user_watchedlist = json.dumps(Helpers.get_watchedlist(request_user_id))
         return HttpResponse(user_watchedlist)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Retriving list Failure: No Response Body")
 
 @csrf_exempt
 def remove_from_watched_list(request):
@@ -262,7 +262,7 @@ def remove_from_watched_list(request):
         DataBaseHandler.remove_watched(request_user_id, request_movie_id, 3)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Deleting list Failure: No Response Body")
     #update recommendation
     Recommendation.create_user_recommendation(request_user_id)
 
@@ -276,7 +276,7 @@ def remove_from_watchlist(request):
         DataBaseHandler.remove_movie_from_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Deleting list Failure: No Response Body")
 
 @csrf_exempt
 def get_watch_list(request):
@@ -287,7 +287,7 @@ def get_watch_list(request):
         user_watchlist = json.dumps(Helpers.get_watchlist(request_user_id))
         return HttpResponse(user_watchlist)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Retrieving list Failure: No Response Body")
 
 def get_rated(request):
     rated_movies = json.dumps(Helpers.get_rated_movies())
@@ -308,7 +308,7 @@ def filter_reco(request):
         filtered = json.dumps(Recommendation.filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id))
         return HttpResponse(filtered)
     else:
-        return HttpResponseServerError("You are on your own")
+        return HttpResponseServerError("Retrieving recommendation Failure: No Response Body")
 
 
 class MovieView(generics.ListAPIView):

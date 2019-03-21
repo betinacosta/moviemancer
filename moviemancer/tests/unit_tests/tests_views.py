@@ -339,6 +339,10 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/getwatchedlist/', content_type='application/json', data=data)
         mock_get_watchedlist.assert_called()
 
+    def test_should_return_error_for_empty_body_on_get_watched_list(self):
+        response = self.client.get(path='/getwatchedlist/')
+        self.assertEqual(response.content, b'Retriving list Failure: No Response Body')
+
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_watched')
     def test_should_remove_movie_from_watched_list(self, mock_remove_watched):
         data = {
@@ -348,6 +352,10 @@ class ViewsTest(TestCase):
 
         response = self.client.post(path='/removefromwatchedlist/', content_type='application/json', data=data)
         mock_remove_watched.assert_called()
+
+    def test_should_return_error_for_empty_body_on_remove_from_watched_list(self):
+        response = self.client.get(path='/removefromwatchedlist/')
+        self.assertEqual(response.content, b'Deleting list Failure: No Response Body')
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.remove_movie_from_list')
     def test_should_remove_movie_from_watchlist(self, mock_remove_movie_from_list):
@@ -359,6 +367,10 @@ class ViewsTest(TestCase):
         response = self.client.post(path='/removefromwatchlist/', content_type='application/json', data=data)
         mock_remove_movie_from_list.assert_called()
 
+    def test_should_return_error_for_empty_body_on_remove_from_watchlist(self):
+        response = self.client.get(path='/removefromwatchlist/')
+        self.assertEqual(response.content, b'Deleting list Failure: No Response Body')
+
     @mock.patch('moviemancer.helpers.Helpers.get_watchlist')
     def test_should_return_watchlist(self, mock_get_watchlist):
         data = {
@@ -368,6 +380,10 @@ class ViewsTest(TestCase):
         mock_get_watchlist.return_value = "[{'1': 2}]"
         response = self.client.post(path='/getwatchlist/', content_type='application/json', data=data)
         mock_get_watchlist.assert_called()
+
+    def test_should_return_error_for_empty_body_on_get_watchlist(self):
+        response = self.client.get(path='/getwatchlist/')
+        self.assertEqual(response.content, b'Retrieving list Failure: No Response Body')
 
     @mock.patch('moviemancer.helpers.Helpers.get_rated_movies')
     def test_should_return_rated_movies(self, mock_get_rated_movies):
@@ -391,3 +407,7 @@ class ViewsTest(TestCase):
         mock_filter_recommendation.return_value = '[1,2,3]'
         response = self.client.post(path='/filterreco/', content_type='application/json', data=data)
         mock_filter_recommendation.assert_called()
+
+    def test_should_return_error_for_empty_body_on_filter_recommendation(self):
+        response = self.client.get(path='/filterreco/')
+        self.assertEqual(response.content, b'Retrieving recommendation Failure: No Response Body')

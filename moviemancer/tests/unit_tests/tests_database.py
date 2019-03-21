@@ -131,6 +131,10 @@ class DatabaseTestCase(TestCase):
         self.assertTrue(movie_queryset)
         self.assertTrue(MovieList.objects.filter(movie_id=movie_queryset[0].movie_id, list_id=33))
 
+    def test_should_create_new_movie_and_add_to_watchedlist_when_rated(self):
+        result = DataBaseHandler.rate_external_movie(user_id=1, user_rating=3, tmdb_movie_id=99, tmdb_poster='bla.jpg', tmdb_title="The Amazing Papas")
+        self.assertTrue(result)
+
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.create_list_to_user')
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.create_user')
     @mock.patch('moviemancer.helpers.Helpers.get_user_id')
