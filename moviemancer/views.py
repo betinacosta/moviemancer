@@ -56,15 +56,8 @@ def search(request):
 def notfound(request):
     return render(request,'recommendation/partials/notfound.html')
 
-def handler404(request):
-    response = render_to_response('recommendation/partials/notfound.html', {},
-                              context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
-
 @csrf_exempt
 def get_recommendation(request):
-
     if request.body:
         request_reco = json.loads(request.body)
         request_user_id = request_reco[u'user_id']

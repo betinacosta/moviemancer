@@ -10,6 +10,11 @@ class ViewsTest(TestCase):
         self.assertRedirects(response, '/moviemancer/', status_code=301)
         self.assertTrue(response)
 
+    def test_should_redirects_to_moviemancer(self):
+        response = self.client.get('/filters')
+        self.assertRedirects(response, '/filters/', status_code=301)
+        self.assertTrue(response)
+
     def test_should_redirects_to_movies(self):
         response = self.client.get('/movies')
         self.assertRedirects(response, '/movies/', status_code=301)
@@ -70,6 +75,13 @@ class ViewsTest(TestCase):
         mock_get_recommendation_list.return_value = '{1,2,3}'
         response = self.client.post(path='/getrecommendation/', content_type='application/json', data={'user_id': 32})
         mock_get_recommendation_list.assert_called()
+
+
+    def test_should_return_error_for_empty_body_on_get_recommendations(self):
+
+        response = self.client.get(path='/getrecommendation/')
+        self.assertEqual(response.content, b'Error while loading recommendations')
+        print(">>>>>>>>", str(response.content))
 
     @mock.patch('moviemancer.database_handlers.DataBaseHandler.update_user_info')
     def test_should_return_user_profile(self, mock_update_user_info):
