@@ -56,15 +56,8 @@ def search(request):
 def notfound(request):
     return render(request,'recommendation/partials/notfound.html')
 
-def handler404(request):
-    response = render_to_response('recommendation/partials/notfound.html', {},
-                              context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
-
 @csrf_exempt
 def get_recommendation(request):
-
     if request.body:
         request_reco = json.loads(request.body)
         request_user_id = request_reco[u'user_id']
@@ -86,7 +79,7 @@ def update_user(request):
         DataBaseHandler.update_user_info(request_user_id, request_email, request_name, request_password)
         return HttpResponse('Success')
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while updating user")
 
 @csrf_exempt
 def get_all_comments(request):
@@ -97,7 +90,7 @@ def get_all_comments(request):
         all_comments = json.dumps(Helpers.get_comments(request_movie_tmdb_id))
         return HttpResponse(all_comments)
     else:
-        return HttpResponse("Erroa o carregar comentarios")
+        return HttpResponse("Error while retrieving comments")
 
 @csrf_exempt
 def add_new_comment(request):
@@ -110,7 +103,7 @@ def add_new_comment(request):
         DataBaseHandler.add_comment(request_movie_tmdb_id, request_user_id, request_comment)
         return HttpResponse('Success')
     else:
-        return HttpResponse("Erro ao criar comentario")
+        return HttpResponse("Error while adding comment")
 
 @csrf_exempt
 def delete_user_comment(request):
@@ -121,9 +114,9 @@ def delete_user_comment(request):
         if DataBaseHandler.delete_comment(request_comment_id):
             return HttpResponse("Success")
         else:
-            return HttpResponseServerError("Erro ao deletar comentario")
+            return HttpResponseServerError("Error while deleting comment")
     else:
-        return HttpResponseServerError("Erro ao deletar comentario")
+        return HttpResponseServerError("Error while deleting comment")
 
 #Repetição em rate_first_movies_request
 @csrf_exempt
@@ -138,7 +131,7 @@ def ratemovie(request):
         Recommendation.create_user_recommendation(request_user_id)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while rating movie")
 
 #Repetição em ratemovie
 @csrf_exempt
@@ -152,7 +145,7 @@ def rate_first_movies_request(request):
         DataBaseHandler.rate_movie(request_user_id, request_movie_id, request_rate_id)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Error while rating movie")
 
 @csrf_exempt
 def get_auth(request):
@@ -169,7 +162,7 @@ def get_auth(request):
 
             return HttpResponse(user_data)
         else:
-            return HttpResponseServerError('Usuário e Senha não combinam')
+            return HttpResponseServerError('Wrong user or password')
     else:
         return HttpResponseServerError('Authentication Failure: No Response Body')
 
@@ -183,12 +176,11 @@ def registration(request):
 
         if not Helpers.user_exists(request_email):
             user_id = DataBaseHandler.register_user(request_name, request_email, request_password)
-            if user_id:
-                return HttpResponse(user_id)
-            else:
-                return HttpResponseServerError('Erro no cadastro')
+            return HttpResponse(user_id)
+        else:
+            return HttpResponse('Registration Failure: User already exists')
     else:
-        return HttpResponseServerError('Erro no cadastro')
+        return HttpResponse('Registration Failure: No Response Body')
 
 @csrf_exempt
 def validate_user(request):
@@ -199,7 +191,9 @@ def validate_user(request):
         if not Helpers.user_exists(request_email):
             return HttpResponse('Success')
         else:
-            return HttpResponseServerError('User already registered')
+            return HttpResponse('Validation Failure: User already registered')
+    else:
+        return HttpResponse('Validation Failure: No Response Body')
 
 @csrf_exempt
 def rate_external(request):
@@ -215,9 +209,9 @@ def rate_external(request):
             Recommendation.create_user_recommendation(request_user_id)
             return HttpResponse('Success')
         else:
-            return HttpResponseServerError('Error')
+            return HttpResponseServerError('Error while rating movie')
     else:
-        return HttpResponseServerError("You are on your own")
+        return HttpResponseServerError("Rating Failure: No Response Body")
 
 @csrf_exempt
 def add_watchlist(request):
@@ -229,7 +223,7 @@ def add_watchlist(request):
         DataBaseHandler.add_to_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Add to list Failure: No Response Body")
     #update recommendation
     Recommendation.create_user_recommendation(request_user_id)
 
@@ -245,7 +239,7 @@ def add_watchlist_external(request):
         DataBaseHandler.add_to_list_external(request_user_id, request_tmdb_movie_id, request_movie_poster, request_movie_title, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Add to list Failure: No Response Body")
 
 @csrf_exempt
 def get_watched_list(request):
@@ -256,7 +250,7 @@ def get_watched_list(request):
         user_watchedlist = json.dumps(Helpers.get_watchedlist(request_user_id))
         return HttpResponse(user_watchedlist)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Retriving list Failure: No Response Body")
 
 @csrf_exempt
 def remove_from_watched_list(request):
@@ -268,7 +262,7 @@ def remove_from_watched_list(request):
         DataBaseHandler.remove_watched(request_user_id, request_movie_id, 3)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Deleting list Failure: No Response Body")
     #update recommendation
     Recommendation.create_user_recommendation(request_user_id)
 
@@ -282,7 +276,7 @@ def remove_from_watchlist(request):
         DataBaseHandler.remove_movie_from_list(request_user_id, request_movie_id, 2)
         return HttpResponse(request.body)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Deleting list Failure: No Response Body")
 
 @csrf_exempt
 def get_watch_list(request):
@@ -293,7 +287,7 @@ def get_watch_list(request):
         user_watchlist = json.dumps(Helpers.get_watchlist(request_user_id))
         return HttpResponse(user_watchlist)
     else:
-        return HttpResponse("You are on your own")
+        return HttpResponse("Retrieving list Failure: No Response Body")
 
 def get_rated(request):
     rated_movies = json.dumps(Helpers.get_rated_movies())
@@ -314,7 +308,7 @@ def filter_reco(request):
         filtered = json.dumps(Recommendation.filter_recommendation(request_genres, request_minYear, request_maxYear, request_minRuntime, request_maxRuntime, request_language, request_user_id))
         return HttpResponse(filtered)
     else:
-        return HttpResponseServerError("You are on your own")
+        return HttpResponseServerError("Retrieving recommendation Failure: No Response Body")
 
 
 class MovieView(generics.ListAPIView):

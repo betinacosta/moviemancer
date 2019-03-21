@@ -91,7 +91,7 @@ class DataBaseHandler:
             movie = Movie.objects.filter(tmdb_movie_id = tmdb_movie_id)
             if movie:
                 movie_id = movie[0].movie_id
-                DataBaseHandler.rate_movie (user_id, movie_id, user_rating)
+                DataBaseHandler.rate_movie(user_id, movie_id, user_rating)
                 return True
             return False
 
