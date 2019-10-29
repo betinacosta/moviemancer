@@ -2,10 +2,19 @@ language: python
 python: 3.6
 cache: pip
 
+services:
+  - postgresql
+
+env:
+  - DJANGO=2.1.11
+
 install:
   - pip install pipenv
   - pipenv lock -r --dev >> requirements.txt
   - pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database travisci;' -U travis-test
 
 jobs:
   include:
