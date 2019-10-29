@@ -3,7 +3,7 @@ python: 3.6
 cache: pip
 
 services:
-  - postgresql
+  - postgresql: "11.2"
 
 env:
   - DJANGO=2.1.11
