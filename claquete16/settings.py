@@ -85,26 +85,27 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'moviemancer',
-        'USER': 'moviemancer',
-        'PASSWORD': 'moviemancer',
-        'HOST': 'localhost',
-        'PORT': 5432,
-    }
-}
 
-if 'TRAVIS' in os.environ:
+if os.getenv('TRAVIS', None):
     DATABASES = {
         'default': {
-            'ENGINE':   'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME':     'travisci',
             'USER':     'postgres',
             'PASSWORD': '',
             'HOST':     'localhost',
             'PORT':     '',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'moviemancer',
+            'USER': 'moviemancer',
+            'PASSWORD': 'moviemancer',
+            'HOST': 'localhost',
+            'PORT': 5432,
         }
     }
 

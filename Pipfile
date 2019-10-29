@@ -10,7 +10,7 @@ gunicorn = "==19.6.0"
 whitenoise = "==3.2"
 djangorestframework = "==3.8.2"
 tmdbsimple = "==2.2.0"
-Django = "==2.1.11"
+Django = "==2.2.6"
 coverage = "==4.5.2"
 
 [dev-packages]
@@ -20,7 +20,7 @@ coverage = "==4.5.2"
 coveralls = "==1.5.1"
 tmdbsimple = "==1.6.1"
 dj-database-url = "==0.4.1"
-djangorestframework = "==3.8.2"
+djangorestframework = "==3.9.1"
 whitenoise = "==3.2"
 
 [requires]

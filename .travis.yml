@@ -1,11 +1,21 @@
 language: python
 python: 3.6
 cache: pip
+dist: trusty
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.4"
 
 install:
   - pip install pipenv
   - pipenv lock -r --dev >> requirements.txt
   - pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database travisci;' -U postgres
 
 jobs:
   include:
