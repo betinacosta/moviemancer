@@ -5,9 +5,6 @@ cache: pip
 services:
   - postgresql: "11.2"
 
-env:
-  - DJANGO=2.1.11
-
 install:
   - pip install pipenv
   - pipenv lock -r --dev >> requirements.txt
