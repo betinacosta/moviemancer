@@ -1,6 +1,7 @@
 language: python
 python: 3.6
 cache: pip
+dist: trusty
 
 services:
   - postgresql
