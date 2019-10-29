@@ -86,7 +86,7 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 
-# if 'TRAVIS' in os.environ:
+# if os.getenv('TRAVIS', None):
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
