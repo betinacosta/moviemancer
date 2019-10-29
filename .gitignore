@@ -5,3 +5,4 @@ staticfiles
 myenv
 .coverage
 htmlcov
+.idea/
