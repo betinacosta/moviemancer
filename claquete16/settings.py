@@ -86,29 +86,27 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 
-# if os.getenv('TRAVIS', None):
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':     'travisci',
-        'USER':     'postgres',
-        'PASSWORD': '',
-        'HOST':     'localhost',
-        'PORT':     '',
+if os.getenv('TRAVIS', None):
+    DATABASES = {
+        'default': {
+            'NAME':     'travisci',
+            'USER':     'postgres',
+            'PASSWORD': '',
+            'HOST':     'localhost',
+            'PORT':     '',
+        }
     }
-}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'moviemancer',
-#         'USER': 'moviemancer',
-#         'PASSWORD': 'moviemancer',
-#         'HOST': 'localhost',
-#         'PORT': 5432,
-#     }
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'moviemancer',
+            'USER': 'moviemancer',
+            'PASSWORD': 'moviemancer',
+            'HOST': 'localhost',
+            'PORT': 5432,
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
