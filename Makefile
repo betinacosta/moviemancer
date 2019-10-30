@@ -1,3 +1,8 @@
+setup:
+	pipenv --three
+	pipenv install --dev
+	pipenv shell
+
 run:
 	python manage.py runserver
 

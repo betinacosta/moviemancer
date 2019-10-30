@@ -7,7 +7,7 @@ Moviemancer is a website for movie recommendation.
 
 **Production:** http://moviemancer-api.herokuapp.com/
 
-![moviemancer on action](https://media.giphy.com/media/KYGfrhmxMBkq9D1oN8/giphy.gif)
+![moviemancer on action](https://media.giphy.com/media/WQNBEWPkChL6WV0FRM/giphy.gif)
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ Moviemancer is a website for movie recommendation.
 
 ## Instalation
 
-- `$ pipenv install`
+- `$ make setup`
 
 ## Running Locally
 
